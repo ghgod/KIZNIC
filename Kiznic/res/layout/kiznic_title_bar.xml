@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="35dip"
+    android:background="#323331"
+    android:paddingLeft="5dip"
+    android:orientation="horizontal" >
+            
+    <Button android:id="@+id/title_back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="B"
+        android:layout_alignParentLeft="true"
+	    />
+    
+	<TextView android:text="KIZNIC"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:textSize="30dp"
+	    android:layout_toRightOf="@id/title_back_button"
+	    />
+	
+	<Button android:id="@+id/title_mypage_button"
+	    android:text="M"
+	    android:layout_width="wrap_content"
+	    android:layout_height="fill_parent"
+	    android:layout_alignParentRight="true"/>
+	<Button android:id="@+id/title_search_button"
+	    android:text="S"
+	    android:layout_width="wrap_content"
+	    android:layout_height="fill_parent"
+	    android:layout_toLeftOf="@id/title_mypage_button"/>
+	<Button android:id="@+id/title_home_button"
+	    android:text="H"
+	    android:layout_width="wrap_content"
+	    android:layout_height="fill_parent"
+	    android:layout_toLeftOf="@id/title_search_button"/>
+</RelativeLayout>

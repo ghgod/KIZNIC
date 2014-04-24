@@ -1,16 +1,137 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
-
-</RelativeLayout>
+    android:orientation="vertical"
+    android:background="#AAAAAA" >
+    
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="100dip"
+        android:paddingLeft="5dp"
+		android:paddingRight="5dp"
+        android:orientation="horizontal">
+    
+        <!-- Profile -->
+        <LinearLayout 
+            android:id="@+id/profile"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:background="#BBBBBB">
+            
+            <ImageView 
+                android:id="@+id/profile_kidimage_image"
+                android:layout_width="wrap_content"
+                android:layout_height="80dip"
+                android:layout_gravity="center"
+                android:src="@drawable/kid"/>
+            
+            <TextView
+                android:id="@+id/profile_kidname_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="닉네임"
+                android:textSize="20sp"
+                android:textColor="#000000"/>
+            
+        </LinearLayout>
+        
+        <!-- Condition -->
+        
+        <LinearLayout 
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:orientation="vertical"
+            android:background="#CCCCCC">
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:text="아이 상태입력"
+                android:textSize="15sp"
+                android:textColor="#000000"/>
+                
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                
+                <!-- Condition In/Out -->
+                
+                <LinearLayout
+                    android:id="@+id/condition_inout_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7"
+                    android:orientation="vertical"
+                    android:background="#ABABAB">
+                    
+                     <ToggleButton
+                         android:id="@+id/condition_inout_image"
+			            android:layout_width="40dip"
+			            android:layout_height="40dip"
+			            android:background="@drawable/condition_inout_toggle"
+			            android:textOn="IN"
+			            android:textOff="OUT"
+			            android:layout_gravity="center"/>
+                     
+                    <TextView
+                        android:id="@+id/condition_inout_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:text="실내/실외"
+                        android:textColor="#000000"
+                        android:textSize="15sp"/>
+                    
+                </LinearLayout>
+                
+                <!-- Condition Range -->
+                
+                <LinearLayout
+                    android:id="@+id/condition_range_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="18"
+                    android:layout_gravity="right"
+                    android:orientation="vertical"
+                    android:background="#BABABA">
+                    
+                    <ImageView
+                        android:id="@+id/condition_range_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dip"
+                        android:src="@drawable/condition_bar"/>
+                    
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|right"
+                        android:text="이동 반경"
+                        android:textColor="#000000"
+                        android:textSize="15sp"/>
+                    
+                </LinearLayout>   
+                
+            </LinearLayout>
+            
+        </LinearLayout>
+        
+    </LinearLayout>
+    
+    <!-- 카드 리스트  -->
+    <ListView
+		android:id="@+id/main_list_view"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:headerDividersEnabled="true"
+		android:footerDividersEnabled="true"
+		android:listSelector="@android:color/transparent"
+		android:cacheColorHint="@android:color/transparent"
+		android:divider="@null"
+		android:dividerHeight="10dp" />
+</LinearLayout>

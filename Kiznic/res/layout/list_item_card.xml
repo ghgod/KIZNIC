@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:paddingLeft="5dp"
+	android:paddingRight="5dp"
+	android:descendantFocusability="beforeDescendants"
+	android:orientation="vertical">
+
+	<LinearLayout
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingLeft="5dp"
+		android:paddingTop="5dp"
+		android:paddingBottom="5dp"
+		android:paddingRight="5dp"
+		android:background="@drawable/selector_card_background"
+		android:descendantFocusability="afterDescendants">
+	   
+	    <!-- recommend title -->
+	    
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="0dip"
+	        android:layout_weight="1"
+	        android:orientation="horizontal"
+	        android:background="#CACACA">
+	        
+	        <TextView
+	            android:id="@+id/recommend_title_text"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="공연"
+	            android:textColor="#000000"
+	            android:textSize="14sp"/>
+	        
+	    </LinearLayout>
+	    
+	    <!-- recommend card 1 -->
+	    
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="0dip"
+	        android:layout_weight="4"
+	        android:orientation="horizontal">
+	        
+	        <!-- recommend item poster -->
+	        
+	        <LinearLayout
+	            android:layout_width="0dip"
+	            android:layout_height="match_parent"
+	            android:layout_weight="4"
+	            android:orientation="vertical"
+	            android:background="#ACACAC">
+	            
+	            <ImageView
+	                android:id="@+id/recommend_posterimage_image"
+	                android:layout_width="80dip"
+	                android:layout_height="80dip"
+	                android:layout_gravity="center"
+	                android:src="@drawable/recommend"/>
+	            
+	        </LinearLayout>
+	        
+	        <LinearLayout
+	            android:layout_width="0dip"
+	            android:layout_height="match_parent"
+	            android:layout_weight="7"
+	            android:orientation="vertical"
+	            android:background="#ACACAC">
+	            
+	            <LinearLayout
+	                android:layout_width="match_parent"
+	                android:layout_height="0dip"
+	                android:layout_weight="1"
+	                android:background="#AAAAAA"
+	                android:orientation="vertical">
+	                
+	                <!-- recommend title -->
+	                
+	                <TextView
+	                    android:id="@+id/recommend_itemtitle_text"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="배고픈 애벌레"
+	                    android:textColor="#000000"
+	                    android:textSize="13sp"/>
+	                
+	                <TextView
+	                    android:id="@+id/recommend_itemage_text"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="만 36개월 이상"
+	                    android:textColor="#000000"
+	                    android:textSize="10sp"/>
+	                
+	            </LinearLayout>
+	            
+	            <LinearLayout
+	                android:layout_width="match_parent"
+	                android:layout_height="0dip"
+	                android:layout_weight="2"
+	                android:orientation="vertical"
+	                android:background="#CCCCCC">
+	                
+	                <LinearLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="0dip"
+	                    android:layout_weight="1"
+	                    android:orientation="horizontal"
+	                    android:background="#AAAAAA">
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:layout_gravity="center"
+	                        android:text="기간"
+	                        android:textColor="#000000"
+	                        android:textSize="12sp"/>
+	                      
+		                <TextView
+		                    android:id="@+id/recommend_period_text"
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:layout_marginLeft="5dip"
+	                        android:layout_gravity="center"
+		                    android:text="14. 04. 22 ~ 14. 04. 27"
+		                    android:textColor="#000000"
+		                    android:textSize="12sp"/>
+	                    
+	                </LinearLayout>
+	                
+	                <LinearLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="0dip"
+	                    android:layout_weight="1"
+	                    android:orientation="horizontal"
+	                    android:background="#AAAAAA">
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:layout_gravity="center"
+	                        android:text="장소"
+	                        android:textColor="#000000"
+	                        android:textSize="12sp"/>
+	                        
+	                    <TextView
+	                        android:id="@+id/recommend_place_text"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:layout_marginLeft="5dip"
+	                        android:layout_gravity="center"
+	                        android:text="오페라 하우스"
+	                        android:textColor="#000000"
+	                        android:textSize="12sp"/>
+	                    
+	                </LinearLayout>
+	                
+	                <LinearLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="0dip"
+	                    android:layout_weight="1"
+	                    android:orientation="horizontal"
+	                    android:background="#AAAAAA">
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:layout_gravity="center"
+	                        android:text="거리"
+	                        android:textColor="#000000"
+	                        android:textSize="12sp"/>
+	                      
+		                <TextView
+		                    android:id="@+id/recommend_distance_text"
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:layout_marginLeft="5dip"
+	                        android:layout_gravity="center"
+		                    android:text="5km"
+		                    android:textColor="#000000"
+		                    android:textSize="12sp"/>
+	                    
+	                </LinearLayout>
+	                
+	            </LinearLayout>
+	            
+	        </LinearLayout>
+	        
+	         <LinearLayout
+	            android:layout_width="0dip"
+	            android:layout_height="match_parent"
+	            android:layout_weight="3"
+	            android:gravity="center"
+	            android:orientation="vertical"
+	            android:background="#CCCCCC">
+	            
+	             <ImageView
+		             android:id="@+id/recommend_weatherimage_image"
+		             android:layout_width="50dip"
+		             android:layout_height="50dip"
+		             android:layout_gravity="center"
+		             android:src="@drawable/weather_image"/>
+		             
+		         <TextView
+		             android:id="@+id/recommend_weathertemperature_text"
+		             android:layout_width="wrap_content"
+		             android:layout_height="wrap_content"
+		             android:layout_gravity="center"
+		             android:text="18.3°"
+		             android:textColor="#000000"
+		             android:textSize="20sp"/>
+		             
+	         </LinearLayout>
+	        
+	    </LinearLayout>
+	    
+	    <!-- recommend card 2 -->
+	    
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="0dip"
+	        android:layout_weight="4"
+	        android:orientation="horizontal">
+	        
+	        <!-- recommend item poster -->
+	        
+	        <LinearLayout
+	            android:layout_width="0dip"
+	            android:layout_height="match_parent"
+	            android:layout_weight="4"
+	            android:orientation="vertical"
+	            android:background="#ACACAC">
+	            
+	            <ImageView
+	                android:id="@+id/recommend_posterimage_image2"
+	                android:layout_width="80dip"
+	                android:layout_height="80dip"
+	                android:layout_gravity="center"
+	                android:src="@drawable/recommend"/>
+	            
+	        </LinearLayout>
+	        
+	        <LinearLayout
+	            android:layout_width="0dip"
+	            android:layout_height="match_parent"
+	            android:layout_weight="7"
+	            android:orientation="vertical"
+	            android:background="#ACACAC">
+	            
+	            <LinearLayout
+	                android:layout_width="match_parent"
+	                android:layout_height="0dip"
+	                android:layout_weight="1"
+	                android:background="#AAAAAA"
+	                android:orientation="vertical">
+	                
+	                <!-- recommend title -->
+	                
+	                <TextView
+	                    android:id="@+id/recommend_itemtitle_text2"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="배고픈 애벌레"
+	                    android:textColor="#000000"
+	                    android:textSize="13sp"/>
+	                
+	                <TextView
+	                    android:id="@+id/recommend_itemage_text2"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="만 36개월 이상"
+	                    android:textColor="#000000"
+	                    android:textSize="10sp"/>
+	                
+	            </LinearLayout>
+	            
+	            <LinearLayout
+	                android:layout_width="match_parent"
+	                android:layout_height="0dip"
+	                android:layout_weight="2"
+	                android:orientation="vertical"
+	                android:background="#CCCCCC">
+	                
+	                <LinearLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="0dip"
+	                    android:layout_weight="1"
+	                    android:orientation="horizontal"
+	                    android:background="#AAAAAA">
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:layout_gravity="center"
+	                        android:text="기간"
+	                        android:textColor="#000000"
+	                        android:textSize="12sp"/>
+	                      
+		                <TextView
+		                    android:id="@+id/recommend_period_text2"
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:layout_marginLeft="5dip"
+	                        android:layout_gravity="center"
+		                    android:text="14. 04. 22 ~ 14. 04. 27"
+		                    android:textColor="#000000"
+		                    android:textSize="12sp"/>
+	                    
+	                </LinearLayout>
+	                
+	                <LinearLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="0dip"
+	                    android:layout_weight="1"
+	                    android:orientation="horizontal"
+	                    android:background="#AAAAAA">
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:layout_gravity="center"
+	                        android:text="장소"
+	                        android:textColor="#000000"
+	                        android:textSize="12sp"/>
+	                        
+	                    <TextView
+	                        android:id="@+id/recommend_place_text2"
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:layout_marginLeft="5dip"
+	                        android:layout_gravity="center"
+	                        android:text="오페라 하우스"
+	                        android:textColor="#000000"
+	                        android:textSize="12sp"/>
+	                    
+	                </LinearLayout>
+	                
+	                <LinearLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="0dip"
+	                    android:layout_weight="1"
+	                    android:orientation="horizontal"
+	                    android:background="#AAAAAA">
+	                    
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:layout_gravity="center"
+	                        android:text="거리"
+	                        android:textColor="#000000"
+	                        android:textSize="12sp"/>
+	                      
+		                <TextView
+		                    android:id="@+id/recommend_distance_text2"
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:layout_marginLeft="5dip"
+	                        android:layout_gravity="center"
+		                    android:text="5km"
+		                    android:textColor="#000000"
+		                    android:textSize="12sp"/>
+	                    
+	                </LinearLayout>
+	                
+	            </LinearLayout>
+	            
+	        </LinearLayout>
+	        
+	         <LinearLayout
+	            android:layout_width="0dip"
+	            android:layout_height="match_parent"
+	            android:layout_weight="3"
+	            android:gravity="center"
+	            android:orientation="vertical"
+	            android:background="#CCCCCC">
+	            
+	             <ImageView
+		             android:id="@+id/recommend_weatherimage_image2"
+		             android:layout_width="50dip"
+		             android:layout_height="50dip"
+		             android:layout_gravity="center"
+		             android:src="@drawable/weather_image"/>
+		             
+		         <TextView
+		             android:id="@+id/recommend_weathertemperature_text2"
+		             android:layout_width="wrap_content"
+		             android:layout_height="wrap_content"
+		             android:layout_gravity="center"
+		             android:text="18.3°"
+		             android:textColor="#000000"
+		             android:textSize="20sp"/>
+		             
+	         </LinearLayout>
+	        
+	    </LinearLayout>
+	    
+	    <!-- more receommend list -->
+	    
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="0dip"
+	        android:layout_weight="1"
+	        android:orientation="vertical">
+	        
+	        <Button
+	            android:id="@+id/recommend_morelist_button"
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:text="더보기"
+	            android:textSize="14sp"
+	            android:background="#BABABA"/>
+	        
+	    </LinearLayout>
+	    
+	</LinearLayout>
+
+</LinearLayout>
