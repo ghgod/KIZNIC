@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="35dip"
-    android:background="#323331"
+    android:layout_height="30dip"
+    android:background="#6AC2C7"
     android:paddingLeft="5dip"
     android:orientation="horizontal" >
-            
-    <Button android:id="@+id/title_back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="B"
-        android:layout_alignParentLeft="true"
-	    />
-    
-	<TextView android:text="KIZNIC"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:textSize="30dp"
-	    android:layout_toRightOf="@id/title_back_button"
-	    />
+         
+	<ImageView android:layout_width="100dip"
+	    android:layout_height="match_parent"
+	    android:layout_marginLeft="10dip"
+	    android:gravity="left"
+	    android:src="@drawable/logo_main"/>
 	
 	<Button android:id="@+id/title_mypage_button"
 	    android:text="M"

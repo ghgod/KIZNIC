@@ -3,8 +3,6 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:paddingLeft="5dp"
-	android:paddingRight="5dp"
 	android:descendantFocusability="beforeDescendants"
 	android:orientation="vertical">
 
@@ -12,11 +10,8 @@
 		android:orientation="vertical"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:paddingLeft="5dp"
-		android:paddingTop="5dp"
-		android:paddingBottom="5dp"
-		android:paddingRight="5dp"
-		android:background="@drawable/selector_card_background"
+		android:layout_margin="5dip"
+		android:background="#FDF9F2"
 		android:descendantFocusability="afterDescendants">
 	   
 	    <!-- recommend title -->
@@ -25,8 +20,7 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="0dip"
 	        android:layout_weight="1"
-	        android:orientation="horizontal"
-	        android:background="#CACACA">
+	        android:orientation="horizontal">
 	        
 	        <TextView
 	            android:id="@+id/recommend_title_text"
@@ -44,6 +38,7 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="0dip"
 	        android:layout_weight="4"
+	        android:background="@drawable/main_card_background"
 	        android:orientation="horizontal">
 	        
 	        <!-- recommend item poster -->
@@ -52,8 +47,7 @@
 	            android:layout_width="0dip"
 	            android:layout_height="match_parent"
 	            android:layout_weight="4"
-	            android:orientation="vertical"
-	            android:background="#ACACAC">
+	            android:orientation="vertical">
 	            
 	            <ImageView
 	                android:id="@+id/recommend_posterimage_image"
@@ -68,14 +62,12 @@
 	            android:layout_width="0dip"
 	            android:layout_height="match_parent"
 	            android:layout_weight="7"
-	            android:orientation="vertical"
-	            android:background="#ACACAC">
+	            android:orientation="vertical">
 	            
 	            <LinearLayout
 	                android:layout_width="match_parent"
 	                android:layout_height="0dip"
 	                android:layout_weight="1"
-	                android:background="#AAAAAA"
 	                android:orientation="vertical">
 	                
 	                <!-- recommend title -->
@@ -102,15 +94,13 @@
 	                android:layout_width="match_parent"
 	                android:layout_height="0dip"
 	                android:layout_weight="2"
-	                android:orientation="vertical"
-	                android:background="#CCCCCC">
+	                android:orientation="vertical">
 	                
 	                <LinearLayout
 	                    android:layout_width="match_parent"
 	                    android:layout_height="0dip"
 	                    android:layout_weight="1"
-	                    android:orientation="horizontal"
-	                    android:background="#AAAAAA">
+	                    android:orientation="horizontal">
 	                    
 	                    <TextView
 	                        android:layout_width="wrap_content"
@@ -136,8 +126,7 @@
 	                    android:layout_width="match_parent"
 	                    android:layout_height="0dip"
 	                    android:layout_weight="1"
-	                    android:orientation="horizontal"
-	                    android:background="#AAAAAA">
+	                    android:orientation="horizontal">
 	                    
 	                    <TextView
 	                        android:layout_width="wrap_content"
@@ -163,8 +152,7 @@
 	                    android:layout_width="match_parent"
 	                    android:layout_height="0dip"
 	                    android:layout_weight="1"
-	                    android:orientation="horizontal"
-	                    android:background="#AAAAAA">
+	                    android:orientation="horizontal">
 	                    
 	                    <TextView
 	                        android:layout_width="wrap_content"
@@ -195,8 +183,7 @@
 	            android:layout_height="match_parent"
 	            android:layout_weight="3"
 	            android:gravity="center"
-	            android:orientation="vertical"
-	            android:background="#CCCCCC">
+	            android:orientation="vertical">
 	            
 	             <ImageView
 		             android:id="@+id/recommend_weatherimage_image"
@@ -224,6 +211,7 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="0dip"
 	        android:layout_weight="4"
+	        android:background="@drawable/main_card_background"
 	        android:orientation="horizontal">
 	        
 	        <!-- recommend item poster -->
@@ -232,8 +220,7 @@
 	            android:layout_width="0dip"
 	            android:layout_height="match_parent"
 	            android:layout_weight="4"
-	            android:orientation="vertical"
-	            android:background="#ACACAC">
+	            android:orientation="vertical">
 	            
 	            <ImageView
 	                android:id="@+id/recommend_posterimage_image2"
@@ -248,14 +235,12 @@
 	            android:layout_width="0dip"
 	            android:layout_height="match_parent"
 	            android:layout_weight="7"
-	            android:orientation="vertical"
-	            android:background="#ACACAC">
+	            android:orientation="vertical">
 	            
 	            <LinearLayout
 	                android:layout_width="match_parent"
 	                android:layout_height="0dip"
 	                android:layout_weight="1"
-	                android:background="#AAAAAA"
 	                android:orientation="vertical">
 	                
 	                <!-- recommend title -->
@@ -282,15 +267,13 @@
 	                android:layout_width="match_parent"
 	                android:layout_height="0dip"
 	                android:layout_weight="2"
-	                android:orientation="vertical"
-	                android:background="#CCCCCC">
+	                android:orientation="vertical">
 	                
 	                <LinearLayout
 	                    android:layout_width="match_parent"
 	                    android:layout_height="0dip"
 	                    android:layout_weight="1"
-	                    android:orientation="horizontal"
-	                    android:background="#AAAAAA">
+	                    android:orientation="horizontal">
 	                    
 	                    <TextView
 	                        android:layout_width="wrap_content"
@@ -316,8 +299,7 @@
 	                    android:layout_width="match_parent"
 	                    android:layout_height="0dip"
 	                    android:layout_weight="1"
-	                    android:orientation="horizontal"
-	                    android:background="#AAAAAA">
+	                    android:orientation="horizontal">
 	                    
 	                    <TextView
 	                        android:layout_width="wrap_content"
@@ -343,8 +325,7 @@
 	                    android:layout_width="match_parent"
 	                    android:layout_height="0dip"
 	                    android:layout_weight="1"
-	                    android:orientation="horizontal"
-	                    android:background="#AAAAAA">
+	                    android:orientation="horizontal">
 	                    
 	                    <TextView
 	                        android:layout_width="wrap_content"
@@ -375,8 +356,7 @@
 	            android:layout_height="match_parent"
 	            android:layout_weight="3"
 	            android:gravity="center"
-	            android:orientation="vertical"
-	            android:background="#CCCCCC">
+	            android:orientation="vertical">
 	            
 	             <ImageView
 		             android:id="@+id/recommend_weatherimage_image2"
@@ -412,7 +392,8 @@
 	            android:layout_height="match_parent"
 	            android:text="더보기"
 	            android:textSize="14sp"
-	            android:background="#BABABA"/>
+	            android:textColor="#000000"
+	            android:background="#FDF9F2"/>
 	        
 	    </LinearLayout>
 	    

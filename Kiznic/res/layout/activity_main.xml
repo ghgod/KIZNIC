@@ -3,12 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#AAAAAA" >
+    android:background="#F1F2F2" >
     
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="100dip"
-        android:paddingLeft="5dp"
-		android:paddingRight="5dp"
+		android:background="#FDF9F2"
         android:orientation="horizontal">
     
         <!-- Profile -->
@@ -17,15 +16,13 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:orientation="vertical"
-            android:background="#BBBBBB">
+            android:orientation="vertical">
             
-            <ImageView 
-                android:id="@+id/profile_kidimage_image"
-                android:layout_width="wrap_content"
-                android:layout_height="80dip"
-                android:layout_gravity="center"
-                android:src="@drawable/kid"/>
+                <ImageView 
+	                android:id="@+id/profile_kidimage_image"
+	                android:layout_width="70dip"
+	                android:layout_height="70dip"
+	                android:layout_gravity="center"/>
             
             <TextView
                 android:id="@+id/profile_kidname_text"
@@ -44,20 +41,20 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="5"
-            android:orientation="vertical"
-            android:background="#CCCCCC">
+            android:orientation="vertical">
             
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dip"
                 android:text="아이 상태입력"
-                android:textSize="15sp"
-                android:textColor="#000000"/>
+                android:textColor="#000000"
+                android:textSize="15sp"/>
                 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/main_condition_card_background"
                 android:orientation="horizontal">
                 
                 <!-- Condition In/Out -->
@@ -67,8 +64,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="7"
-                    android:orientation="vertical"
-                    android:background="#ABABAB">
+                    android:orientation="vertical">
                     
                      <ToggleButton
                          android:id="@+id/condition_inout_image"
@@ -98,8 +94,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="18"
                     android:layout_gravity="right"
-                    android:orientation="vertical"
-                    android:background="#BABABA">
+                    android:orientation="vertical">
                     
                     <ImageView
                         android:id="@+id/condition_range_image"

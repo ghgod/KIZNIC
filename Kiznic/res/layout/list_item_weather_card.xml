@@ -10,11 +10,8 @@
 		android:orientation="vertical"
 		android:layout_width="match_parent"
 		android:layout_height="180dip"
-		android:paddingLeft="5dp"
-		android:paddingTop="5dp"
-		android:paddingBottom="5dp"
-		android:paddingRight="5dp"
-		android:background="@drawable/selector_card_background"
+		android:layout_margin="5dip"
+		android:background="#DEE7E7"
 		android:descendantFocusability="afterDescendants">
 		
 		 <!-- location -->
@@ -23,8 +20,7 @@
 		     android:layout_width="match_parent"
 		     android:layout_height="0dip"
 		     android:layout_weight="1"
-		     android:orientation="horizontal"
-		     android:background="#CACACA">
+		     android:orientation="horizontal">
 		     
 		     <TextView
 		             android:id="@+id/weather_location_text"
@@ -56,8 +52,7 @@
 		         android:layout_width="0dip"
 		         android:layout_height="match_parent"
 		         android:layout_weight="43"
-		         android:orientation="vertical"
-		         android:background="#BBBBBB">
+		         android:orientation="vertical">
 		         
 		         <!-- weather simple info -->
 		         
@@ -65,8 +60,8 @@
 		             android:layout_width="match_parent"
 		             android:layout_height="0dip"
 		             android:layout_weight="1"
-		             android:orientation="vertical"
-		             android:background="#ACACAC">
+		             android:background="#30FFFFFF"
+		             android:orientation="vertical">
 		             
 		             <TextView
 		                 android:id="@+id/weather_simpleinfo_text"
@@ -82,8 +77,7 @@
 		             android:layout_width="match_parent"
 		             android:layout_height="0dip"
 		             android:layout_weight="6"
-		             android:orientation="horizontal"
-		             android:background="#BABABA">
+		             android:orientation="horizontal">
 		             
 		             <LinearLayout
 		                 android:layout_width="0dip"
@@ -95,8 +89,7 @@
 		                 android:layout_width="match_parent"
 		                 android:layout_height="0dip"
 		                 android:layout_weight="1"
-		                 android:orientation="vertical"
-		                 android:background="#CACACA">
+		                 android:orientation="vertical">
 		             
 		                     <ImageView
 		                     android:id="@+id/weather_weatherimage_image"
@@ -111,16 +104,14 @@
 		                 android:layout_width="match_parent"
 		                 android:layout_height="0dip"
 		                 android:layout_weight="1"
-		                 android:orientation="vertical"
-		                 android:background="#ACACAC">
+		                 android:orientation="vertical">
 		             
 		                     <LinearLayout
 			                 android:layout_width="match_parent"
 			                 android:layout_height="0dip"
 			                 android:layout_weight="1"
 			                 android:orientation="horizontal"
-			                 android:gravity="center"
-			                 android:background="#ACACAC">
+			                 android:gravity="center">
 			                 
 		                         <!-- rainfall -->
 		             
@@ -146,8 +137,7 @@
 			                 android:layout_height="0dip"
 			                 android:layout_weight="1"
 			                 android:orientation="horizontal"
-			                 android:gravity="center"
-			                 android:background="#ACACAC">
+			                 android:gravity="center">
 		                         
 		                         <!-- wind speed -->
 				     	     
@@ -174,8 +164,7 @@
 			                 android:layout_height="0dip"
 			                 android:layout_weight="1"
 			                 android:orientation="horizontal"
-			                 android:gravity="center"
-			                 android:background="#ACACAC">
+			                 android:gravity="center">
 		                         
 				     	     <TextView
 				     	         android:id="@+id/weather_weatherwatch_text"
@@ -203,8 +192,7 @@
 		                 android:layout_width="match_parent"
 		                 android:layout_height="0dip"
 		                 android:layout_weight="1"
-		                 android:orientation="vertical"
-		                 android:background="#ACACAC">
+		                 android:orientation="vertical">
 
 		                     <TextView
 		                     android:id="@+id/weather_temperature_text"
@@ -237,11 +225,11 @@
 		             	</LinearLayout>
 		             
 		                 <LinearLayout
-		                 android:layout_width="match_parent"
-		                 android:layout_height="0dip"
-		                 android:layout_weight="1"
-		                 android:orientation="vertical"
-		                 android:background="#CACACA">
+		                     android:id="@+id/weather_circlemeter_layout"
+			                 android:layout_width="match_parent"
+			                 android:layout_height="0dip"
+			                 android:layout_weight="1"
+			                 android:orientation="vertical">
 		             
 		                     <ImageView
 		                     android:id="@+id/weather_finedustimage_image"
@@ -275,8 +263,7 @@
 		         android:layout_width="0dip"
 		         android:layout_height="match_parent"
 		         android:layout_weight="23"
-		         android:orientation="vertical"
-		         android:background="#ACACAC">
+		         android:orientation="vertical">
 		         
 		         <!-- next weather simple info -->
 		         
@@ -284,8 +271,8 @@
 		             android:layout_width="match_parent"
 		             android:layout_height="0dip"
 		             android:layout_weight="1"
-		             android:orientation="vertical"
-		             android:background="#CBCBCB">
+		             android:background="#30FFFFFF"
+		             android:orientation="vertical">
 		     	     
 		             <TextView
 		                 android:id="@+id/weather_nextdaysimpleinfo_text"
@@ -302,28 +289,28 @@
 		             android:layout_width="match_parent"
 		             android:layout_height="0dip"
 		             android:layout_weight="6"
-		             android:orientation="vertical"
-		             android:background="#AAAAAA">
+		             android:padding="5dip"
+		             android:background="#20A7A9AC"
+		             android:orientation="vertical">
 		             
 		             <LinearLayout
 		                 android:layout_width="match_parent"
 		                 android:layout_height="0dip"
 		                 android:layout_weight="1"
 		                 android:orientation="horizontal"
-		                 android:gravity="center"
-		                 android:background="#BBBBBB">
+		                 android:gravity="center">
 		                 
 		                 <!-- next weather Info -->
 		                 
 		                 <ImageView
-		                     android:id="@+id/weather_nextdayweatherimage_image"
+		                     android:id="@+id/weather_nextweatherimage_image"
 		                     android:layout_width="50dip"
 		                     android:layout_height="50dip"
 		                     android:layout_gravity="center"
 		                     android:src="@drawable/weather_image"/>
 		             
 		             	 <TextView
-		                     android:id="@+id/weather_nextdaytemperature_text"
+		                     android:id="@+id/weather_nexttemperature_text"
 		                     android:layout_width="wrap_content"
 		                     android:layout_height="wrap_content"
 		                     android:layout_marginLeft="5dp"
@@ -338,11 +325,10 @@
 		                 android:layout_width="match_parent"
 		                 android:layout_height="0dip"
 		                 android:layout_weight="1"
-		                 android:orientation="vertical"
-		                 android:background="#CCCCCC">
+		                 android:orientation="vertical">
 		                 
 		                 <ImageView
-		                     android:id="@+id/weather_nextdayfinedustimage_image"
+		                     android:id="@+id/weather_nextfinedustimage_image"
 		                     android:layout_width="35dip"
 		                     android:layout_height="35dip"
 		                     android:layout_gravity="center"
@@ -350,7 +336,7 @@
 		                     android:src="@drawable/finedust"/>
 		                 
 		                	 <TextView
-		                     android:id="@+id/weather_nextdayfinedusttext_text"
+		                     android:id="@+id/weather_nextfinedusttext_text"
 		                     android:layout_width="wrap_content"
 		                     android:layout_height="wrap_content"
 		                     android:layout_marginTop="5dip"
