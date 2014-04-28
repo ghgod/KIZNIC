@@ -4,5 +4,11 @@
     <string name="app_name">Kiznic</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    
+    <string name="url">http://61.43.139.62:9090</string>
+    <string name="keystring">G8k1khn3u2a1oyhH</string>
+    <string name="IVstring">3nHk1k8ghhyo1A2u</string>
+    <string name="sPadding">PKCS5Padding</string>
+    <string name="openApiKey">VOkSUpz7nEopmqMzB%2FuxEbYc38fdppOA3nw%2FI%2FReAWcwC%2BmQZl1acj0vs%2B2hJUUA6W%2FRYIICIH2FMkUOw%2BloYw%3D%3D</string>
 
 </resources>

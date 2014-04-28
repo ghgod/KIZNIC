@@ -1,10 +1,21 @@
 package com.hhh.kiznic;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.json.JSONException;
+
 import com.hhh.kiznic.card.CardAdapter;
 import com.hhh.kiznic.card.MainRecommendCard;
 import com.hhh.kiznic.card.MainWeatherCard;
 import com.hhh.kiznic.customdiagram.CustomCircleMeter;
+import com.hhh.kiznic.dataclass.NextPollutionInfo;
+import com.hhh.kiznic.dataclass.PollutionInfo;
+import com.hhh.kiznic.dataclass.WeatherInfo;
+import com.hhh.kiznic.util.LocationHelper;
+import com.hhh.kiznic.util.Util;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -25,6 +36,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	
@@ -35,6 +47,25 @@ public class MainActivity extends Activity {
 	private ImageView weather_finedust, weather_nextfinedust;
 	private Button title_search_button;
 	private Button title_mypage_button;
+	
+	//////////////////장 혁 작성 ///////////////////
+	private TextView weather_mylocation;
+	private TextView weather_today_timedesc;
+	private TextView weather_today_temp;
+	private TextView weather_today_rainprob;
+	private TextView weather_today_windspeed;
+	private TextView weather_next_timedesc;
+	private TextView weather_next_temp;
+	private TextView weather_today_pm10value;
+	private TextView weather_today_o3grade;
+	private TextView weather_next_pm10Info;
+	
+	private String[] addressArray;
+	private String mySiDo;
+	
+	
+	
+	//////////////////////////////////////////////
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +92,34 @@ public class MainActivity extends Activity {
 		//weather_finedust = (ImageView)mainListView.getItemIdAtPosition(0).getCardView().findViewById(R.id.weather_finedustimage_image);
 		//weather_nextfinedust = (ImageView)mainListView.getChildAt(0).findViewById(R.id.weather_nextfinedustimage_image);
 		
-		weather_finedust_set(weather_finedust,"#ACACAC","����",120);
-		//weather_finedust_set(weather_nextfinedust,"#ACACAC","����",120);
+		weather_finedust_set(weather_finedust,"#ACACAC","����",120);
+		//weather_finedust_set(weather_nextfinedust,"#ACACAC","����",120);
+		
+		////////////by Hyouk Jang //////////
+		
+		
+		weather_mylocation = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_location_text);
+		weather_today_timedesc = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_simpleinfo_text);
+		weather_today_temp= (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_temperature_text);
+		weather_today_rainprob = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_rainfallpercent_text);
+		weather_today_windspeed = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_windspeedpercent_text);
+		weather_today_pm10value = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_finedusttext_text);
+		weather_today_o3grade = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_weatherwatch_text);
+		weather_next_timedesc = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextdaysimpleinfo_text);
+		weather_next_temp = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nexttemperature_text);
+		weather_next_pm10Info  = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextfinedusttext_text);
+		
+		
+		LocationHelper location = new LocationHelper(getBaseContext());
+		location.run();
+		weather_mylocation.setText(location.getMyLocation());
+		addressArray = location.getAddress();
+		mySiDo = location.getMySiDo();
+		
+		new getWeatherAsync().execute("");
+		new getPollutionAsync().execute("");
+		new getNextPollutionAsync().execute("");
+		//////////////////////////////////////////////		
 	}
 	
 	private void init() {
@@ -158,7 +215,128 @@ public class MainActivity extends Activity {
 		
 		imageview.setImageBitmap(b);
 	}
+	///////////////////////장 혁 작 성 //////////////////////
 	
+	
+	class getWeatherAsync extends AsyncTask<String, Integer, String> {
+		
+			
+		@Override
+		protected String doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			Util util = new Util();
+			String url = null;
+			try {
+				url = util.getWeatherURL(addressArray[0], addressArray[1], addressArray[2]);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+					
+			String xmlResult = util.getXMLHttp(url);
+			return xmlResult;
+		}
+		
+		protected void onPostExecute(String result) {
+	        //tv4.setText(result);
+			ArrayList<WeatherInfo> weatherInfo = null;
+			Util util = new Util();
+			
+			try {
+				weatherInfo = util.parseWeatherXML(result);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			weather_today_timedesc.setText(weatherInfo.get(0).getDayState() + " " + weatherInfo.get(0).getTime() + ", " + weatherInfo.get(0).getWeatherDesc());
+			weather_today_temp.setText(weatherInfo.get(0).getTemperature() + "도");
+			weather_today_rainprob.setText(weatherInfo.get(0).getRainProb() + " %");
+			weather_today_windspeed.setText(weatherInfo.get(0).getWindSpeed() + " m/s");
+			weather_next_timedesc.setText(weatherInfo.get(1).getDayState() + " " + weatherInfo.get(1).getTime() + ", " + weatherInfo.get(1).getWeatherDesc());
+			weather_next_temp.setText(weatherInfo.get(1).getTemperature() + "도");
+		}
+	}
+	
+	class getPollutionAsync extends AsyncTask<String, Integer, String> {
+
+		@Override
+		protected String doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			Util util = new Util();
+			String pollutionXML = util.getXMLHttp("http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?sidoName="+mySiDo+"&pageNo=1&numOfRows=10&ServiceKey="+getResources().getString(R.string.openApiKey));
+			
+			return pollutionXML;
+		}
+		
+		protected void onPostExecute(String result) {
+	        //tv4.setText(result);
+			ArrayList<PollutionInfo> pollutionInfo = null;
+			Util util = new Util();
+			
+			try {
+				pollutionInfo = util.parseCurrentPollutionXML(result);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			weather_today_pm10value.setText("미세먼지 농도 " + pollutionInfo.get(0).getPM10Value());
+			weather_today_o3grade.setText("오존 지수 " + pollutionInfo.get(0).getO3Value());
+			
+		}
+	}
+	
+	class getNextPollutionAsync extends AsyncTask<String, Integer, String> {
+
+		@Override
+		protected String doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			Util util = new Util();
+			String nextPollutionXML = util.getXMLHttp("http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getMinuDustFrcstDspth?searchDate="+util.yesterdayDate()+"&ServiceKey="+getResources().getString(R.string.openApiKey));
+			Log.d("2014-??", util.yesterdayDate());
+			return nextPollutionXML;
+		}
+		
+		protected void onPostExecute(String result) {
+	        //tv4.setText(result);
+			ArrayList<NextPollutionInfo> nextPollutionInfo = null;
+			Util util = new Util();
+			
+			try {
+				nextPollutionInfo = util.parseNextPollutionXML(result);
+				Log.d("pollution", result);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			switch(util.sidoToArea(mySiDo)){
+				case 0 :
+					weather_next_pm10Info.setText("미세먼지 농도 " + nextPollutionInfo.get(0).getSudoInfo());
+					break;
+				case 1 :
+					weather_next_pm10Info.setText("미세먼지 농도 " + nextPollutionInfo.get(0).getJejuInfo());
+					break;
+				case 2 :
+					weather_next_pm10Info.setText("미세먼지 농도 " + nextPollutionInfo.get(0).getYoungnamInfo());
+					break;
+				case 3 :
+					weather_next_pm10Info.setText("미세먼지 농도 " + nextPollutionInfo.get(0).getHonamInfo());
+					break;
+				case 4 :
+					weather_next_pm10Info.setText("미세먼지 농도 " + nextPollutionInfo.get(0).getGangwonInfo());
+					break;
+				case 5 :
+					weather_next_pm10Info.setText("미세먼지 농도 " + nextPollutionInfo.get(0).getChungchungInfo());
+					break;
+			}
+				
+		}
+		
+	}
+	
+	
+	
+	
+	///////////////////////////////////////////////////////
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
