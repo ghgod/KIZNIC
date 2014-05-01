@@ -207,34 +207,159 @@ public class MainActivity extends Activity {
 		mainListView.setAdapter(cardAdapter);
 	}
 	
-	public void weather_finedust_set(ImageView imageview, String colorCode, String text, int gage){
+	public void weather_finedust_set(ImageView imageview, int gage, boolean flag, String nextfinedustString){
+
+
 
 		Bitmap b = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888);
-		
+
+
 		Canvas canvas = new Canvas(b);
-		
+
+
+
 		Paint pnt = new Paint();
+
 		Paint circlepnt = new Paint();
-		
+
+		Paint Stringpnt = new Paint();
+
+
+		String finedust_text;
+
+		String color_string;
+
+
 		RectF r = new RectF(5, 5, 35, 35);
-	
+
+
 		pnt.setStrokeWidth(3);
+
 		pnt.setStyle(Paint.Style.STROKE);
+
 		pnt.setAntiAlias(true);
-		
+
+
 		pnt.setColor(Color.parseColor("#FFFFFF"));
+
 		canvas.drawArc(r, 0, 360, true, pnt);
-		
-		pnt.setColor(Color.parseColor("#000000"));
+
+
+		// NextWeather
+
+		if(flag){
+
+
+		finedust_text = nextfinedustString;
+
+
+		if(finedust_text.equals("좋음"))
+
+		color_string = "#000000";
+
+		else if(finedust_text.equals("보통"))
+
+		color_string = "#AAAAAA";
+
+		else if(finedust_text.equals("약간 나쁨"))
+
+		color_string = "#BBBBBB";
+
+		else
+
+		color_string = "#CCCCCC";
+
+
+		// Color
+
+		pnt.setColor(Color.parseColor(color_string));
+
 		canvas.drawArc(r, -90, gage, true, pnt);
-		
+
+
+		// String
+
+		Stringpnt.setColor(Color.parseColor(color_string));
+
+		Stringpnt.setTextSize(10);
+
+		Stringpnt.setAntiAlias(true);
+
+		canvas.drawText(finedust_text, 10, 10, Stringpnt);
+
+
+		}
+
+		// Weather
+
+		else{
+
+
+		if(gage <= 30){
+
+		finedust_text = "좋음";
+
+		color_string = "#000000";
+
+		}
+
+		else if(gage <= 80){
+
+		finedust_text = "보통";
+
+		color_string = "#AAAAAA";
+
+		}
+
+		else if(gage <= 120){
+
+		finedust_text = "주의";
+
+		color_string = "#BBBBBB";
+
+		}
+
+		else{
+
+		finedust_text = "자제";
+
+		color_string = "#CCCCCC";
+
+		}
+
+
+		// Color
+
+		pnt.setColor(Color.parseColor(color_string));
+
+		canvas.drawArc(r, -90, gage, true, pnt);
+
+
+		// String
+
+		Stringpnt.setColor(Color.parseColor(color_string));
+
+		Stringpnt.setTextSize(10);
+
+		Stringpnt.setAntiAlias(true);
+
+		canvas.drawText(finedust_text, 10, 10, Stringpnt);
+
+		}
+
+
+
 		circlepnt.setColor(Color.parseColor("#DEE7E7"));
+
 		circlepnt.setAntiAlias(true);
-		
+
+
 		canvas.drawCircle(20, 20, 15, circlepnt);
-		
+
+
 		imageview.setImageBitmap(b);
-	}
+
+		}
 	///////////////////////장혁 작성//////////////////////
 	
 	
@@ -304,7 +429,7 @@ public class MainActivity extends Activity {
 			weather_today_pm10value.setText("미세먼지 농도 " + pollutionInfo.get(0).getPM10Value());
 			weather_today_o3grade.setText("오존 농도 " + pollutionInfo.get(0).getO3Value());
 			dust_gage = pollutionInfo.get(0).getPM10Value();
-			weather_finedust_set(weather_finedust,"#ACACAC","보통",(int)((3.6 * Integer.parseInt(dust_gage))));
+			weather_finedust_set(weather_finedust,(int)((1.2 * Integer.parseInt(dust_gage))), false, null);
 		}
 	}
 	
