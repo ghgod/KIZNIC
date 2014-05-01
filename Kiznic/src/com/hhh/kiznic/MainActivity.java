@@ -83,12 +83,9 @@ public class MainActivity extends Activity {
 		
 		profile_circleimage();
 		
-		//MainWeatherCard a = (MainWeatherCard)mainListView.getItemAtPosition(1);
-		
-		//a.getCardView().findViewById(R.id.weather_finedustimage_image);
-		
 		weather_finedust = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_finedustimage_image);
 		
+<<<<<<< HEAD
 		//weather_finedust = (ImageView)mainListView.getItemIdAtPosition(0).getCardView().findViewById(R.id.weather_finedustimage_image);
 		//weather_nextfinedust = (ImageView)mainListView.getChildAt(0).findViewById(R.id.weather_nextfinedustimage_image);
 		
@@ -120,6 +117,10 @@ public class MainActivity extends Activity {
 		new getPollutionAsync().execute("");
 		new getNextPollutionAsync().execute("");
 		//////////////////////////////////////////////		
+=======
+		weather_finedust_set(weather_finedust,"#ACACAC","보통",120);
+		//weather_finedust_set(weather_nextfinedust,"#ACACAC","보통",120);
+>>>>>>> UI
 	}
 	
 	private void init() {
@@ -194,24 +195,29 @@ public class MainActivity extends Activity {
 	
 	public void weather_finedust_set(ImageView imageview, String colorCode, String text, int gage){
 
-		
-		Bitmap b = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
+		Bitmap b = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888);
 		
 		Canvas canvas = new Canvas(b);
 		
 		Paint pnt = new Paint();
+		Paint circlepnt = new Paint();
 		
-		RectF r = new RectF(50, 50, 150, 150);
+		RectF r = new RectF(5, 5, 35, 35);
 	
-		pnt.setStrokeWidth(10);
+		pnt.setStrokeWidth(3);
 		pnt.setStyle(Paint.Style.STROKE);
 		pnt.setAntiAlias(true);
 		
-		pnt.setColor(Color.parseColor(colorCode));
+		pnt.setColor(Color.parseColor("#FFFFFF"));
 		canvas.drawArc(r, 0, 360, true, pnt);
 		
-		pnt.setColor(Color.parseColor(colorCode));
-		canvas.drawArc(r, -90, gage, true, pnt);
+		pnt.setColor(Color.parseColor("#000000"));
+		canvas.drawArc(r, -90, 120, true, pnt);
+		
+		circlepnt.setColor(Color.parseColor("#DEE7E7"));
+		circlepnt.setAntiAlias(true);
+		
+		canvas.drawCircle(20, 20, 15, circlepnt);
 		
 		imageview.setImageBitmap(b);
 	}
