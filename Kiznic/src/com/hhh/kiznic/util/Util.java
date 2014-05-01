@@ -143,10 +143,14 @@ public class Util {
 		 Calendar cal = new GregorianCalendar();
 		 cal.add(Calendar.DATE, -1);
 		 String month = "";
+		 String day = "";
 		 if((cal.get(Calendar.MONTH) + 1) < 10) {
 			 month = "0"+String.valueOf((cal.get(Calendar.MONTH) + 1));
 		 }
-		return String.valueOf(cal.get(Calendar.YEAR))+"-"+month+"-"+String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+		 if(cal.get(Calendar.DAY_OF_MONTH) < 10){
+			 day = "0"+String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+		 }
+		return String.valueOf(cal.get(Calendar.YEAR))+"-"+month+"-"+day;
 	}
 
 	
