@@ -62,7 +62,9 @@ public class MainActivity extends Activity {
 	
 	
 	private ImageView weather_refresh_button;
+	private ImageView weather_next_dustmeter;
 	
+	private LocationHelper location;
 	private String[] addressArray;
 	private String mySiDo;
 	private String dust_gage;
@@ -79,35 +81,21 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.kiznic_title_bar);
 		 
-		LocationHelper location = new LocationHelper(getBaseContext());
-		location.run();
-		
-		
 		
 		init();
-		
-		weather_mylocation.setText(location.getMyLocation());
-		addressArray = location.getAddress();
-		mySiDo = location.getMySiDo();
 		
 		clicklistener();
 		
 		profile_circleimage();
 		
-		weather_finedust = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_finedustimage_image);
-
-		
-		
-		////////////by Hyouk Jang //////////
-	
-		
+		//////////////////////////////////////////	
 		
 		new getWeatherAsync().execute("");
 		new getPollutionAsync().execute("");
 		new getNextPollutionAsync().execute("");
-		//////////////////////////////////////////////////
 		
-		//weather_finedust_set(weather_finedust,"#ACACAC","보통",(int)(3.6 * Integer.parseInt(dust_gage)-90));
+		//////////////////////////////////////////
+	
 	}
 	
 	private void init() {
@@ -134,7 +122,11 @@ public class MainActivity extends Activity {
 		weather_next_pm10Info  = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextfinedusttext_text);
 		weather_refresh_button = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_getlocation_imagebutton);
 		wewather_today_feeltemp = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_windcilltemperature_text);
+		weather_finedust = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_finedustimage_image);
+		weather_next_dustmeter =(ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextfinedustimage_image);
 		
+		location = new LocationHelper(getBaseContext());
+		location.run();
 	}
 	
 	private void clicklistener(){
@@ -164,7 +156,6 @@ public class MainActivity extends Activity {
 		});
 		
 		weather_refresh_button.setOnClickListener(new ImageView.OnClickListener(){
-
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -212,34 +203,21 @@ public class MainActivity extends Activity {
 
 
 		Bitmap b = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888);
-
-
+		
 		Canvas canvas = new Canvas(b);
-
-
-
+		
 		Paint pnt = new Paint();
-
 		Paint circlepnt = new Paint();
-
 		Paint Stringpnt = new Paint();
-
-
+		
 		String finedust_text;
-
 		String color_string;
-
 
 		RectF r = new RectF(5, 5, 35, 35);
 
-
 		pnt.setStrokeWidth(3);
-
 		pnt.setStyle(Paint.Style.STROKE);
-
 		pnt.setAntiAlias(true);
-
-
 		pnt.setColor(Color.parseColor("#FFFFFF"));
 
 		canvas.drawArc(r, 0, 360, true, pnt);
@@ -248,123 +226,75 @@ public class MainActivity extends Activity {
 		// NextWeather
 
 		if(flag){
+			finedust_text = nextfinedustString;
 
-
-		finedust_text = nextfinedustString;
-
-
-		if(finedust_text.equals("좋음"))
-
-		color_string = "#000000";
-
-		else if(finedust_text.equals("보통"))
-
-		color_string = "#AAAAAA";
-
-		else if(finedust_text.equals("약간 나쁨"))
-
-		color_string = "#BBBBBB";
-
-		else
-
-		color_string = "#CCCCCC";
-
-
-		// Color
-
-		pnt.setColor(Color.parseColor(color_string));
-
-		canvas.drawArc(r, -90, gage, true, pnt);
-
-
-		// String
-
-		Stringpnt.setColor(Color.parseColor(color_string));
-
-		Stringpnt.setTextSize(10);
-
-		Stringpnt.setAntiAlias(true);
-
-		canvas.drawText(finedust_text, 10, 10, Stringpnt);
-
-
+			if(finedust_text.equals("좋음")){
+				color_string = "#000000";
+				gage = 10;
+			}
+			else if(finedust_text.equals("보통")){
+				color_string = "#AAAAAA";
+				gage = 26;
+			}
+			else if(finedust_text.equals("약간 나쁨")){
+				color_string = "#BBBBBB";
+				gage = 40;
+			}
+			else{
+				color_string = "#CCCCCC";
+				gage = 100;
+			}
 		}
 
 		// Weather
 
 		else{
-
-
-		if(gage <= 30){
-
-		finedust_text = "좋음";
-
-		color_string = "#000000";
-
-		}
-
-		else if(gage <= 80){
-
-		finedust_text = "보통";
-
-		color_string = "#AAAAAA";
-
-		}
-
-		else if(gage <= 120){
-
-		finedust_text = "주의";
-
-		color_string = "#BBBBBB";
-
-		}
-
-		else{
-
-		finedust_text = "자제";
-
-		color_string = "#CCCCCC";
-
+			if(gage <= 30){
+				finedust_text = "좋음";
+				color_string = "#000000";
+			}
+			else if(gage <= 80){
+				finedust_text = "보통";
+				color_string = "#AAAAAA";
+			}
+			else if(gage <= 120){
+				finedust_text = "주의";
+				color_string = "#BBBBBB";
+			}
+			else{
+				finedust_text = "자제";
+				color_string = "#CCCCCC";
+			}
 		}
 
 
 		// Color
-
 		pnt.setColor(Color.parseColor(color_string));
-
 		canvas.drawArc(r, -90, gage, true, pnt);
 
-
-		// String
-
-		Stringpnt.setColor(Color.parseColor(color_string));
-
-		Stringpnt.setTextSize(10);
-
-		Stringpnt.setAntiAlias(true);
-
-		canvas.drawText(finedust_text, 10, 10, Stringpnt);
-
-		}
-
-
-
+		// Circle
 		circlepnt.setColor(Color.parseColor("#DEE7E7"));
-
 		circlepnt.setAntiAlias(true);
-
-
 		canvas.drawCircle(20, 20, 15, circlepnt);
 
-
+		// String
+		Stringpnt.setColor(Color.parseColor(color_string));
+		Stringpnt.setTextSize(10);
+		Stringpnt.setAntiAlias(true);
+		canvas.drawText(finedust_text, 15, 25, Stringpnt);
 		imageview.setImageBitmap(b);
 
-		}
+	}
 	///////////////////////장혁 작성//////////////////////
 	
 	
 	class getWeatherAsync extends AsyncTask<String, Integer, String> {
 		
+		protected void onPreExecute() {
+			super.onPreExecute();
+			
+			addressArray = location.getAddress();
+		}
 			
 		@Override
 		protected String doInBackground(String... params) {
@@ -393,6 +323,7 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			weather_mylocation.setText(location.getMyLocation());
 			weather_today_timedesc.setText(weatherInfo.get(0).getDayState() + " " + weatherInfo.get(0).getTime() + ", " + weatherInfo.get(0).getWeatherDesc());
 			weather_today_temp.setText(weatherInfo.get(0).getTemperature()+"°");
 			weather_today_rainprob.setText(" " + weatherInfo.get(0).getRainProb() + " %");
@@ -406,6 +337,13 @@ public class MainActivity extends Activity {
 	
 	class getPollutionAsync extends AsyncTask<String, Integer, String> {
 
+		protected void onPreExecute() {
+			super.onPreExecute();
+			
+			mySiDo = location.getMySiDo();
+		}
+		
+		
 		@Override
 		protected String doInBackground(String... params) {
 			// TODO Auto-generated method stub
@@ -458,25 +396,31 @@ public class MainActivity extends Activity {
 			}
 			switch(util.sidoToArea(mySiDo)){
 				case 0 :
-					weather_next_pm10Info.setText("미세먼지 농도 " + nextPollutionInfo.get(0).getSudoInfo());
+					weather_next_pm10Info.setText("미세먼지  " + nextPollutionInfo.get(0).getSudoInfo());
+					weather_finedust_set(weather_next_dustmeter, 0, true, nextPollutionInfo.get(0).getSudoInfo());
 					break;
 				case 1 :
-					weather_next_pm10Info.setText("미세먼지 농도  " + nextPollutionInfo.get(0).getJejuInfo());
+					weather_next_pm10Info.setText("미세먼지  " + nextPollutionInfo.get(0).getJejuInfo());
+					weather_finedust_set(weather_next_dustmeter, 0, true, nextPollutionInfo.get(0).getJejuInfo());
 					break;
 				case 2 :
-					weather_next_pm10Info.setText("미세먼지 농도  " + nextPollutionInfo.get(0).getYoungnamInfo());
+					weather_next_pm10Info.setText("미세먼지 " + nextPollutionInfo.get(0).getYoungnamInfo());
+					weather_finedust_set(weather_next_dustmeter, 0, true, nextPollutionInfo.get(0).getYoungnamInfo());
 					break;
 				case 3 :
-					weather_next_pm10Info.setText("미세먼지 농도 " + nextPollutionInfo.get(0).getHonamInfo());
+					weather_next_pm10Info.setText("미세먼지 " + nextPollutionInfo.get(0).getHonamInfo());
+					weather_finedust_set(weather_next_dustmeter, 0, true, nextPollutionInfo.get(0).getHonamInfo());
 					break;
 				case 4 :
-					weather_next_pm10Info.setText("미세먼지 농도 " + nextPollutionInfo.get(0).getGangwonInfo());
+					weather_next_pm10Info.setText("미세먼지 " + nextPollutionInfo.get(0).getGangwonInfo());
+					weather_finedust_set(weather_next_dustmeter, 0, true, nextPollutionInfo.get(0).getGangwonInfo());
 					break;
 				case 5 :
-					weather_next_pm10Info.setText("미세먼지 농도 " + nextPollutionInfo.get(0).getChungchungInfo());
+					weather_next_pm10Info.setText("미세먼지 " + nextPollutionInfo.get(0).getChungchungInfo());
+					weather_finedust_set(weather_next_dustmeter, 0, true, nextPollutionInfo.get(0).getChungchungInfo());
 					break;
 			}
-				
+			
 		}
 		
 	}
