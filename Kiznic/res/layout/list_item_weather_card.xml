@@ -36,8 +36,9 @@
 		         
 		         <ImageView
 		             android:id="@+id/weather_getlocation_imagebutton"
-		             android:layout_width="20dip"
-		             android:layout_height="20dip"
+		             android:layout_width="15dip"
+		             android:layout_height="15dip"
+		             android:layout_marginLeft="5dip"
 		             android:layout_gravity="center"
 		             android:src="@drawable/weather_gps"/>
 		     
@@ -151,20 +152,19 @@
 		             	        android:layout_height="0dip"
 		             	        android:layout_weight="5"
 		             	        android:orientation="horizontal">
-		             	        
+
 		             	        <RelativeLayout
 		             	            android:layout_width="match_parent"
-		             	            android:layout_height="match_parent">
-		             	            
+		             	            android:layout_height="match_parent" >
+
 		             	            <TextView
-					                    android:id="@+id/weather_windcilltemperature_text"
-					                    android:layout_width="wrap_content"
-					                    android:layout_height="wrap_content"
-					                    android:layout_centerInParent="true"
-					                    android:text="체감온도 -9.3°"
-					                    android:textColor="#000000"
-					                    android:textSize="10sp"/>
-		             	            
+		             	                android:id="@+id/weather_windcilltemperature_text"
+		             	                android:layout_width="wrap_content"
+		             	                android:layout_height="wrap_content"
+		             	                android:layout_centerInParent="true"
+		             	                android:text="체감온도 -9.3°"
+		             	                android:textColor="#000000"
+		             	                android:textSize="10sp" />
 		             	        </RelativeLayout>
 		             	        
 		             	    </LinearLayout>
@@ -233,22 +233,6 @@
 					             android:text="100%"
 					             android:textColor="#000000"
 					             android:textSize="10sp"/>
-		                     
-		                 </RelativeLayout>
-		                 
-		                 <RelativeLayout
-		                     android:layout_width="match_parent"
-		                     android:layout_height="0dip"
-		                     android:layout_weight="1">
-				     	     
-		                     <TextView
-				     	         android:id="@+id/weather_weatherwatch_text"
-					             android:layout_width="wrap_content"
-					             android:layout_height="wrap_content"
-					             android:layout_centerInParent="true"
-					             android:text="XX주의보"
-					             android:textColor="#000000"
-					             android:textSize="10sp"/> 
 		                     
 		                 </RelativeLayout>
 		                 

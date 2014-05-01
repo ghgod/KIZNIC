@@ -23,7 +23,6 @@ public class MainWeatherCard extends Card implements View.OnClickListener{
 	TextView weather_finedusttext_text;
 	TextView weather_rainfallpercent_text;
 	TextView weather_windspeedpercent_text;
-	TextView weather_weatherwatch_text;
 	TextView weather_nextdaysimpleinfo_text;
 	TextView weather_nexttemperature_text;
 	TextView weather_nextfinedusttext_text;
@@ -51,7 +50,6 @@ public class MainWeatherCard extends Card implements View.OnClickListener{
 		weather_finedusttext_text = (TextView)cardView.findViewById(R.id.weather_finedusttext_text);
 		weather_rainfallpercent_text = (TextView)cardView.findViewById(R.id.weather_rainfallpercent_text);
 		weather_windspeedpercent_text = (TextView)cardView.findViewById(R.id.weather_windspeedpercent_text);
-		weather_weatherwatch_text = (TextView)cardView.findViewById(R.id.weather_weatherwatch_text);
 		weather_nextdaysimpleinfo_text = (TextView)cardView.findViewById(R.id.weather_nextdaysimpleinfo_text);
 		weather_nexttemperature_text = (TextView)cardView.findViewById(R.id.weather_nexttemperature_text);
 		weather_nextfinedusttext_text = (TextView)cardView.findViewById(R.id.weather_nextfinedusttext_text);

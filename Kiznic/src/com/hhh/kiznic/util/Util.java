@@ -667,7 +667,7 @@ public static String transformRegionName(String region1) {
 		return pollutionInfoList;
 	}
 	
-public Bitmap setWeatherImage(Context context, String weatherDesc) {
+	public Bitmap setWeatherImage(Context context, String weatherDesc) {
 		
 		Bitmap image = null;
 		
@@ -686,11 +686,9 @@ public Bitmap setWeatherImage(Context context, String weatherDesc) {
 		else if(weatherDesc.equals("비")) {
 			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_rain_image);
 		}
-		/*
-		else if(weatherDesc.equals("비/눈")) {
-			image = BitmapFactory.decodeResource(context.getResources(), R.drawable);
+		else if(weatherDesc.equals("눈/비")) {
+			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_snowrain_image);
 		}
-		*/
 		else if(weatherDesc.equals("눈")) {
 			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_snow_image);
 		}

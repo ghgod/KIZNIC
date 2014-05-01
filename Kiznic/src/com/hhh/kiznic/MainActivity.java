@@ -56,7 +56,6 @@ public class MainActivity extends Activity {
 	private TextView weather_next_timedesc;
 	private TextView weather_next_temp;
 	private TextView weather_today_pm10value;
-	private TextView weather_today_o3grade;
 	private TextView weather_next_pm10Info;
 	private TextView wewather_today_feeltemp;
 	
@@ -118,7 +117,6 @@ public class MainActivity extends Activity {
 		weather_today_rainprob = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_rainfallpercent_text);
 		weather_today_windspeed = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_windspeedpercent_text);
 		weather_today_pm10value = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_finedusttext_text);
-		weather_today_o3grade = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_weatherwatch_text);
 		weather_next_timedesc = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextdaysimpleinfo_text);
 		weather_next_temp = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nexttemperature_text);
 		weather_next_pm10Info  = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextfinedusttext_text);
@@ -288,7 +286,6 @@ public class MainActivity extends Activity {
 		imageview.setImageBitmap(b);
 
 	}
-	///////////////////////장혁 작성//////////////////////
 	
 	
 	class getWeatherAsync extends AsyncTask<String, Integer, String> {
@@ -335,6 +332,7 @@ public class MainActivity extends Activity {
 			weather_next_timedesc.setText(weatherInfo.get(1).getDayState() + " " + weatherInfo.get(1).getTime() + ", " + weatherInfo.get(1).getWeatherDesc());
 			weather_next_temp.setText(weatherInfo.get(1).getTemperature()+"°");
 			weather_image.setImageBitmap(util.setWeatherImage(getBaseContext(), weatherInfo.get(0).getWeatherDesc()));
+			weather_next_image.setImageBitmap(util.setWeatherImage(getBaseContext(), weatherInfo.get(1).getWeatherDesc()));
 			
 			
 		}
@@ -370,7 +368,6 @@ public class MainActivity extends Activity {
 				e.printStackTrace();
 			}
 			weather_today_pm10value.setText("미세먼지 농도 " + pollutionInfo.get(0).getPM10Value());
-			weather_today_o3grade.setText("오존 농도 " + pollutionInfo.get(0).getO3Value());
 			dust_gage = pollutionInfo.get(0).getPM10Value();
 			weather_finedust_set(weather_finedust,(int)((1.2 * Integer.parseInt(dust_gage))), false, null);
 		}
