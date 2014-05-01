@@ -40,17 +40,22 @@ public final class R {
         public static final int main_condition_card_background=0x7f020010;
         public static final int mypage_card_background=0x7f020011;
         public static final int mypage_next=0x7f020012;
-        public static final int plus=0x7f020013;
-        public static final int poster=0x7f020014;
-        public static final int rainfall=0x7f020015;
-        public static final int recommend=0x7f020016;
-        public static final int search_button=0x7f020017;
-        public static final int search_category_background=0x7f020018;
-        public static final int search_edittext_background=0x7f020019;
-        public static final int weather=0x7f02001a;
+        public static final int poster=0x7f020013;
+        public static final int rainfall=0x7f020014;
+        public static final int recommend=0x7f020015;
+        public static final int search_button=0x7f020016;
+        public static final int search_category_background=0x7f020017;
+        public static final int search_edittext_background=0x7f020018;
+        public static final int weather=0x7f020019;
+        public static final int weather_cloudy_image=0x7f02001a;
         public static final int weather_gps=0x7f02001b;
         public static final int weather_image=0x7f02001c;
-        public static final int windspeed=0x7f02001d;
+        public static final int weather_rain_image=0x7f02001d;
+        public static final int weather_slightlycover_image=0x7f02001e;
+        public static final int weather_snow_image=0x7f02001f;
+        public static final int weather_sunny_image=0x7f020020;
+        public static final int weather_verycloudy_image=0x7f020021;
+        public static final int windspeed=0x7f020022;
     }
     public static final class id {
         public static final int action_settings=0x7f080038;

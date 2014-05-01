@@ -30,12 +30,16 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 
+import com.hhh.kiznic.R;
 import com.hhh.kiznic.dataclass.NextPollutionInfo;
 import com.hhh.kiznic.dataclass.PollutionInfo;
 import com.hhh.kiznic.dataclass.WeatherInfo;
 
 
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Log;
 
@@ -129,7 +133,7 @@ public class Util {
 				received = EntityUtils.toString(resEntity,"UTF-8");
 				//Log.d("downLoadHTTP_result", received);
 			} else {
-				Log.d("downLoadHTTP", "null이야");                  
+				Log.d("downLoadHTTP", "null��댁��");                  
 			}			
 		}
 		catch (Exception e) {
@@ -168,7 +172,7 @@ public class Util {
 	}
 
 	
-	public static String transformRegionName(String region1) {
+public static String transformRegionName(String region1) {
 		
 		if(region1.equals("서울특별시")){
 			return "서울";
@@ -663,5 +667,35 @@ public class Util {
 		return pollutionInfoList;
 	}
 	
-	
+public Bitmap setWeatherImage(Context context, String weatherDesc) {
+		
+		Bitmap image = null;
+		
+		if(weatherDesc.equals("맑음")) {
+			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_sunny_image);
+		}
+		else if(weatherDesc.equals("흐림")) {
+			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_cloudy_image);
+		}
+		else if(weatherDesc.equals("구름 많음")) {
+			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_verycloudy_image);
+		}
+		else if(weatherDesc.equals("구름 조금")) {
+			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_slightlycover_image);
+		}
+		else if(weatherDesc.equals("비")) {
+			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_rain_image);
+		}
+		/*
+		else if(weatherDesc.equals("비/눈")) {
+			image = BitmapFactory.decodeResource(context.getResources(), R.drawable);
+		}
+		*/
+		else if(weatherDesc.equals("눈")) {
+			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_snow_image);
+		}
+		
+		return image;
+		
+	}
 }

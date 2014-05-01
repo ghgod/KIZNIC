@@ -63,6 +63,8 @@ public class MainActivity extends Activity {
 	
 	private ImageView weather_refresh_button;
 	private ImageView weather_next_dustmeter;
+	private ImageView weather_image;
+	private ImageView weather_next_image;
 	
 	private LocationHelper location;
 	private String[] addressArray;
@@ -123,7 +125,10 @@ public class MainActivity extends Activity {
 		weather_refresh_button = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_getlocation_imagebutton);
 		wewather_today_feeltemp = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_windcilltemperature_text);
 		weather_finedust = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_finedustimage_image);
-		weather_next_dustmeter =(ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextfinedustimage_image);
+		weather_next_dustmeter = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextfinedustimage_image);
+		
+		weather_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_weatherimage_image);
+		weather_next_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextweatherimage_image);
 		
 		location = new LocationHelper(getBaseContext());
 		location.run();
@@ -199,8 +204,6 @@ public class MainActivity extends Activity {
 	}
 	
 	public void weather_finedust_set(ImageView imageview, int gage, boolean flag, String nextfinedustString){
-
-
 
 		Bitmap b = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888);
 		
@@ -331,6 +334,8 @@ public class MainActivity extends Activity {
 			wewather_today_feeltemp.setText("체감 온도 " + util.convertFeelTemp(weatherInfo.get(0).getTemperature(), weatherInfo.get(0).getWindSpeed())+"°");
 			weather_next_timedesc.setText(weatherInfo.get(1).getDayState() + " " + weatherInfo.get(1).getTime() + ", " + weatherInfo.get(1).getWeatherDesc());
 			weather_next_temp.setText(weatherInfo.get(1).getTemperature()+"°");
+			weather_image.setImageBitmap(util.setWeatherImage(getBaseContext(), weatherInfo.get(0).getWeatherDesc()));
+			
 			
 		}
 	}
