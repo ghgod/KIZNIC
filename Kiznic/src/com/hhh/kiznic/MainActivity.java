@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
 	private Button title_search_button;
 	private Button title_mypage_button;
 	
-	//////////////////장 혁 작성 ///////////////////
+	//////////////////��� ��� ������ ///////////////////
 	private TextView weather_mylocation;
 	private TextView weather_today_timedesc;
 	private TextView weather_today_temp;
@@ -84,17 +84,11 @@ public class MainActivity extends Activity {
 		profile_circleimage();
 		
 		weather_finedust = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_finedustimage_image);
-		
-<<<<<<< HEAD
-		//weather_finedust = (ImageView)mainListView.getItemIdAtPosition(0).getCardView().findViewById(R.id.weather_finedustimage_image);
-		//weather_nextfinedust = (ImageView)mainListView.getChildAt(0).findViewById(R.id.weather_nextfinedustimage_image);
-		
-		weather_finedust_set(weather_finedust,"#ACACAC","����",120);
-		//weather_finedust_set(weather_nextfinedust,"#ACACAC","����",120);
+
+		weather_finedust_set(weather_finedust,"#ACACAC","보통",120);
 		
 		////////////by Hyouk Jang //////////
-		
-		
+	
 		weather_mylocation = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_location_text);
 		weather_today_timedesc = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_simpleinfo_text);
 		weather_today_temp= (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_temperature_text);
@@ -116,11 +110,6 @@ public class MainActivity extends Activity {
 		new getWeatherAsync().execute("");
 		new getPollutionAsync().execute("");
 		new getNextPollutionAsync().execute("");
-		//////////////////////////////////////////////		
-=======
-		weather_finedust_set(weather_finedust,"#ACACAC","����",120);
-		//weather_finedust_set(weather_nextfinedust,"#ACACAC","����",120);
->>>>>>> UI
 	}
 	
 	private void init() {
@@ -221,7 +210,7 @@ public class MainActivity extends Activity {
 		
 		imageview.setImageBitmap(b);
 	}
-	///////////////////////장 혁 작 성 //////////////////////
+	///////////////////////��� ��� ��� ��� //////////////////////
 	
 	
 	class getWeatherAsync extends AsyncTask<String, Integer, String> {
@@ -255,11 +244,11 @@ public class MainActivity extends Activity {
 				e.printStackTrace();
 			}
 			weather_today_timedesc.setText(weatherInfo.get(0).getDayState() + " " + weatherInfo.get(0).getTime() + ", " + weatherInfo.get(0).getWeatherDesc());
-			weather_today_temp.setText(weatherInfo.get(0).getTemperature() + "도");
+			weather_today_temp.setText(weatherInfo.get(0).getTemperature() + "���");
 			weather_today_rainprob.setText(weatherInfo.get(0).getRainProb() + " %");
 			weather_today_windspeed.setText(weatherInfo.get(0).getWindSpeed() + " m/s");
 			weather_next_timedesc.setText(weatherInfo.get(1).getDayState() + " " + weatherInfo.get(1).getTime() + ", " + weatherInfo.get(1).getWeatherDesc());
-			weather_next_temp.setText(weatherInfo.get(1).getTemperature() + "도");
+			weather_next_temp.setText(weatherInfo.get(1).getTemperature() + "���");
 		}
 	}
 	
@@ -285,8 +274,8 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			weather_today_pm10value.setText("미세먼지 농도 " + pollutionInfo.get(0).getPM10Value());
-			weather_today_o3grade.setText("오존 지수 " + pollutionInfo.get(0).getO3Value());
+			weather_today_pm10value.setText("誘몄�몃㉫吏� ������ " + pollutionInfo.get(0).getPM10Value());
+			weather_today_o3grade.setText("��ㅼ〈 吏���� " + pollutionInfo.get(0).getO3Value());
 			
 		}
 	}
@@ -316,22 +305,22 @@ public class MainActivity extends Activity {
 			}
 			switch(util.sidoToArea(mySiDo)){
 				case 0 :
-					weather_next_pm10Info.setText("미세먼지 농도 " + nextPollutionInfo.get(0).getSudoInfo());
+					weather_next_pm10Info.setText("誘몄�몃㉫吏� ������ " + nextPollutionInfo.get(0).getSudoInfo());
 					break;
 				case 1 :
-					weather_next_pm10Info.setText("미세먼지 농도 " + nextPollutionInfo.get(0).getJejuInfo());
+					weather_next_pm10Info.setText("誘몄�몃㉫吏� ������ " + nextPollutionInfo.get(0).getJejuInfo());
 					break;
 				case 2 :
-					weather_next_pm10Info.setText("미세먼지 농도 " + nextPollutionInfo.get(0).getYoungnamInfo());
+					weather_next_pm10Info.setText("誘몄�몃㉫吏� ������ " + nextPollutionInfo.get(0).getYoungnamInfo());
 					break;
 				case 3 :
-					weather_next_pm10Info.setText("미세먼지 농도 " + nextPollutionInfo.get(0).getHonamInfo());
+					weather_next_pm10Info.setText("誘몄�몃㉫吏� ������ " + nextPollutionInfo.get(0).getHonamInfo());
 					break;
 				case 4 :
-					weather_next_pm10Info.setText("미세먼지 농도 " + nextPollutionInfo.get(0).getGangwonInfo());
+					weather_next_pm10Info.setText("誘몄�몃㉫吏� ������ " + nextPollutionInfo.get(0).getGangwonInfo());
 					break;
 				case 5 :
-					weather_next_pm10Info.setText("미세먼지 농도 " + nextPollutionInfo.get(0).getChungchungInfo());
+					weather_next_pm10Info.setText("誘몄�몃㉫吏� ������ " + nextPollutionInfo.get(0).getChungchungInfo());
 					break;
 			}
 				
