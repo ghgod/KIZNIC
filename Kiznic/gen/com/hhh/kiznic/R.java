@@ -53,7 +53,7 @@ public final class R {
         public static final int windspeed=0x7f02001d;
     }
     public static final class id {
-        public static final int action_settings=0x7f080039;
+        public static final int action_settings=0x7f080038;
         public static final int condition_inout_image=0x7f080003;
         public static final int condition_range_image=0x7f080004;
         public static final int main_list_view=0x7f080005;
@@ -92,25 +92,24 @@ public final class R {
         public static final int title_home_button=0x7f080013;
         public static final int title_mypage_button=0x7f080011;
         public static final int title_search_button=0x7f080012;
-        public static final int weather_compareyesterday_text=0x7f08002c;
-        public static final int weather_finedustimage_image=0x7f080033;
-        public static final int weather_finedusttext_text=0x7f080034;
+        public static final int weather_finedustimage_image=0x7f080032;
+        public static final int weather_finedusttext_text=0x7f080033;
         public static final int weather_getlocation_imagebutton=0x7f080027;
         public static final int weather_location_text=0x7f080026;
         public static final int weather_nextdaysimpleinfo_text=0x7f080029;
-        public static final int weather_nextfinedustimage_image=0x7f080037;
-        public static final int weather_nextfinedusttext_text=0x7f080038;
-        public static final int weather_nexttemperature_text=0x7f080036;
-        public static final int weather_nextweatherimage_image=0x7f080035;
-        public static final int weather_rainfall_image=0x7f08002e;
-        public static final int weather_rainfallpercent_text=0x7f08002f;
+        public static final int weather_nextfinedustimage_image=0x7f080036;
+        public static final int weather_nextfinedusttext_text=0x7f080037;
+        public static final int weather_nexttemperature_text=0x7f080035;
+        public static final int weather_nextweatherimage_image=0x7f080034;
+        public static final int weather_rainfall_image=0x7f08002d;
+        public static final int weather_rainfallpercent_text=0x7f08002e;
         public static final int weather_simpleinfo_text=0x7f080028;
         public static final int weather_temperature_text=0x7f08002b;
         public static final int weather_weatherimage_image=0x7f08002a;
-        public static final int weather_weatherwatch_text=0x7f080032;
-        public static final int weather_windcilltemperature_text=0x7f08002d;
-        public static final int weather_windspeed_image=0x7f080030;
-        public static final int weather_windspeedpercent_text=0x7f080031;
+        public static final int weather_weatherwatch_text=0x7f080031;
+        public static final int weather_windcilltemperature_text=0x7f08002c;
+        public static final int weather_windspeed_image=0x7f08002f;
+        public static final int weather_windspeedpercent_text=0x7f080030;
     }
     public static final class layout {
         public static final int activity_detailpage=0x7f030000;

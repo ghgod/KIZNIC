@@ -304,14 +304,10 @@ public class Util {
 	
 	
 	public static String transformHour(String hour) {
-		int hourInt = Integer.parseInt(hour);
+	
 		
-		if(hourInt <= 12) {
-			return "오전 " + hour +"시";
-		}
-		else {
-			return "오후 " + String.valueOf(hourInt - 12) + "시";
-		}
+			return hour +"시";
+		
 	}
 	
 	public static String getCurrentDate() {
