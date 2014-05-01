@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -137,6 +138,19 @@ public class Util {
 		}
 		return received;
 	}
+	
+	public String convertFeelTemp(String temp, String windSpeed) {
+		
+		
+		double speed = 3.6 * Double.parseDouble(windSpeed);
+		double feelTemp = 13.12 + (0.6215 * Double.parseDouble(temp)) - (11.37 * Math.pow(speed, 0.16)) + (0.3965 * Math.pow(speed, 0.16) * Double.parseDouble(temp));
+		DecimalFormat df = new DecimalFormat("#.#");
+		String result = df.format(feelTemp);
+		
+		return result;
+		
+	}
+	
 	
 	
 	public String yesterdayDate() {

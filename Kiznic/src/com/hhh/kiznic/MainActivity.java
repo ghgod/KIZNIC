@@ -58,6 +58,8 @@ public class MainActivity extends Activity {
 	private TextView weather_today_pm10value;
 	private TextView weather_today_o3grade;
 	private TextView weather_next_pm10Info;
+	private TextView wewather_today_feeltemp;
+	
 	
 	private ImageView weather_refresh_button;
 	
@@ -131,7 +133,7 @@ public class MainActivity extends Activity {
 		weather_next_temp = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nexttemperature_text);
 		weather_next_pm10Info  = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextfinedusttext_text);
 		weather_refresh_button = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_getlocation_imagebutton);
-		
+		wewather_today_feeltemp = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_windcilltemperature_text);
 		
 	}
 	
@@ -267,11 +269,13 @@ public class MainActivity extends Activity {
 				e.printStackTrace();
 			}
 			weather_today_timedesc.setText(weatherInfo.get(0).getDayState() + " " + weatherInfo.get(0).getTime() + ", " + weatherInfo.get(0).getWeatherDesc());
-			weather_today_temp.setText(weatherInfo.get(0).getTemperature());
+			weather_today_temp.setText(weatherInfo.get(0).getTemperature()+"°");
 			weather_today_rainprob.setText(" " + weatherInfo.get(0).getRainProb() + " %");
 			weather_today_windspeed.setText(" " + weatherInfo.get(0).getWindSpeed() + " m/s");
+			wewather_today_feeltemp.setText("체감 온도 " + util.convertFeelTemp(weatherInfo.get(0).getTemperature(), weatherInfo.get(0).getWindSpeed())+"°");
 			weather_next_timedesc.setText(weatherInfo.get(1).getDayState() + " " + weatherInfo.get(1).getTime() + ", " + weatherInfo.get(1).getWeatherDesc());
-			weather_next_temp.setText(weatherInfo.get(1).getTemperature());
+			weather_next_temp.setText(weatherInfo.get(1).getTemperature()+"°");
+			
 		}
 	}
 	
