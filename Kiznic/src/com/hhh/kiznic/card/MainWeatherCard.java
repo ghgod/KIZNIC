@@ -28,7 +28,7 @@ public class MainWeatherCard extends Card implements View.OnClickListener{
 	TextView weather_nextdaysimpleinfo_text;
 	TextView weather_nexttemperature_text;
 	TextView weather_nextfinedusttext_text;
-	ImageButton weather_morelocationinfo_imagebutton;
+	ImageView weather_getlocation_imagebutton;
 	ImageView weather_weatherimage_image;
 	ImageView weather_finedustimage_image;
 	ImageView weather_rainfall_image;
@@ -42,7 +42,6 @@ public class MainWeatherCard extends Card implements View.OnClickListener{
 		
 		init();
 		setListener();
-		//weather_finedust_set();
 	}
 
 	public void init(){
@@ -58,49 +57,18 @@ public class MainWeatherCard extends Card implements View.OnClickListener{
 		weather_nextdaysimpleinfo_text = (TextView)cardView.findViewById(R.id.weather_nextdaysimpleinfo_text);
 		weather_nexttemperature_text = (TextView)cardView.findViewById(R.id.weather_nexttemperature_text);
 		weather_nextfinedusttext_text = (TextView)cardView.findViewById(R.id.weather_nextfinedusttext_text);
-		weather_morelocationinfo_imagebutton = (ImageButton)cardView.findViewById(R.id.weather_morelocationinfo_imagebutton);
+		weather_getlocation_imagebutton = (ImageView)cardView.findViewById(R.id.weather_getlocation_imagebutton);
 		weather_weatherimage_image = (ImageView)cardView.findViewById(R.id.weather_weatherimage_image);
 		weather_finedustimage_image = (ImageView)cardView.findViewById(R.id.weather_finedustimage_image);
 		weather_rainfall_image = (ImageView)cardView.findViewById(R.id.weather_rainfall_image);
 		weather_windspeed_image = (ImageView)cardView.findViewById(R.id.weather_windspeed_image);
 		weather_nextweatherimage_image = (ImageView)cardView.findViewById(R.id.weather_nextweatherimage_image);
 		weather_nextfinedustimage_image = (ImageView)cardView.findViewById(R.id.weather_nextfinedustimage_image);
-		weather_circlemeter_layout = (LinearLayout)cardView.findViewById(R.id.weather_circlemeter_layout);
-	}
-
-	public void weather_finedust_set(){
-
-		
-		Bitmap b = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888);
-		
-		Canvas canvas = new Canvas(b);
-		
-		Paint pnt = new Paint();
-		Paint circlepnt = new Paint();
-		
-		RectF r = new RectF(0, 0, 40, 40);
-	
-		pnt.setStrokeWidth(3);
-		pnt.setStyle(Paint.Style.STROKE);
-		pnt.setAntiAlias(true);
-		
-		pnt.setColor(Color.parseColor("#FFFFFF"));
-		canvas.drawArc(r, 0, 360, true, pnt);
-		
-		pnt.setColor(Color.parseColor("#000000"));
-		canvas.drawArc(r, -90, 120, true, pnt);
-		
-		circlepnt.setColor(Color.parseColor("#DEE7E7"));
-		circlepnt.setAntiAlias(true);
-		
-		canvas.drawCircle(20, 20, 20, circlepnt);
-		
-		weather_finedustimage_image.setImageBitmap(b);
 	}
 	
 	@Override
 	public void setListener(){
-		weather_morelocationinfo_imagebutton.setOnClickListener(this);
+		weather_getlocation_imagebutton.setOnClickListener(this);
 	}
 	
 	@Override
