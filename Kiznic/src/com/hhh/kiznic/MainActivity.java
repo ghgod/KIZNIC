@@ -9,8 +9,10 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Shader.TileMode;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -34,10 +36,12 @@ public class MainActivity extends Activity {
 	private int cardCount = -1;
 	private View profile;
 	private ImageView weather_finedust;
+	
+	private Button title_home_button;
 	private Button title_search_button;
 	private Button title_mypage_button;
 	
-	//////////////////��� ��� ������ ///////////////////
+	
 	private TextView weather_mylocation;
 	private TextView weather_today_timedesc;
 	private TextView weather_today_temp;
@@ -86,6 +90,7 @@ public class MainActivity extends Activity {
 		
 		profile = (View)findViewById(R.id.profile);
 		
+		title_home_button = (Button)findViewById(R.id.title_home_button);
 		title_search_button = (Button)findViewById(R.id.title_search_button);
 		title_mypage_button = (Button)findViewById(R.id.title_mypage_button);
 		
@@ -113,6 +118,8 @@ public class MainActivity extends Activity {
 		
 		inside = (ToggleButton)findViewById(R.id.condition_inout_image);
 		
+		title_home_button.setSelected(true);
+		
 	}
 	
 	private void clicklistener(){
@@ -125,16 +132,18 @@ public class MainActivity extends Activity {
 			}
 		});
 		
-		title_search_button.setOnClickListener(new Button.OnClickListener(){
+		title_search_button.setOnClickListener(new OnClickListener(){
 			public void onClick(View v){
+				title_search_button.setSelected(true);
 				Intent searchActivity = new Intent(MainActivity.this, SearchActivity.class);
 				searchActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 				startActivity(searchActivity);
 			}
 		});
 		
-		title_mypage_button.setOnClickListener(new Button.OnClickListener(){
+		title_mypage_button.setOnClickListener(new OnClickListener(){
 			public void onClick(View v){
+				title_mypage_button.setSelected(true);
 				Intent mypageActivity = new Intent(MainActivity.this, MyPageActivity.class);
 				mypageActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 				startActivity(mypageActivity);

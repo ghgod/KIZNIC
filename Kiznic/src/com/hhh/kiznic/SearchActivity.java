@@ -49,6 +49,7 @@ public class SearchActivity extends Activity implements OnClickListener{
 	public void clicklistener(){	
 		title_home_button.setOnClickListener(new Button.OnClickListener(){
 			public void onClick(View v){
+				title_home_button.setSelected(true);
 				Intent homeActivity = new Intent(SearchActivity.this, MainActivity.class);
 				homeActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 				startActivity(homeActivity);
@@ -56,6 +57,7 @@ public class SearchActivity extends Activity implements OnClickListener{
 		});
 		title_mypage_button.setOnClickListener(new Button.OnClickListener(){
 			public void onClick(View v){
+				title_mypage_button.setSelected(true);
 				Intent mypageActivity = new Intent(SearchActivity.this, MyPageActivity.class);
 				mypageActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 				startActivity(mypageActivity);
