@@ -79,11 +79,11 @@
                     <ToggleButton
                         
                         android:id="@+id/condition_inout_image"
-				        android:layout_width="40dip"
-				        android:layout_height="40dip"
+				        android:layout_width="50dip"
+				        android:layout_height="20dip"
 				        android:background="@drawable/condition_inout_toggle"
-				        android:textOn="IN"
-				        android:textOff="OUT"
+				        android:textOn=" "
+				        android:textOff=" "
 						android:layout_centerInParent="true"/>
                     
                     <TextView

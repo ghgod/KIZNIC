@@ -11,4 +11,37 @@
     <string name="sPadding">PKCS5Padding</string>
     <string name="openApiKey">VOkSUpz7nEopmqMzB%2FuxEbYc38fdppOA3nw%2FI%2FReAWcwC%2BmQZl1acj0vs%2B2hJUUA6W%2FRYIICIH2FMkUOw%2BloYw%3D%3D</string>
 
+    <string-array name = "dialog_list_genre">
+        
+        <item> 전체 </item>
+        <item> 공연 / 전시 </item>
+        <item> 놀이 </item>
+        <item> 체험 </item>
+        <item> 축제 </item>
+        <item> 기타 </item>
+        
+    </string-array>
+    
+    <string-array name = "dialog_list_term">
+        
+        <item> 전체 </item>
+        <item> 진행 예정 </item>
+        <item> 1주 이내 </item>
+        <item> 2주 이내 </item>
+        <item> 2주 이상</item>
+        <item> 상설 </item>
+        
+    </string-array>
+    
+    <string-array name = "dialog_list_array">
+        
+        <item> 인기도 순 </item>
+        <item> 높은 가격순 </item>
+        <item> 낮은 가격순 </item>
+        <item> 신규 순 </item>
+        <item> 거리 순 </item>
+        <item> 평점 순 </item>
+        
+    </string-array>
+    
 </resources>
