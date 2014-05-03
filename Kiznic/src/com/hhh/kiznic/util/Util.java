@@ -16,9 +16,12 @@ import java.util.zip.GZIPOutputStream;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
@@ -32,6 +35,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import com.hhh.kiznic.R;
 import com.hhh.kiznic.dataclass.NextPollutionInfo;
+import com.hhh.kiznic.dataclass.PicnicSimpleInfo;
 import com.hhh.kiznic.dataclass.PollutionInfo;
 import com.hhh.kiznic.dataclass.WeatherInfo;
 
@@ -40,8 +44,13 @@ import com.hhh.kiznic.dataclass.WeatherInfo;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.ImageView;
 
 public class Util {
 
@@ -142,6 +151,46 @@ public class Util {
 		}
 		return received;
 	}
+	
+	public String getJSONHttp(Context mContext, String addedURL, JSONArray sendConditionInfo) {
+		
+		String received = null;
+		HttpClient http = new DefaultHttpClient();
+					
+		try {								
+			ArrayList<NameValuePair> nameValuePairs = 	new ArrayList<NameValuePair>();
+			nameValuePairs.add(new BasicNameValuePair("recommend_info", sendConditionInfo.toString()));
+			
+			HttpParams params = http.getParams();
+			HttpConnectionParams.setConnectionTimeout(params, 5000);
+			HttpConnectionParams.setSoTimeout(params, 5000);
+			
+			//Log.d("downLoadHttp_URL", url);
+			
+			HttpPost httpPost = new HttpPost(mContext.getResources().getString(R.string.url)+"/"+addedURL);
+			UrlEncodedFormEntity entityRequest = new UrlEncodedFormEntity(nameValuePairs, "UTF-8");
+
+			httpPost.setEntity(entityRequest);
+			
+			HttpResponse responsePost = http.execute(httpPost);
+			HttpEntity resEntity = responsePost.getEntity();
+				
+			if(resEntity!=null){
+				received = EntityUtils.toString(resEntity,"UTF-8");
+				//Log.d("downLoadHTTP_result", received);
+			} else {
+				Log.d("downLoadHTTP", "null��댁��");                  
+			}			
+		}
+		catch (Exception e) {
+				Log.e("downLoadHTTP", "missed");
+			e.printStackTrace();
+		}
+		return received;
+	}
+	
+	
+	
 	
 	public String convertFeelTemp(String temp, String windSpeed) {
 		
@@ -386,6 +435,7 @@ public static String transformRegionName(String region1) {
 		String rainProb = "";
 		String windSpeed = "";
 		String temp = "";
+		String humidity = "";
 					
 		try {
 		
@@ -427,6 +477,9 @@ public static String transformRegionName(String region1) {
 						else if(tag.equals("temp") && initem) {
 							flag = 4;
 						}
+						else if(tag.equals("reh") && initem) {
+							flag = 6;
+						}
 						break;
 					
 					case XmlPullParser.TEXT:
@@ -440,7 +493,6 @@ public static String transformRegionName(String region1) {
 								case 0 :
 									//weatherInfo.setTime(parser.getText());
 									hour = parser.getText();
-									Log.d("hour", parser.getText());
 									break;
 								case 1 :
 									//weatherInfo.setWeatherDesc(parser.getText());
@@ -461,6 +513,10 @@ public static String transformRegionName(String region1) {
 								case 5 :
 									dayState = parser.getText();
 									break;
+								case 6 :
+									humidity = parser.getText();
+									break;
+									
 							}
 							
 						}
@@ -477,6 +533,7 @@ public static String transformRegionName(String region1) {
 							weatherInfo.setWindSpeed(windSpeed.substring(0, 3));
 							weatherInfo.setTemperature(temp);
 							weatherInfo.setDayState(Util.convertDayState(dayState, searchDate));
+							weatherInfo.setHumidity(humidity);
 							weatherInfoList.add(Integer.parseInt(seqNo), weatherInfo);
 						}
 						break;
@@ -646,10 +703,10 @@ public static String transformRegionName(String region1) {
 							pollutionInfo.setPM10Value(pm10Value);
 							pollutionInfo.setPM10Grade(pm10Grade);
 							
-							Log.d("ozValue", o3Value);
-							Log.d("ozGrade", o3Grade);
-							Log.d("pm10Value", pm10Value);
-							Log.d("pm10Grade", pm10Grade);
+							//Log.d("ozValue", o3Value);
+						//	Log.d("ozGrade", o3Grade);
+						//	Log.d("pm10Value", pm10Value);
+						//	Log.d("pm10Grade", pm10Grade);
 							pollutionInfoList.add(pollutionInfo);
 						}
 						
@@ -667,7 +724,36 @@ public static String transformRegionName(String region1) {
 		return pollutionInfoList;
 	}
 	
-public Bitmap setWeatherImage(Context context, String weatherDesc) {
+	public ArrayList<PicnicSimpleInfo> parsePicnicSimpleInfoJSON(String json) throws JSONException {
+		
+		ArrayList<PicnicSimpleInfo> simpleInfoList = new ArrayList<PicnicSimpleInfo>();
+		JSONArray picnicSimpleInfo = new JSONArray(json);
+		Util util = new Util();
+		
+		for(int i=0; i<picnicSimpleInfo.length()-1; i++) {
+			JSONObject playInfo = picnicSimpleInfo.getJSONObject(i);
+			
+			PicnicSimpleInfo simpleInfo = new PicnicSimpleInfo();
+			//Log.d("play_no", playInfo.getString("play_no"));
+			simpleInfo.setPlayNo(util.checkNull(playInfo.getString("play_no")));
+			simpleInfo.setPlayTitle(util.checkNull(playInfo.getString("play_title")));
+			simpleInfo.setPlayType(util.checkNull(playInfo.getString("play_type")));
+			simpleInfo.setPlayPlace(util.checkNull(playInfo.getString("play_place")));
+			simpleInfo.setPlayThumb(util.checkNull(playInfo.getString("play_thumb")));
+			simpleInfo.setPlayStartDate(util.checkNull(playInfo.getString("play_start_date")));
+			simpleInfo.setPlayEndDate(util.checkNull(playInfo.getString("play_end_date")));
+			simpleInfo.setPlayDistance(util.checkNull(playInfo.getString("play_spot_distance")));
+			simpleInfo.setPlayAddress(util.checkNull(playInfo.getString("play_address")));
+			
+			simpleInfoList.add(simpleInfo);
+		}	
+		
+		return simpleInfoList;	
+		
+	}
+	
+	
+	public Bitmap getWeatherImage(Context context, String weatherDesc) {
 		
 		Bitmap image = null;
 		
@@ -686,11 +772,9 @@ public Bitmap setWeatherImage(Context context, String weatherDesc) {
 		else if(weatherDesc.equals("비")) {
 			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_rain_image);
 		}
-		/*
-		else if(weatherDesc.equals("비/눈")) {
-			image = BitmapFactory.decodeResource(context.getResources(), R.drawable);
+		else if(weatherDesc.equals("눈/비")) {
+			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_snowrain_image);
 		}
-		*/
 		else if(weatherDesc.equals("눈")) {
 			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_snow_image);
 		}
@@ -698,4 +782,134 @@ public Bitmap setWeatherImage(Context context, String weatherDesc) {
 		return image;
 		
 	}
+	
+	public Bitmap getPlaceWeatherImage(Context context, String weatherDesc) {
+		
+		Bitmap image = null;
+		
+		if(weatherDesc.equals("맑음")) {
+			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_sunny_image_sky);
+		}
+		else if(weatherDesc.equals("흐림")) {
+			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_cloudy_image_sky);
+		}
+		else if(weatherDesc.equals("구름 많음")) {
+			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_verycloudy_image_sky);
+		}
+		else if(weatherDesc.equals("구름 조금")) {
+			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_slightlycover_image_sky);
+		}
+		else if(weatherDesc.equals("비")) {
+			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_rain_image_sky);
+		}
+		else if(weatherDesc.equals("눈/비")) {
+			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_snowrain_image_sky);
+		}
+		else if(weatherDesc.equals("눈")) {
+			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_snow_image_sky);
+		}
+		
+		return image;
+		
+	}
+	
+	
+	
+	public void weather_finedust_set(ImageView imageview, int gage, boolean flag, String nextfinedustString){
+
+		Bitmap b = Bitmap.createBitmap(40, 40, Bitmap.Config.ARGB_8888);
+		
+		Canvas canvas = new Canvas(b);
+		
+		Paint pnt = new Paint();
+		Paint circlepnt = new Paint();
+		Paint Stringpnt = new Paint();
+		
+		String finedust_text;
+		String color_string;
+
+		RectF r = new RectF(5, 5, 35, 35);
+
+		pnt.setStrokeWidth(3);
+		pnt.setStyle(Paint.Style.STROKE);
+		pnt.setAntiAlias(true);
+		pnt.setColor(Color.parseColor("#FFFFFF"));
+
+		canvas.drawArc(r, 0, 360, true, pnt);
+
+
+		// NextWeather
+
+		if(flag){
+			finedust_text = nextfinedustString;
+
+			if(finedust_text.equals("좋음")){
+				color_string = "#000000";
+				gage = 10;
+			}
+			else if(finedust_text.equals("보통")){
+				color_string = "#AAAAAA";
+				gage = 26;
+			}
+			else if(finedust_text.equals("약간 나쁨")){
+				color_string = "#BBBBBB";
+				gage = 40;
+			}
+			else{
+				color_string = "#CCCCCC";
+				gage = 100;
+			}
+		}
+
+		// Weather
+
+		else{
+			if(gage <= 30){
+				finedust_text = "좋음";
+				color_string = "#000000";
+			}
+			else if(gage <= 80){
+				finedust_text = "보통";
+				color_string = "#AAAAAA";
+			}
+			else if(gage <= 120){
+				finedust_text = "주의";
+				color_string = "#BBBBBB";
+			}
+			else{
+				finedust_text = "자제";
+				color_string = "#CCCCCC";
+			}
+		}
+
+
+		// Color
+		pnt.setColor(Color.parseColor(color_string));
+		canvas.drawArc(r, -90, gage, true, pnt);
+
+		// Circle
+		circlepnt.setColor(Color.parseColor("#DEE7E7"));
+		circlepnt.setAntiAlias(true);
+		canvas.drawCircle(20, 20, 15, circlepnt);
+
+		// String
+		Stringpnt.setColor(Color.parseColor(color_string));
+		Stringpnt.setTextSize(10);
+		Stringpnt.setAntiAlias(true);
+		canvas.drawText(finedust_text, 15, 25, Stringpnt);
+		imageview.setImageBitmap(b);
+
+	}
+	
+	
+	public String checkNull(String str) {
+		if(str.equals("null")){
+			return "";
+		}
+		else {
+			return str;
+		}
+	}
+	
+	
 }

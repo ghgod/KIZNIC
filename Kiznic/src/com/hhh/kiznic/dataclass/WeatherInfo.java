@@ -9,6 +9,7 @@ public class WeatherInfo {
 	String temperature;
 	String rainProb;
 	String windSpeed;
+	String humidity;
 	
 	PollutionInfo pollutionInfo;
 	
@@ -39,6 +40,11 @@ public class WeatherInfo {
 	public void setWindSpeed(String windSpeed){
 		this.windSpeed = windSpeed;
 	}
+	
+	public void setHumidity(String humidity) {
+		this.humidity = humidity;
+	}
+	
 	
 	public void setPollutionInfo(PollutionInfo pollutionInfo) {
 		this.pollutionInfo = pollutionInfo;
@@ -75,5 +81,9 @@ public class WeatherInfo {
 	
 	public String getDayState() {
 		return dayState;
+	}
+	
+	public String getHumidity() {
+		return humidity;
 	}
 }
