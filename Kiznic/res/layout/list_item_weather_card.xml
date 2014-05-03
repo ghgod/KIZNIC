@@ -22,6 +22,7 @@
 		     android:layout_width="match_parent"
 		     android:layout_height="0dip"
 		     android:layout_weight="4"
+		     android:background="#6AC2C7"
 		     android:orientation="horizontal">
 		     
 		     <TextView
@@ -55,7 +56,7 @@
 		         android:layout_height="match_parent"
 		         android:layout_weight="28"
 		         android:layout_marginRight="1dip"
-		         android:background="#30FFFFFF"
+		         android:background="#50FFFFFF"
 		         android:orientation="horizontal">
 		             
 		         <TextView
@@ -75,7 +76,7 @@
 		         android:layout_height="match_parent"
 		         android:layout_weight="15"
 		         android:layout_marginLeft="1dip"
-		         android:background="#30FFFFFF"
+		         android:background="#50FFFFFF"
 		         android:orientation="horizontal">
 		             
 		         <TextView
@@ -102,6 +103,7 @@
 		         android:layout_width="0dip"
 		         android:layout_height="match_parent"
 		         android:layout_weight="28"
+		         android:background="#606AC2C7"
 		         android:orientation="vertical">
 		         
 		         <LinearLayout
@@ -163,7 +165,7 @@
 		             	                android:layout_height="wrap_content"
 		             	                android:layout_centerInParent="true"
 		             	                android:text="체감온도 -9.3°"
-		             	                android:textColor="#000000"
+		             	                android:textColor="#FFFFFF"
 		             	                android:textSize="10sp" />
 		             	        </RelativeLayout>
 		             	        
@@ -206,7 +208,7 @@
 						         android:layout_centerVertical="true"
 						         android:layout_toRightOf="@id/weather_rainfall_image"
 						         android:text="100%"
-						         android:textColor="#000000"
+						         android:textColor="#FFFFFF"
 						         android:textSize="10sp"/>
 		                     
 		                 </RelativeLayout>
@@ -231,7 +233,7 @@
 						         android:layout_centerVertical="true"
 						         android:layout_toRightOf="@id/weather_windspeed_image"
 					             android:text="100%"
-					             android:textColor="#000000"
+					             android:textColor="#FFFFFF"
 					             android:textSize="10sp"/>
 		                     
 		                 </RelativeLayout>
@@ -260,7 +262,7 @@
 							 android:layout_centerHorizontal="true"
 							 android:layout_below="@id/weather_finedustimage_image"
 		                     android:text="미세먼지 농도 50"
-		                     android:textColor="#000000"
+		                     android:textColor="#FFFFFF"
 		                     android:textSize="10sp"/>
 		                 
 		             </RelativeLayout>
@@ -273,6 +275,7 @@
 		         android:layout_width="0dip"
 		         android:layout_height="match_parent"
 		         android:layout_weight="15"
+		         android:background = "#20F1F2F2"
 		         android:orientation="vertical">
 		             
 		         <LinearLayout
@@ -334,7 +337,7 @@
 						 android:layout_centerHorizontal="true"
 						 android:layout_below="@id/weather_nextfinedustimage_image"
 		                 android:text="미세먼지 농도 50"
-		                 android:textColor="#000000"
+		                 android:textColor="#FFFFFF"
 		                 android:textSize="10sp"/>
 		             
 		         </RelativeLayout>

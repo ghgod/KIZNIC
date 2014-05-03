@@ -16,14 +16,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.hhh.kiznic.card.CardAdapter;
 import com.hhh.kiznic.card.MainRecommendCard;
 import com.hhh.kiznic.card.MainWeatherCard;
+import com.hhh.kiznic.connection.GetNextPollutionAsync;
+import com.hhh.kiznic.connection.GetRecommendPicnicSimpleInfo;
+import com.hhh.kiznic.connection.GetPollutionAsync;
+import com.hhh.kiznic.connection.GetWeatherAsync;
 import com.hhh.kiznic.util.LocationHelper;
-import com.hhh.kiznic.util.getNextPollutionAsync;
-import com.hhh.kiznic.util.getPollutionAsync;
-import com.hhh.kiznic.util.getWeatherAsync;
 
 public class MainActivity extends Activity {
 	
@@ -53,12 +55,9 @@ public class MainActivity extends Activity {
 	private ImageView weather_image;
 	private ImageView weather_next_image;
 	
-	private LocationHelper location;
-	private String mySiDo;
-
+	private ToggleButton inside;
 	
-
-	
+		
 	//////////////////////////////////////////////
 	
 	@Override
@@ -69,20 +68,16 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.kiznic_title_bar);
 		
-		
 		init();
 		
 		clicklistener();
 		
 		profile_circleimage();
 	
-		
 		//////////////////////////////////////////	
-		
-		new getWeatherAsync(getBaseContext(), location, weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, wewather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image).execute("");
-		new getPollutionAsync(getBaseContext(), location, weather_today_pm10value, weather_finedust).execute("");
-		new getNextPollutionAsync(getBaseContext(),weather_next_pm10Info, weather_next_dustmeter, mySiDo).execute("");
-		
+		new GetWeatherAsync(getBaseContext(), weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, wewather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image).execute("");
+		new GetPollutionAsync(getBaseContext(), weather_today_pm10value, weather_finedust).execute("");
+		new GetNextPollutionAsync(getBaseContext(),weather_next_pm10Info, weather_next_dustmeter).execute("");
 		//////////////////////////////////////////
 	
 	}
@@ -116,9 +111,8 @@ public class MainActivity extends Activity {
 		weather_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_weatherimage_image);
 		weather_next_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextweatherimage_image);
 		
-		location = new LocationHelper(getBaseContext());
-		location.run();
-		mySiDo = location.getMySiDo();
+		inside = (ToggleButton)findViewById(R.id.condition_inout_image);
+		
 	}
 	
 	private void clicklistener(){
@@ -151,16 +145,24 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				LocationHelper location = new LocationHelper(getApplicationContext());
-				location.run();
-				mySiDo = location.getMySiDo();
-				
-				new getWeatherAsync(getBaseContext(), location, weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, wewather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image).execute("");
-				new getPollutionAsync(getBaseContext(), location, weather_today_pm10value, weather_finedust).execute("");
-				new getNextPollutionAsync(getBaseContext(),weather_next_pm10Info, weather_next_dustmeter, mySiDo).execute("");
+					
+				new GetWeatherAsync(getBaseContext(), weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, wewather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image).execute("");
+				new GetPollutionAsync(getBaseContext(), weather_today_pm10value, weather_finedust).execute("");
+				new GetNextPollutionAsync(getBaseContext(),weather_next_pm10Info, weather_next_dustmeter).execute("");
 			}
 			
 		});
+		
+		inside.setOnClickListener(new Button.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				new GetRecommendPicnicSimpleInfo(getBaseContext(), "11", "1", "15" ).execute("");
+			}
+			
+		});
+
 	}
 	
 	private void profile_circleimage(){
