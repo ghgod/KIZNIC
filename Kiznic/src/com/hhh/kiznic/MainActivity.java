@@ -20,18 +20,19 @@ import android.widget.ToggleButton;
 
 import com.hhh.kiznic.card.CardAdapter;
 import com.hhh.kiznic.card.MainRecommendCard;
+import com.hhh.kiznic.card.MainRecommendCarditemCard;
 import com.hhh.kiznic.card.MainWeatherCard;
 import com.hhh.kiznic.connection.GetNextPollutionAsync;
 import com.hhh.kiznic.connection.GetRecommendPicnicSimpleInfo;
 import com.hhh.kiznic.connection.GetPollutionAsync;
 import com.hhh.kiznic.connection.GetWeatherAsync;
-import com.hhh.kiznic.util.LocationHelper;
 
 public class MainActivity extends Activity {
 	
-	private ListView mainListView;
+	private ListView mainListView, recommendmainListView;
 	private CardAdapter cardAdapter;
-	private int cardCount = -1;
+	private CardAdapter[] recommendCardAdapter = new CardAdapter[4];
+	private int cardCount = -1, recommendcardCount = -1;
 	private View profile;
 	private ImageView weather_finedust;
 	private Button title_search_button;
@@ -91,6 +92,10 @@ public class MainActivity extends Activity {
 		
 		mainListView = (ListView)findViewById(R.id.main_list_view);
 		cardAdapter = new CardAdapter(getApplicationContext());
+		
+		for(int i=0;i<4;i++){
+			recommendCardAdapter[i] = new CardAdapter(getApplicationContext());
+		}
 		
 		listsetting();
 		
@@ -194,6 +199,18 @@ public class MainActivity extends Activity {
 		}
 
 		mainListView.setAdapter(cardAdapter);
+		
+		for(int i=0;i<4;i++){
+			recommendcardCount = -1;
+			for(int j=0;j<2;j++){
+				recommendCardAdapter[i].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "Recommend Card in Card", getApplicationContext(), recommendcardCount++));
+			}
+		}
+		
+		for(int i=1;i<=4;i++){
+			recommendmainListView = (ListView)mainListView.getAdapter().getView(i, null, mainListView).findViewById(R.id.main_recommend_card_item_list);
+			recommendmainListView.setAdapter(recommendCardAdapter[i-1]);
+		}
 	}
 	
 	
