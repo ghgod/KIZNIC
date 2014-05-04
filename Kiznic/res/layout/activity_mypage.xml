@@ -260,7 +260,7 @@
     
     <!-- book mark -->
     
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dip"
         android:layout_marginTop="5dip"
@@ -269,35 +269,43 @@
         android:orientation="horizontal"
         android:background="@drawable/mypage_card_background">
         
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dip"
-                android:text="북마크"
-                android:textColor="#000000"
-                android:textSize="20sp"/>
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rainfall" />
+
+		</LinearLayout> 
+		
+		<LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            
+		    <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rainfall" />
+		    
+		</LinearLayout> 
+		
+		<LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+	
+		    <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rainfall" />
+		    		
+		</LinearLayout>        
         
-    </RelativeLayout>
-    
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dip"
-        android:layout_marginTop="5dip"
-        android:layout_marginLeft="5dip"
-        android:layout_marginRight="5dip"
-        android:orientation="horizontal"
-        android:background="@drawable/mypage_card_background">
-        
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dip"
-                android:text="설정"
-                android:textColor="#000000"
-                android:textSize="20sp"/>
-        
-    </RelativeLayout>
+    </LinearLayout>
     
 </LinearLayout>

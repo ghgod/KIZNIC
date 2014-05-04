@@ -21,10 +21,12 @@ public class SearchcategoryDialog extends Dialog {
 	private Context context;
 	
 	private TextView dialog_title_textview;
-	private ListView dialog_list_listview;
+	private ListView dialog_firstlist_listview;
+	private ListView dialog_secondlist_listview;
 	
 	private String dialog_title;
 	private String[] list_item;
+	private String[] list_item2;
 	
 	private AdapterView.OnItemClickListener firstlistClickListener;
 	private AdapterView.OnItemClickListener secondlistClickListener;
@@ -38,22 +40,28 @@ public class SearchcategoryDialog extends Dialog {
 		lpWindow.dimAmount = 0.8f;
 		getWindow().setAttributes(lpWindow);
 		
-		init();
-		
 		if(secondlistClickListener == null)
 			setContentView(R.layout.dailog_search);
-		//else
-			//setContentView();
-		
+		else
+			setContentView(R.layout.dailog_search2);
+		init();
 		setTitle();
-		setList(dialog_list_listview);
+		if(secondlistClickListener == null)
+			setList(dialog_firstlist_listview);
+		else
+			setList(dialog_firstlist_listview, dialog_secondlist_listview);
 		
 		setClickListener(firstlistClickListener , secondlistClickListener);
 	}
 	
 	public void init(){
 		dialog_title_textview = (TextView)findViewById(R.id.search_dailog_title_text);
-		dialog_list_listview = (ListView)findViewById(R.id.search_dialog_list_list);
+		if(secondlistClickListener == null)
+			dialog_firstlist_listview = (ListView)findViewById(R.id.search_dialog_list_list);
+		else{
+			dialog_firstlist_listview = (ListView)findViewById(R.id.search_dialog_firstlist_list);
+			dialog_secondlist_listview = (ListView)findViewById(R.id.search_dialog_secondlist_list);
+		}
 	}
 	
 	public SearchcategoryDialog(Context context , String title , 
@@ -88,14 +96,35 @@ public class SearchcategoryDialog extends Dialog {
 		dialog_title_textview.setText(dialog_title);
 	}
 	
-	private void setList(ListView dialoglist){
+private void setList(ListView dialoglist){
 		
-		if(dialoglist.equals("장르"))
+		//if(dialog_title.equals("장르"))
 			list_item = context.getResources().getStringArray(R.array.dialog_list_genre);
 		
 		List<String> listItem = Arrays.asList(list_item);
 		ArrayList<String> itemArrayList = new ArrayList<String> (listItem);
 		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, itemArrayList);
-		//dialog_list_listview.setAdapter(arrayAdapter)
+		dialog_firstlist_listview.setAdapter(arrayAdapter);
+	
+		//dialog_list_listview.getChildAt(0).setBottom(10);
 	}
+
+private void setList(ListView firstdialoglist, ListView seconddialoglist){
+	
+	list_item = context.getResources().getStringArray(R.array.dialog_list_genre);
+	
+	List<String> listItem = Arrays.asList(list_item);
+	ArrayList<String> itemArrayList = new ArrayList<String> (listItem);
+	ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, itemArrayList);
+	dialog_firstlist_listview.setAdapter(arrayAdapter);
+
+	//dialog_list_listview.getChildAt(0).setBottom(10);
+	
+	list_item2 = context.getResources().getStringArray(R.array.dialog_list_genre);
+	
+	List<String> listItem2 = Arrays.asList(list_item);
+	ArrayList<String> itemArrayList2 = new ArrayList<String> (listItem2);
+	ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, itemArrayList2);
+	dialog_firstlist_listview.setAdapter(arrayAdapter2);
+}
 }

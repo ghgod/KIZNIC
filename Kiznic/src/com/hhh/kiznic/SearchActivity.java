@@ -77,10 +77,13 @@ public class SearchActivity extends Activity implements OnClickListener{
 			showListDialog("장르");
 			break;
 		case R.id.search_category2_relativelayout:
+			showListDialog("기간");
 			break;
 		case R.id.search_category3_relativelayout:
+			showListDialog("장소");
 			break;
 		case R.id.search_category4_relativelayout:
+			showListDialog("정렬");
 			break;
 		}
 	}
