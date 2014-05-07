@@ -4,47 +4,308 @@
      android:layout_height="match_parent"
      android:orientation="vertical"
      android:background="#F1F2F2" >
-    
-     <ScrollView
-         android:layout_width="fill_parent"
-         android:layout_height="fill_parent"
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
          android:orientation="vertical">
-     
-	    <LinearLayout
-	        android:layout_width="match_parent"
-	        android:layout_height="100dip"
-	        android:orientation="vertical"
-	        android:layout_marginTop="5dip"
-	        android:layout_marginLeft="5dip"
-	        android:layout_marginRight="5dip"
-	        android:background="#ACACAC">
-	        
-	        <LinearLayout
-	            android:layout_width="match_parent"
-	            android:layout_height="0dip"
-	            android:layout_weight="22">
-	            
-	            <ImageView
-	                android:layout_width="match_parent"
-	                android:layout_height="100dip"
-	                android:src="@drawable/weather_image"/>
-	            
-	        </LinearLayout>
-	        
-	        <LinearLayout
-	            android:layout_width="match_parent"
-	            android:layout_height="0dip"
-	            android:layout_weight="7">
-	            
-	            <TextView
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="[성남 아트센터] 배고픈 애벌레"
-	                android:textColor="#000000"
-	                android:textSize="25sp"/>
-	            
-	        </LinearLayout>
-	        
-	    </LinearLayout>
-    </ScrollView>
+	     <ScrollView
+	         android:layout_width="match_parent"
+	         android:layout_height="wrap_content"
+	         android:orientation="vertical">
+	     	<LinearLayout
+	     	    android:layout_width="match_parent"
+	     	    android:layout_height="wrap_content"
+	     	    android:orientation="vertical">
+			    <LinearLayout
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:orientation="vertical"
+			        android:layout_marginTop="5dip"
+			        android:layout_marginLeft="5dip"
+			        android:layout_marginRight="5dip"
+			        android:background="#FDF9F2">
+			        
+			        <LinearLayout
+			            android:layout_width="match_parent"
+			            android:layout_height="wrap_content">
+			            
+			            <ImageView
+			                android:layout_width="match_parent"
+			                android:layout_height="300dip"
+			                android:src="@drawable/recommend"/>
+			            
+			        </LinearLayout>
+			        
+			        <LinearLayout
+			            android:layout_width="match_parent"
+			            android:layout_height="100dip"
+			            android:gravity="center">
+			            
+			            <TextView
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:layout_gravity="center"
+			                android:text="[성남 아트센터] 배고픈 애벌레"
+			                android:textColor="#000000"
+			                android:textSize="25sp"/>
+			            
+			        </LinearLayout>
+			        
+			    </LinearLayout>
+			    
+			    <LinearLayout
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:orientation="vertical"
+			        android:layout_marginTop="5dip"
+			        android:layout_marginLeft="5dip"
+			        android:layout_marginRight="5dip"
+			        android:background="#FDF9F2">
+			        
+			        <LinearLayout
+			            android:layout_width="match_parent"
+			            android:layout_height="30dip"
+			            android:background="@drawable/detail_underline_background">
+			            
+			            <TextView
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:layout_gravity="center"
+			                android:layout_marginLeft="10dip"
+			                android:text="정보"
+			                android:textColor="#000000"
+			                android:textSize="12sp"/>
+			            
+			        </LinearLayout>
+			        
+			        <LinearLayout
+			            android:layout_width="match_parent"
+			            android:layout_height="wrap_content"
+			            android:background="@drawable/detail_underline_background">
+			            
+			            <TextView
+			                android:layout_width="match_parent"
+			                android:layout_height="wrap_content"
+			                android:layout_marginLeft="10dip"
+			                android:layout_marginBottom="10dip"
+			                android:maxLines="5"
+			                android:text="배고픈 애벌레는 먹이를 찾으러 이곳 저곳을 돌아다니기 시작한다. 이러쿵 저러쿵 왔다가갔다 으흐흐흐 모라고 써야할까 배고픈 애벌레는 이곳저곳 돌아다니다 새밥이된다.동심파괴 젠장.. 몇자까지가 적당할까, 난 여기에 조금 더 써볼까해, 음... 아무래도 5줄 정도면 적당하겠지?"/>
+			            
+			        </LinearLayout>
+			        
+			        <LinearLayout
+			            android:layout_width="match_parent"
+			            android:layout_height="30dip">
+			            
+			            <Button
+			                android:layout_width="match_parent"
+			                android:layout_height="match_parent"
+			                android:text="더보기"
+			                android:textColor="#000000"
+			                android:textSize="12sp"
+			                android:background="#FDF9F2"/>
+			            
+			        </LinearLayout>
+			        
+			    </LinearLayout>
+			    
+			    <LinearLayout
+			        android:id="@+id/detail_listview_layout"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_marginTop="5dip"
+			        android:layout_marginLeft="5dip"
+			        android:layout_marginRight="5dip"
+			        android:background="#FDF9F2">
+			        
+			        <ListView
+						android:id="@+id/detail_list_view"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:headerDividersEnabled="true"
+						android:footerDividersEnabled="true"
+						android:listSelector="@android:color/transparent"
+						android:cacheColorHint="@android:color/transparent"
+						android:divider="@null" />
+			        
+			    </LinearLayout>
+			    
+			    <LinearLayout
+			        android:layout_width="match_parent"
+			        android:layout_height="60dip"
+			        android:orientation="horizontal"
+			        android:layout_marginTop="5dip"
+			        android:layout_marginLeft="5dip"
+			        android:layout_marginRight="5dip"
+			        android:background="#FDF9F2">
+			        
+			        <LinearLayout
+			            android:layout_width="0dip"
+			            android:layout_height="match_parent"
+			            android:layout_weight="1">
+			            
+			            <ImageView
+			                android:layout_width="match_parent"
+			                android:layout_height="match_parent"
+			                android:padding="5dip"
+			                android:src="@drawable/detail_phone"/>
+			            
+			        </LinearLayout>
+			        
+			        <LinearLayout
+			            android:layout_width="0dip"
+			            android:layout_height="match_parent"
+			            android:layout_weight="1">
+			             
+			            <ImageView
+			                android:layout_width="match_parent"
+			                android:layout_height="match_parent"
+			                android:padding="5dip"
+			                android:src="@drawable/detail_link"/>
+			            
+			        </LinearLayout>
+			        
+			        <LinearLayout
+			            android:layout_width="0dip"
+			            android:layout_height="match_parent"
+			            android:layout_weight="1">
+			             
+			            <ImageView
+			                android:layout_width="match_parent"
+			                android:layout_height="match_parent"
+			                android:padding="5dip"
+			                android:src="@drawable/detail_bookmark"/>
+			            
+			        </LinearLayout>
+			        
+			        <LinearLayout
+			            android:layout_width="0dip"
+			            android:layout_height="match_parent"
+			            android:layout_weight="1">
+			             
+			            <ImageView
+			                android:layout_width="match_parent"
+			                android:layout_height="match_parent"
+			                android:padding="5dip"
+			                android:src="@drawable/detail_sharing"/>
+			            
+			        </LinearLayout> 
+			        
+			    </LinearLayout>
+			    
+			    <LinearLayout
+			        android:layout_width="match_parent"
+			        android:layout_height="180dip"
+			        android:orientation="vertical"
+			        android:layout_marginTop="5dip"
+			        android:layout_marginLeft="5dip"
+			        android:layout_marginRight="5dip"
+			        android:background="#FDF9F2">
+			    
+			        <LinearLayout
+			            android:layout_width="match_parent"
+			            android:layout_height="0dip"
+			            android:layout_weight="10">
+			            
+			            <ImageView
+			                android:layout_width="match_parent"
+			                android:layout_height="match_parent"
+			                android:src="@drawable/recommend"/>
+			            
+			        </LinearLayout>
+			        
+			        <LinearLayout
+			            android:layout_width="match_parent"
+			            android:layout_height="0dip"
+			            android:layout_weight="2"
+			            android:background="@drawable/detail_underline_background">
+			            
+			            <TextView
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:layout_gravity="center_vertical"
+			                android:layout_marginLeft="10dip"
+			                android:text="거리"
+			                android:textColor="#000000"
+			                android:textSize="12sp"/>
+			            
+			        </LinearLayout>
+			        
+			        <LinearLayout
+			            android:layout_width="match_parent"
+			            android:layout_height="0dip"
+			            android:layout_weight="6"
+			            android:orientation="horizontal">
+			            
+			            <LinearLayout
+			                android:layout_width="0dip"
+			                android:layout_height="match_parent"
+			                android:layout_weight="5">
+			                
+			            </LinearLayout>
+			            
+			            <LinearLayout
+			                android:layout_width="0dip"
+			                android:layout_height="match_parent"
+			                android:layout_weight="1"
+			                android:gravity="center">
+			                
+			                <ImageView
+			                    android:layout_width="match_parent"
+			                    android:layout_height="match_parent"
+			                    android:src="@drawable/detail_range"/>
+			                
+			            </LinearLayout>
+			            
+			        </LinearLayout>
+			        
+			    </LinearLayout>
+			    
+			    <LinearLayout
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:orientation="vertical"
+			        android:layout_marginTop="5dip"
+			        android:layout_marginLeft="5dip"
+			        android:layout_marginRight="5dip"
+			        android:background="#FDF9F2">
+			        
+			        <LinearLayout
+			            android:layout_width="match_parent"
+			            android:layout_height="30dip"
+			            android:background="@drawable/detail_underline_background">
+			        
+			            <TextView
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:layout_gravity="center_vertical"
+			                android:layout_marginLeft="10dip"
+			                android:text="오시는 길"
+			                android:textColor="#000000"
+			                android:textSize="12sp"/>
+			            
+			        </LinearLayout>
+			        
+			        <LinearLayout
+			            android:id="@+id/detail_nevigation_layout"
+			            android:layout_width="match_parent"
+			            android:layout_height="wrap_content">
+			        
+			            <ListView
+							android:id="@+id/detail_list2_view"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:headerDividersEnabled="true"
+							android:footerDividersEnabled="true"
+							android:listSelector="@android:color/transparent"
+							android:cacheColorHint="@android:color/transparent"
+							android:divider="@null" />
+			            
+			        </LinearLayout>
+			        
+			    </LinearLayout>
+			    
+		    </LinearLayout>
+	    </ScrollView>
+   </LinearLayout>   
 </LinearLayout>

@@ -5,6 +5,7 @@
     android:orientation="vertical" >
     
     <LinearLayout
+       	android:id="@+id/recommend_recommendview_view"
 	        android:layout_width="match_parent"
 	        android:layout_height="85dip"
 	        android:background="#FDF9F2"

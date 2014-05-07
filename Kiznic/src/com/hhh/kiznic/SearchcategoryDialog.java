@@ -125,6 +125,6 @@ private void setList(ListView firstdialoglist, ListView seconddialoglist){
 	List<String> listItem2 = Arrays.asList(list_item);
 	ArrayList<String> itemArrayList2 = new ArrayList<String> (listItem2);
 	ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, itemArrayList2);
-	dialog_firstlist_listview.setAdapter(arrayAdapter2);
+	dialog_secondlist_listview.setAdapter(arrayAdapter2);
 }
 }

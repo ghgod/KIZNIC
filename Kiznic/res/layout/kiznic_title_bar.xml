@@ -3,30 +3,93 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="left"
     android:background="#6ABED2"
     android:orientation="horizontal" >
 	
-    <Button
+    <!-- Main -->
+    
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        
+        <Button
         android:id="@+id/title_home_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+		android:layout_gravity="center_vertical"
+		android:layout_marginTop="5dip"
         android:background="@drawable/title_home_button"
         />
-    <Button
+        
+    </LinearLayout>
+    
+    <!-- Album -->
+    
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        
+    </LinearLayout>
+    
+    <!-- Search -->
+    
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        
+        <Button
         android:id="@+id/title_search_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+		android:layout_gravity="center_vertical"
+		android:layout_marginTop="5dip"
         android:background="@drawable/title_search_button"
         />
+        
+    </LinearLayout>
     
-    <Button
+    <!-- Bookmark -->
+    
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        
+    </LinearLayout>
+    
+    <!-- MyPage -->
+    
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        
+        <Button
         android:id="@+id/title_mypage_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+		android:layout_gravity="center_vertical"
+		android:layout_marginTop="5dip"
         android:background="@drawable/title_mypage_button"
         />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        
+    </LinearLayout>
+    
 </LinearLayout>
