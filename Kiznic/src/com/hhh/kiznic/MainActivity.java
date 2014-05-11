@@ -71,7 +71,7 @@ public class MainActivity extends Fragment {
 	public MainActivity(Context context){
 		this.context = context;
 	}
-		
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	
