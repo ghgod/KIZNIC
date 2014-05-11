@@ -893,10 +893,12 @@ public static String transformRegionName(String region1) {
 		canvas.drawCircle(20, 20, 15, circlepnt);
 
 		// String
+		/*
 		Stringpnt.setColor(Color.parseColor(color_string));
 		Stringpnt.setTextSize(10);
 		Stringpnt.setAntiAlias(true);
 		canvas.drawText(finedust_text, 15, 25, Stringpnt);
+		*/
 		imageview.setImageBitmap(b);
 
 	}

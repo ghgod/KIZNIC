@@ -1,49 +1,33 @@
 package com.hhh.kiznic;
 
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 
-public class MyPageActivity extends Activity{
+@SuppressLint("ValidFragment")
+public class MyPageActivity extends Fragment{
 	
-	private Button title_home_button;
-	private Button title_search_button;
+	private Context context;
 	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-		setContentView(R.layout.activity_mypage);
-		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.kiznic_title_bar);
-		
-		title_home_button = (Button)findViewById(R.id.title_home_button);
-		title_home_button.setOnClickListener(new Button.OnClickListener(){
-			public void onClick(View v){
-				title_home_button.setSelected(true);
-				Intent homeActivity = new Intent(MyPageActivity.this, MainActivity.class);
-				homeActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-				startActivity(homeActivity);
-			}
-		});
-		title_search_button = (Button)findViewById(R.id.title_search_button);
-		title_search_button.setOnClickListener(new Button.OnClickListener(){
-			public void onClick(View v){
-				title_home_button.setSelected(true);
-				Intent searchActivity = new Intent(MyPageActivity.this, SearchActivity.class);
-				searchActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-				startActivity(searchActivity);
-			}
-		});
+	public MyPageActivity(Context context) {
+		context = context;
 	}
-
+	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+	public View onCreateView(LayoutInflater inflater, 
+			ViewGroup container, Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.activity_mypage, null);
+		
+    	return view;
 	}
 }

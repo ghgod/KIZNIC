@@ -1,16 +1,18 @@
 package com.hhh.kiznic;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
-import android.view.Menu;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 
-public class SearchActivity extends Activity implements OnClickListener{
+@SuppressLint("ValidFragment")
+public class SearchActivity extends Fragment implements OnClickListener{
 
 	private Button title_home_button;
 	private Button title_mypage_button;
@@ -26,27 +28,40 @@ public class SearchActivity extends Activity implements OnClickListener{
 	private AdapterView.OnItemClickListener firstListListener = null;
 	private AdapterView.OnItemClickListener secondListListener = null;
 	
+	private Context context;
+	
+	private View view;
+
+	//////////////////////////////////////////////////////
+	
+	public SearchActivity(Context context){
+		this.context = context;
+	}
+	
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-		setContentView(R.layout.activity_search);
-		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.kiznic_title_bar);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		view = inflater.inflate(R.layout.activity_search, null);
 		
 		init();
+		
 		clicklistener();
+		
+    	return view;
 	}
+	
+	//////////////////////////////////////////////////////
 
 	public void init(){
-		title_home_button = (Button)findViewById(R.id.title_home_button);
-		title_mypage_button = (Button)findViewById(R.id.title_mypage_button);
-		search_category1_relativelayout = (View)findViewById(R.id.search_category1_relativelayout);
-		search_category2_relativelayout = (View)findViewById(R.id.search_category2_relativelayout);
-		search_category3_relativelayout = (View)findViewById(R.id.search_category3_relativelayout);
-		search_category4_relativelayout = (View)findViewById(R.id.search_category4_relativelayout);
+		title_home_button = (Button)view.findViewById(R.id.title_home_button);
+		title_mypage_button = (Button)view.findViewById(R.id.title_mypage_button);
+		search_category1_relativelayout = (View)view.findViewById(R.id.search_category1_relativelayout);
+		search_category2_relativelayout = (View)view.findViewById(R.id.search_category2_relativelayout);
+		search_category3_relativelayout = (View)view.findViewById(R.id.search_category3_relativelayout);
+		search_category4_relativelayout = (View)view.findViewById(R.id.search_category4_relativelayout);
 	}
 	
 	public void clicklistener(){	
+		/*
 		title_home_button.setOnClickListener(new Button.OnClickListener(){
 			public void onClick(View v){
 				title_home_button.setSelected(true);
@@ -63,7 +78,7 @@ public class SearchActivity extends Activity implements OnClickListener{
 				startActivity(mypageActivity);
 			}
 		});
-		
+		*/
 		search_category1_relativelayout.setOnClickListener(this);
 		search_category2_relativelayout.setOnClickListener(this);
 		search_category3_relativelayout.setOnClickListener(this);
@@ -98,7 +113,7 @@ public class SearchActivity extends Activity implements OnClickListener{
 		        }
 		    };
 		    
-		    listdialog = new SearchcategoryDialog(this, title, singleListListener);
+		    listdialog = new SearchcategoryDialog(context, title, singleListListener);
 		}
 		else{
 			firstListListener = new AdapterView.OnItemClickListener() {
@@ -114,16 +129,10 @@ public class SearchActivity extends Activity implements OnClickListener{
 		        }
 		    };
 		    
-		    listdialog = new SearchcategoryDialog(this, title, firstListListener, secondListListener);
+		    listdialog = new SearchcategoryDialog(context, title, firstListListener, secondListListener);
 		}
 		
 		listdialog.show();
 	}
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
 }

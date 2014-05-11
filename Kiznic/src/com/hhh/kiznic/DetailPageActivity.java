@@ -30,6 +30,8 @@ public class DetailPageActivity extends Activity {
 	    init();
 	    
 	    clicklistener();
+	    
+	    //NMapViewer nMap = new NMapViewer(this);
 	}
 
 	private void clicklistener() {
@@ -73,4 +75,6 @@ public class DetailPageActivity extends Activity {
 		
 		detailNevigationParams.height = deatilNevigationCardheight;
 	}
+
+
 }

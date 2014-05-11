@@ -103,7 +103,7 @@
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="51">
-                    
+                    <!-- 
                     <ImageView
                         
                         android:id="@+id/condition_range_image"
@@ -111,7 +111,16 @@
                         android:layout_height="40dip"
                         android:layout_centerInParent="true"
                         android:src="@drawable/condition_bar"/>
-                    
+                      -->
+                    <SeekBar android:id="@+id/condition_range_seekbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dip"
+                        android:layout_centerInParent="true"
+                        android:max="5"
+                        android:progress="0"
+                        android:secondaryProgress="0"
+                        android:progressDrawable="@drawable/condition_seekbar"
+                        android:thumb="@drawable/condition_seekbar_thumb"/>                    
                     <TextView
                         
                         android:layout_width="wrap_content"

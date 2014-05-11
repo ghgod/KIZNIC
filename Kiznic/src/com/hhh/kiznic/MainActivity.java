@@ -1,7 +1,7 @@
 package com.hhh.kiznic;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
@@ -9,11 +9,10 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Shader.TileMode;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.view.Menu;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -29,7 +28,8 @@ import com.hhh.kiznic.connection.GetRecommendPicnicSimpleInfo;
 import com.hhh.kiznic.connection.GetPollutionAsync;
 import com.hhh.kiznic.connection.GetWeatherAsync;
 
-public class MainActivity extends Activity {
+@SuppressLint("ValidFragment")
+public class MainActivity extends Fragment {
 	
 	private ListView mainListView, recommendmainListView;
 	private CardAdapter cardAdapter;
@@ -62,44 +62,46 @@ public class MainActivity extends Activity {
 	
 	private ToggleButton inside;
 	
-		
+	private Context context;
+	
+	private View view;
+	
 	//////////////////////////////////////////////
 	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public MainActivity(Context context){
+		this.context = context;
+	}
 		
-		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-		setContentView(R.layout.activity_main);
-		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.kiznic_title_bar);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	
+		view = inflater.inflate(R.layout.activity_main, null);
+		
+		//KiznicTitle a = new KiznicTitle(this);
 		
 		init();
 		
 		clicklistener();
 		
 		profile_circleimage();
-	
-		//////////////////////////////////////////	
-		new GetWeatherAsync(getBaseContext(), weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, wewather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image).execute("");
-		new GetPollutionAsync(getBaseContext(), weather_today_pm10value, weather_finedust).execute("");
-		new GetNextPollutionAsync(getBaseContext(),weather_next_pm10Info, weather_next_dustmeter).execute("");
-		//////////////////////////////////////////
-	
+		
+//////////////////////////////////////////
+//new GetWeatherAsync(getBaseContext(), weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, wewather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image).execute("");
+//new GetPollutionAsync(getBaseContext(), weather_today_pm10value, weather_finedust).execute("");
+//new GetNextPollutionAsync(getBaseContext(),weather_next_pm10Info, weather_next_dustmeter).execute("");
+//////////////////////////////////////////
+		
+		return view;
 	}
+	//////////////////////////////////////////////
 	
 	private void init() {
 		
-		profile = (View)findViewById(R.id.profile);
-		
-		title_home_button = (Button)findViewById(R.id.title_home_button);
-		title_search_button = (Button)findViewById(R.id.title_search_button);
-		title_mypage_button = (Button)findViewById(R.id.title_mypage_button);
-		
-		mainListView = (ListView)findViewById(R.id.main_list_view);
-		cardAdapter = new CardAdapter(getApplicationContext());
+		mainListView = (ListView)view.findViewById(R.id.main_list_view);
+		cardAdapter = new CardAdapter(getActivity().getApplicationContext());
 		
 		for(int i=0;i<4;i++){
-			recommendCardAdapter[i] = new CardAdapter(getApplicationContext());
+			recommendCardAdapter[i] = new CardAdapter(getActivity().getApplicationContext());
 		}
 		
 		listsetting();
@@ -121,15 +123,13 @@ public class MainActivity extends Activity {
 		weather_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_weatherimage_image);
 		weather_next_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextweatherimage_image);
 		
-		inside = (ToggleButton)findViewById(R.id.condition_inout_image);
-		
-		title_home_button.setSelected(true);
+		inside = (ToggleButton)view.findViewById(R.id.condition_inout_image);
 		
 	}
 	
 	private void clicklistener(){
 		
-		
+		/*
 		profile.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent mypageActivity = new Intent(MainActivity.this, MyPageActivity.class);
@@ -154,15 +154,15 @@ public class MainActivity extends Activity {
 				startActivity(mypageActivity);
 			}
 		});
-		
+		*/
 		weather_refresh_button.setOnClickListener(new ImageView.OnClickListener(){
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 					
-				new GetWeatherAsync(getBaseContext(), weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, wewather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image).execute("");
-				new GetPollutionAsync(getBaseContext(), weather_today_pm10value, weather_finedust).execute("");
-				new GetNextPollutionAsync(getBaseContext(),weather_next_pm10Info, weather_next_dustmeter).execute("");
+				new GetWeatherAsync(getActivity().getBaseContext(), weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, wewather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image).execute("");
+				new GetPollutionAsync(getActivity().getBaseContext(), weather_today_pm10value, weather_finedust).execute("");
+				new GetNextPollutionAsync(getActivity().getBaseContext(),weather_next_pm10Info, weather_next_dustmeter).execute("");
 			}
 			
 		});
@@ -172,7 +172,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				new GetRecommendPicnicSimpleInfo(getBaseContext(), "11", "1", "15" ).execute("");
+				new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "15" ).execute("");
 			}
 			
 		});
@@ -183,7 +183,7 @@ public class MainActivity extends Activity {
 		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kid);
 		Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
 
-		ImageView profile_image = (ImageView)findViewById(R.id.profile_kidimage_image);
+		ImageView profile_image = (ImageView)view.findViewById(R.id.profile_kidimage_image);
 		
 		BitmapShader shader = new BitmapShader (bitmap,  TileMode.CLAMP, TileMode.CLAMP);
 		Paint paint = new Paint();
@@ -199,12 +199,12 @@ public class MainActivity extends Activity {
 		
 		// weather
 		
-		cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getApplicationContext(), cardCount++));
+		cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), cardCount++));
 		
 		// recommend
 		
 		for(int i=0;i<4;i++){
-			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "Recommend Card", getApplicationContext(), cardCount++));
+			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "Recommend Card", getActivity().getApplicationContext(), cardCount++));
 		}
 
 		mainListView.setAdapter(cardAdapter);
@@ -212,7 +212,7 @@ public class MainActivity extends Activity {
 		for(int i=0;i<4;i++){
 			recommendcardCount = -1;
 			for(int j=0;j<2;j++){
-				recommendCardAdapter[i].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "Recommend Card in Card", getApplicationContext(), recommendcardCount++));
+				recommendCardAdapter[i].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "Recommend Card in Card", getActivity().getApplicationContext(), recommendcardCount++));
 			}
 		}
 		
@@ -221,15 +221,4 @@ public class MainActivity extends Activity {
 			recommendmainListView.setAdapter(recommendCardAdapter[i-1]);
 		}
 	}
-	
-	
-	
-	///////////////////////////////////////////////////////
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-	
 }
