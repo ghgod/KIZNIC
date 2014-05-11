@@ -52,8 +52,6 @@ public class SearchActivity extends Fragment implements OnClickListener{
 	//////////////////////////////////////////////////////
 
 	public void init(){
-		title_home_button = (Button)view.findViewById(R.id.title_home_button);
-		title_mypage_button = (Button)view.findViewById(R.id.title_mypage_button);
 		search_category1_relativelayout = (View)view.findViewById(R.id.search_category1_relativelayout);
 		search_category2_relativelayout = (View)view.findViewById(R.id.search_category2_relativelayout);
 		search_category3_relativelayout = (View)view.findViewById(R.id.search_category3_relativelayout);

@@ -78,18 +78,18 @@ public final class R {
         public static final int title_bookmark_button_down=0x7f020031;
         public static final int title_bookmark_button_focuse=0x7f020032;
         public static final int title_bookmark_button_up=0x7f020033;
-        public static final int title_home_button=0x7f020034;
-        public static final int title_home_button_down=0x7f020035;
-        public static final int title_home_button_focuse=0x7f020036;
-        public static final int title_home_button_up=0x7f020037;
-        public static final int title_mypage_button=0x7f020038;
-        public static final int title_mypage_button_down=0x7f020039;
-        public static final int title_mypage_button_focuse=0x7f02003a;
-        public static final int title_mypage_button_up=0x7f02003b;
-        public static final int title_search_button=0x7f02003c;
-        public static final int title_search_button_down=0x7f02003d;
-        public static final int title_search_button_focuse=0x7f02003e;
-        public static final int title_search_button_up=0x7f02003f;
+        public static final int title_home_button_down=0x7f020034;
+        public static final int title_home_button_focuse=0x7f020035;
+        public static final int title_home_button_up=0x7f020036;
+        public static final int title_home_tab_selector=0x7f020037;
+        public static final int title_mypage_button_down=0x7f020038;
+        public static final int title_mypage_button_focuse=0x7f020039;
+        public static final int title_mypage_button_up=0x7f02003a;
+        public static final int title_mypage_tab_selector=0x7f02003b;
+        public static final int title_search_button_down=0x7f02003c;
+        public static final int title_search_button_focuse=0x7f02003d;
+        public static final int title_search_button_up=0x7f02003e;
+        public static final int title_search_tab_selector=0x7f02003f;
         public static final int weather=0x7f020040;
         public static final int weather_cloudy_image=0x7f020041;
         public static final int weather_cloudy_image_sky=0x7f020042;
@@ -110,8 +110,7 @@ public final class R {
         public static final int windspeed=0x7f020051;
     }
     public static final class id {
-        public static final int LinearLayout1=0x7f09001f;
-        public static final int action_settings=0x7f090042;
+        public static final int action_settings=0x7f09003d;
         public static final int condition_inout_image=0x7f090009;
         public static final int condition_range_seekbar=0x7f09000a;
         public static final int detail_list2_view=0x7f090004;
@@ -122,7 +121,7 @@ public final class R {
         public static final int detailpage_info_text=0x7f09001d;
         public static final int detailpage_infotitle_text=0x7f09001c;
         public static final int main_list_view=0x7f09000b;
-        public static final int main_recommend_card_item_list=0x7f090026;
+        public static final int main_recommend_card_item_list=0x7f090021;
         public static final int mapViewContainer=0x7f090002;
         public static final int mypage_id_text=0x7f09000c;
         public static final int mypage_idinput_image=0x7f09000d;
@@ -133,17 +132,17 @@ public final class R {
         public static final int profile=0x7f090007;
         public static final int profile_kidimage_image=0x7f090008;
         public static final int profile_kidname_text=0x7f090006;
-        public static final int recommend_distance_text=0x7f09002e;
-        public static final int recommend_itemage_text=0x7f09002b;
-        public static final int recommend_itemtitle_text=0x7f09002a;
-        public static final int recommend_morelist_button=0x7f090027;
-        public static final int recommend_period_text=0x7f09002c;
-        public static final int recommend_place_text=0x7f09002d;
-        public static final int recommend_posterimage_image=0x7f090029;
-        public static final int recommend_recommendview_view=0x7f090028;
-        public static final int recommend_title_text=0x7f090025;
-        public static final int recommend_weatherimage_image=0x7f09002f;
-        public static final int recommend_weathertemperature_text=0x7f090030;
+        public static final int recommend_distance_text=0x7f090029;
+        public static final int recommend_itemage_text=0x7f090026;
+        public static final int recommend_itemtitle_text=0x7f090025;
+        public static final int recommend_morelist_button=0x7f090022;
+        public static final int recommend_period_text=0x7f090027;
+        public static final int recommend_place_text=0x7f090028;
+        public static final int recommend_posterimage_image=0x7f090024;
+        public static final int recommend_recommendview_view=0x7f090023;
+        public static final int recommend_title_text=0x7f090020;
+        public static final int recommend_weatherimage_image=0x7f09002a;
+        public static final int recommend_weathertemperature_text=0x7f09002b;
         public static final int search_category1_relativelayout=0x7f090013;
         public static final int search_category2_relativelayout=0x7f090014;
         public static final int search_category3_relativelayout=0x7f090015;
@@ -155,28 +154,24 @@ public final class R {
         public static final int search_list_view=0x7f090017;
         public static final int search_search_edittext=0x7f090011;
         public static final int search_searchbutton_image=0x7f090012;
-        public static final int title_album_button=0x7f090021;
-        public static final int title_bookmark_button=0x7f090023;
-        public static final int title_home_button=0x7f090020;
-        public static final int title_mypage_button=0x7f090024;
-        public static final int title_search_button=0x7f090022;
-        public static final int weather_finedustimage_image=0x7f09003c;
-        public static final int weather_finedusttext_text=0x7f09003d;
-        public static final int weather_getlocation_imagebutton=0x7f090032;
-        public static final int weather_location_text=0x7f090031;
-        public static final int weather_nextdaysimpleinfo_text=0x7f090034;
-        public static final int weather_nextfinedustimage_image=0x7f090040;
-        public static final int weather_nextfinedusttext_text=0x7f090041;
-        public static final int weather_nexttemperature_text=0x7f09003f;
-        public static final int weather_nextweatherimage_image=0x7f09003e;
-        public static final int weather_rainfall_image=0x7f090038;
-        public static final int weather_rainfallpercent_text=0x7f090039;
-        public static final int weather_simpleinfo_text=0x7f090033;
-        public static final int weather_temperature_text=0x7f090036;
-        public static final int weather_weatherimage_image=0x7f090035;
-        public static final int weather_windcilltemperature_text=0x7f090037;
-        public static final int weather_windspeed_image=0x7f09003a;
-        public static final int weather_windspeedpercent_text=0x7f09003b;
+        public static final int title_tab=0x7f09001f;
+        public static final int weather_finedustimage_image=0x7f090037;
+        public static final int weather_finedusttext_text=0x7f090038;
+        public static final int weather_getlocation_imagebutton=0x7f09002d;
+        public static final int weather_location_text=0x7f09002c;
+        public static final int weather_nextdaysimpleinfo_text=0x7f09002f;
+        public static final int weather_nextfinedustimage_image=0x7f09003b;
+        public static final int weather_nextfinedusttext_text=0x7f09003c;
+        public static final int weather_nexttemperature_text=0x7f09003a;
+        public static final int weather_nextweatherimage_image=0x7f090039;
+        public static final int weather_rainfall_image=0x7f090033;
+        public static final int weather_rainfallpercent_text=0x7f090034;
+        public static final int weather_simpleinfo_text=0x7f09002e;
+        public static final int weather_temperature_text=0x7f090031;
+        public static final int weather_weatherimage_image=0x7f090030;
+        public static final int weather_windcilltemperature_text=0x7f090032;
+        public static final int weather_windspeed_image=0x7f090035;
+        public static final int weather_windspeedpercent_text=0x7f090036;
     }
     public static final class layout {
         public static final int activity_detailpage=0x7f030000;
@@ -188,10 +183,12 @@ public final class R {
         public static final int dailog_search2=0x7f030006;
         public static final int detailpage_info_list_card=0x7f030007;
         public static final int detailpage_nevigation_list_card=0x7f030008;
-        public static final int kiznic_title_bar=0x7f030009;
-        public static final int list_item_card=0x7f03000a;
-        public static final int list_item_card_item_card=0x7f03000b;
-        public static final int list_item_weather_card=0x7f03000c;
+        public static final int kiznic_title_home_tab=0x7f030009;
+        public static final int kiznic_title_mypage_tab=0x7f03000a;
+        public static final int kiznic_title_search_tab=0x7f03000b;
+        public static final int list_item_card=0x7f03000c;
+        public static final int list_item_card_item_card=0x7f03000d;
+        public static final int list_item_weather_card=0x7f03000e;
     }
     public static final class menu {
         public static final int main=0x7f080000;
@@ -207,6 +204,7 @@ public final class R {
         public static final int url=0x7f050003;
     }
     public static final class style {
+        public static final int ActionBarTabStyle=0x7f070003;
         /** 
         Base application theme for API 11+. This theme completely replaces
         AppBaseTheme from res/values/styles.xml on API 11+ devices.
@@ -219,8 +217,9 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f070002;
+        public static final int AppBaseTheme=0x7f070004;
         public static final int CustomTheme=0x7f070001;
         public static final int CustomTitleBackground=0x7f070000;
+        public static final int ThemeHoloWithActionBar=0x7f070002;
     }
 }
