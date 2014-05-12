@@ -7,6 +7,7 @@ public class WeatherInfo {
 	String hour;
 	String weatherDesc;
 	String temperature;
+	String feelTemp;
 	String rainProb;
 	String windSpeed;
 	String humidity;
@@ -31,6 +32,10 @@ public class WeatherInfo {
 	
 	public void setTemperature(String temperature) {
 		this.temperature = temperature;
+	}
+	
+	public void setFeelTemp(String feelTemp) {
+		this.feelTemp = feelTemp;
 	}
 	
 	public void setRainProb(String rainProb) {
@@ -65,6 +70,10 @@ public class WeatherInfo {
 	
 	public String getTemperature() {
 		return temperature;
+	}
+	
+	public String getFeelTemp() {
+		return feelTemp;
 	}
 	
 	public String getRainProb() {

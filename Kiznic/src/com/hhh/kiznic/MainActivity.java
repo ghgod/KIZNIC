@@ -23,10 +23,13 @@ import com.hhh.kiznic.card.CardAdapter;
 import com.hhh.kiznic.card.MainRecommendCard;
 import com.hhh.kiznic.card.MainRecommendCarditemCard;
 import com.hhh.kiznic.card.MainWeatherCard;
-import com.hhh.kiznic.connection.GetNextPollutionAsync;
 import com.hhh.kiznic.connection.GetRecommendPicnicSimpleInfo;
-import com.hhh.kiznic.connection.GetPollutionAsync;
 import com.hhh.kiznic.connection.GetWeatherAsync;
+import com.hhh.kiznic.databasemanager.Databasehelper;
+import com.hhh.kiznic.dataclass.PollutionInfo;
+import com.hhh.kiznic.dataclass.WeatherInfo;
+import com.hhh.kiznic.util.LocationHelper;
+import com.hhh.kiznic.util.Util;
 
 @SuppressLint("ValidFragment")
 public class MainActivity extends Fragment {
@@ -52,7 +55,7 @@ public class MainActivity extends Fragment {
 	private TextView weather_next_temp;
 	private TextView weather_today_pm10value;
 	private TextView weather_next_pm10Info;
-	private TextView wewather_today_feeltemp;
+	private TextView weather_today_feeltemp;
 	
 	
 	private ImageView weather_refresh_button;
@@ -61,7 +64,7 @@ public class MainActivity extends Fragment {
 	private ImageView weather_next_image;
 	
 	private ToggleButton inside;
-	
+	Databasehelper dbHelper;
 	private Context context;
 	
 	private View view;
@@ -78,18 +81,14 @@ public class MainActivity extends Fragment {
 		view = inflater.inflate(R.layout.activity_main, null);
 		
 		//KiznicTitle a = new KiznicTitle(this);
-		
+		dbHelper = new Databasehelper(getActivity().getBaseContext());
 		init();
 		
 		clicklistener();
 		
 		profile_circleimage();
-		
-//////////////////////////////////////////
-//new GetWeatherAsync(getBaseContext(), weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, wewather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image).execute("");
-//new GetPollutionAsync(getBaseContext(), weather_today_pm10value, weather_finedust).execute("");
-//new GetNextPollutionAsync(getBaseContext(),weather_next_pm10Info, weather_next_dustmeter).execute("");
-//////////////////////////////////////////
+		new GetWeatherAsync(getActivity().getBaseContext(), 0, dbHelper,  weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, weather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image, weather_finedust, weather_today_pm10value,  weather_next_pm10Info, weather_next_dustmeter).execute("");
+
 		
 		return view;
 	}
@@ -116,7 +115,7 @@ public class MainActivity extends Fragment {
 		weather_next_temp = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nexttemperature_text);
 		weather_next_pm10Info  = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextfinedusttext_text);
 		weather_refresh_button = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_getlocation_imagebutton);
-		wewather_today_feeltemp = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_windcilltemperature_text);
+		weather_today_feeltemp = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_windcilltemperature_text);
 		weather_finedust = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_finedustimage_image);
 		weather_next_dustmeter = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextfinedustimage_image);
 		
@@ -129,40 +128,12 @@ public class MainActivity extends Fragment {
 	
 	private void clicklistener(){
 		
-		/*
-		profile.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Intent mypageActivity = new Intent(MainActivity.this, MyPageActivity.class);
-				startActivity(mypageActivity);
-			}
-		});
-		
-		title_search_button.setOnClickListener(new OnClickListener(){
-			public void onClick(View v){
-				title_search_button.setSelected(true);
-				Intent searchActivity = new Intent(MainActivity.this, SearchActivity.class);
-				searchActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-				startActivity(searchActivity);
-			}
-		});
-		
-		title_mypage_button.setOnClickListener(new OnClickListener(){
-			public void onClick(View v){
-				title_mypage_button.setSelected(true);
-				Intent mypageActivity = new Intent(MainActivity.this, MyPageActivity.class);
-				mypageActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-				startActivity(mypageActivity);
-			}
-		});
-		*/
 		weather_refresh_button.setOnClickListener(new ImageView.OnClickListener(){
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 					
-				new GetWeatherAsync(getActivity().getBaseContext(), weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, wewather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image).execute("");
-				new GetPollutionAsync(getActivity().getBaseContext(), weather_today_pm10value, weather_finedust).execute("");
-				new GetNextPollutionAsync(getActivity().getBaseContext(),weather_next_pm10Info, weather_next_dustmeter).execute("");
+				new GetWeatherAsync(getActivity().getBaseContext(),1, dbHelper, weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, weather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image, weather_finedust, weather_today_pm10value,  weather_next_pm10Info, weather_next_dustmeter).execute("");				
 			}
 			
 		});
@@ -172,9 +143,18 @@ public class MainActivity extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "15" ).execute("");
-			}
+				CardAdapter cardAdapter = new CardAdapter(getActivity().getBaseContext());
+				CardAdapter[] recommendCardAdapter = new CardAdapter[4];
+				
+				for(int i=0;i<4;i++){
+					recommendCardAdapter[i] = new CardAdapter(getActivity().getBaseContext());
+				}
 			
+				cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
+				getDBWeatherInfo();
+				//cardAdapter.notifyDataSetChanged();
+				new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "15", cardAdapter, mainListView, recommendCardAdapter).execute("");
+			}
 		});
 
 	}
@@ -199,26 +179,44 @@ public class MainActivity extends Fragment {
 		
 		// weather
 		
-		cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), cardCount++));
+		cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
 		
 		// recommend
+				
+		new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "15", cardAdapter, mainListView, recommendCardAdapter ).execute("");
 		
-		for(int i=0;i<4;i++){
-			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "Recommend Card", getActivity().getApplicationContext(), cardCount++));
-		}
-
 		mainListView.setAdapter(cardAdapter);
 		
-		for(int i=0;i<4;i++){
-			recommendcardCount = -1;
-			for(int j=0;j<2;j++){
-				recommendCardAdapter[i].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "Recommend Card in Card", getActivity().getApplicationContext(), recommendcardCount++));
-			}
-		}
 		
-		for(int i=1;i<=4;i++){
-			recommendmainListView = (ListView)mainListView.getAdapter().getView(i, null, mainListView).findViewById(R.id.main_recommend_card_item_list);
-			recommendmainListView.setAdapter(recommendCardAdapter[i-1]);
-		}
+	
+	}
+	
+	public void getDBWeatherInfo() {
+		
+		WeatherInfo dbTodayWeatherInfo = dbHelper.getTodayWeatherInfo();
+		WeatherInfo dbNextWeatherInfo = dbHelper.getNextWeatherInfo();
+		PollutionInfo dbTodayPollutionInfo = dbHelper.getPollutionInfo();
+		String dbNextPollutionInfo = dbHelper.getNextPollutionInfo();
+		Util util = new Util();
+		
+		LocationHelper location = new LocationHelper(getActivity().getBaseContext());
+		location.run();
+		
+		weather_mylocation.setText(location.getMyLocation());
+		weather_today_timedesc.setText(dbTodayWeatherInfo.getDayState() + " " + dbTodayWeatherInfo.getTime() + ", " + dbTodayWeatherInfo.getWeatherDesc());
+		weather_today_temp.setText(dbTodayWeatherInfo.getTemperature()+"℃");
+		weather_today_rainprob.setText(" " + dbTodayWeatherInfo.getRainProb()+ " %");
+		weather_today_windspeed.setText(" " + dbTodayWeatherInfo.getWindSpeed() + " m/s");
+		weather_today_feeltemp.setText("체감 온도 " + dbTodayWeatherInfo.getFeelTemp()+"℃");
+		weather_next_timedesc.setText(dbNextWeatherInfo.getDayState() + " " + dbNextWeatherInfo.getTime() + ", " + dbNextWeatherInfo.getWeatherDesc());
+		weather_next_temp.setText(dbNextWeatherInfo.getTemperature()+"℃");
+		weather_image.setImageBitmap(util.getWeatherImage(getActivity(), dbTodayWeatherInfo.getWeatherDesc()));
+		weather_next_image.setImageBitmap(util.getWeatherImage(getActivity(), dbNextWeatherInfo.getWeatherDesc()));
+		
+		weather_today_pm10value.setText("미세먼지 농도 " + dbTodayPollutionInfo.getPM10Value());
+		util.weather_finedust_set(weather_finedust,(int)((1.2 * Integer.parseInt(dbTodayPollutionInfo.getPM10Value()))), false, null);
+		
+		weather_next_pm10Info.setText("미세먼지  " + dbNextPollutionInfo);
+		util.weather_finedust_set(weather_next_dustmeter, 0, true, dbNextPollutionInfo);
 	}
 }

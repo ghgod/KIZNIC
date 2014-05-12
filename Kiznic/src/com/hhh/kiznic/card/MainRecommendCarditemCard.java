@@ -13,6 +13,7 @@ import com.hhh.kiznic.MainActivity;
 import com.hhh.kiznic.MyPageActivity;
 import com.hhh.kiznic.R;
 import com.hhh.kiznic.SearchActivity;
+import com.hhh.kiznic.dataclass.PicnicSimpleInfo;
 
 public class MainRecommendCarditemCard extends Card implements View.OnClickListener{
 
@@ -25,13 +26,15 @@ public class MainRecommendCarditemCard extends Card implements View.OnClickListe
 	ImageView recommend_weatherimage_image;
 	View recommend_recommendview_view;
 	
+	PicnicSimpleInfo simpleInfo;
+	
 	Context context;
 
-	public MainRecommendCarditemCard(int layout, String cardName, Context context, int cardId){
+	public MainRecommendCarditemCard(int layout, String cardName, Context context, int cardId, PicnicSimpleInfo simpleInfo){
 		super(layout, cardName, context, cardId);
 		
 		this.context = context;
-		
+		this.simpleInfo = simpleInfo;
 		init();
 		setListener();
 	}

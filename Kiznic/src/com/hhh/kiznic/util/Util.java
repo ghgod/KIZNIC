@@ -1,8 +1,11 @@
 package com.hhh.kiznic.util;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -217,6 +220,10 @@ public class Util {
 		 if(cal.get(Calendar.DAY_OF_MONTH) < 10){
 			 day = "0"+String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
 		 }
+		 else{
+			 day = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+		 }
+		 
 		return String.valueOf(cal.get(Calendar.YEAR))+"-"+month+"-"+day;
 	}
 
@@ -370,6 +377,45 @@ public static String transformRegionName(String region1) {
 		return mTime;
 	}
 	
+	public String getWeatherURL(Context mContext, String topRegion, String middleRegion) throws IOException {
+		
+		InputStream is = mContext.getAssets().open("weather_code.txt");
+		BufferedReader bufferReader = new BufferedReader(new InputStreamReader(is));
+		ArrayList<String[]> sepList = new ArrayList<String[]>();
+		
+		String rLine = null;
+		boolean hasMore = true;
+		String gridX = "";
+		String gridY = "";
+		
+		
+		while(hasMore) {
+			if((rLine = bufferReader.readLine()) != null){
+				sepList.add(rLine.split(","));
+				hasMore = true;
+			} else {
+				hasMore = false;
+			}
+		}
+		
+		bufferReader.close();
+		is.close();
+		
+		for(int i=0; i<sepList.size()-1; i++) {
+			
+			String top = sepList.get(i)[1];
+			String mid = sepList.get(i)[2];
+			
+			
+			if(top.equals(topRegion) && mid.equals(middleRegion)) {
+				gridX = sepList.get(i)[3];
+				gridY = sepList.get(i)[4];
+			}
+		}
+	
+		return "http://www.kma.go.kr/wid/queryDFS.jsp?gridx="+gridX+"&gridy="+gridY;
+	}
+	/*
 	public String getWeatherURL(String topRegion, String middleRegion, String bottomRegion) throws JSONException {
 		
 		String sido = "http://www.kma.go.kr/DFSROOT/POINT/DATA/top.json.txt";
@@ -419,7 +465,7 @@ public static String transformRegionName(String region1) {
 		}
 		return "http://www.kma.go.kr/wid/queryDFS.jsp?gridx="+gridX+"&gridy="+gridY;
 	}
-	
+	*/
 	
 	public ArrayList<WeatherInfo> parseWeatherXML(String xmlText) throws IOException {
 		
@@ -435,6 +481,7 @@ public static String transformRegionName(String region1) {
 		String rainProb = "";
 		String windSpeed = "";
 		String temp = "";
+		String feelTemp = "";
 		String humidity = "";
 					
 		try {
@@ -443,7 +490,7 @@ public static String transformRegionName(String region1) {
 			XmlPullParser parser = factory.newPullParser();
 			parser.setInput(new StringReader(xmlText));
 			int eventType = parser.getEventType();
-			
+			Util util = new Util();
 			String seqNo = "";
 						
 			while(eventType != XmlPullParser.END_DOCUMENT) {
@@ -532,6 +579,7 @@ public static String transformRegionName(String region1) {
 							weatherInfo.setRainProb(rainProb);
 							weatherInfo.setWindSpeed(windSpeed.substring(0, 3));
 							weatherInfo.setTemperature(temp);
+							weatherInfo.setFeelTemp(util.convertFeelTemp(temp, windSpeed.substring(0, 3)));
 							weatherInfo.setDayState(Util.convertDayState(dayState, searchDate));
 							weatherInfo.setHumidity(humidity);
 							weatherInfoList.add(Integer.parseInt(seqNo), weatherInfo);
@@ -738,6 +786,7 @@ public static String transformRegionName(String region1) {
 			simpleInfo.setPlayNo(util.checkNull(playInfo.getString("play_no")));
 			simpleInfo.setPlayTitle(util.checkNull(playInfo.getString("play_title")));
 			simpleInfo.setPlayType(util.checkNull(playInfo.getString("play_type")));
+			//simpleInfo.setPlayAges(util.checkNull(playInfo.getString("play_ages")));
 			simpleInfo.setPlayPlace(util.checkNull(playInfo.getString("play_place")));
 			simpleInfo.setPlayThumb(util.checkNull(playInfo.getString("play_thumb")));
 			simpleInfo.setPlayStartDate(util.checkNull(playInfo.getString("play_start_date")));
@@ -893,12 +942,10 @@ public static String transformRegionName(String region1) {
 		canvas.drawCircle(20, 20, 15, circlepnt);
 
 		// String
-		/*
 		Stringpnt.setColor(Color.parseColor(color_string));
 		Stringpnt.setTextSize(10);
 		Stringpnt.setAntiAlias(true);
 		canvas.drawText(finedust_text, 15, 25, Stringpnt);
-		*/
 		imageview.setImageBitmap(b);
 
 	}
@@ -906,7 +953,7 @@ public static String transformRegionName(String region1) {
 	
 	public String checkNull(String str) {
 		if(str.equals("null")){
-			return "";
+			return "kiznic";
 		}
 		else {
 			return str;

@@ -8,6 +8,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.hhh.kiznic.R;
+import com.hhh.kiznic.card.CardAdapter;
+import com.hhh.kiznic.card.MainRecommendCard;
+import com.hhh.kiznic.card.MainRecommendCarditemCard;
 import com.hhh.kiznic.dataclass.ConditionforSimpleInfo;
 import com.hhh.kiznic.dataclass.PicnicSimpleInfo;
 import com.hhh.kiznic.dataclass.PollutionInfo;
@@ -18,13 +21,22 @@ import com.hhh.kiznic.util.Util;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, String> {
 
 	Context mContext;
 	String mySiDo;
 	String[] addressArray;
-	
+	ListView mainListView;
+	CardAdapter[] recommendCardAdapter;
+	CardAdapter cardAdapter;
 	String ages;
 	String inSide;
 	String latitude;
@@ -32,11 +44,16 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 	String distance;
 	JSONArray sendConditionInfo;
 	
-	public GetRecommendPicnicSimpleInfo(Context mContext, String ages, String inSide, String distance) {
+	TextView categoryName[] = new TextView[4];
+	
+	public GetRecommendPicnicSimpleInfo(Context mContext, String ages, String inSide, String distance, CardAdapter cardAdapter, ListView mainListView, CardAdapter[] recommendCardAdapter) {
 		this.mContext = mContext;
 		this.ages = ages;
 		this.inSide = inSide;
 		this.distance = distance;
+		this.cardAdapter = cardAdapter;
+		this.mainListView = mainListView;
+		this.recommendCardAdapter = recommendCardAdapter;
 	}
 	
 	protected void onPreExecute() {
@@ -56,8 +73,8 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 		Util util = new Util();
 		String url = null;
 		try {
-			url = util.getWeatherURL(addressArray[0], addressArray[1], addressArray[2]);
-		} catch (JSONException e) {
+			url = util.getWeatherURL(mContext, addressArray[0], addressArray[1]);
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -121,10 +138,14 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 	
 	protected void onPostExecute(String result) { 
 		
-	//	Log.d("result", result);
+	
 		Util util = new Util();
 		
-		ArrayList<PicnicSimpleInfo> simpleInfo = null;
+		ArrayList<PicnicSimpleInfo> simpleInfo = new ArrayList<PicnicSimpleInfo>();
+		ArrayList<PicnicSimpleInfo> simpleInfo1 = new ArrayList<PicnicSimpleInfo>();
+		ArrayList<PicnicSimpleInfo> simpleInfo2 = new ArrayList<PicnicSimpleInfo>();
+		ArrayList<PicnicSimpleInfo> simpleInfo3 = new ArrayList<PicnicSimpleInfo>();
+		ArrayList<PicnicSimpleInfo> simpleInfo4 = new ArrayList<PicnicSimpleInfo>();
 		
 		try {
 			simpleInfo = util.parsePicnicSimpleInfoJSON(result);
@@ -132,11 +153,101 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	
+		for(int i=0; i<simpleInfo.size(); i++) {
+			if(simpleInfo.get(i).getPlayType().equals("1")) {
+				simpleInfo1.add(simpleInfo.get(i));
+				
+			}
+			if(simpleInfo.get(i).getPlayType().equals("2")) {
+				simpleInfo2.add(simpleInfo.get(i));
+				
+			}
+			else if(simpleInfo.get(i).getPlayType().equals("3")) {
+				simpleInfo3.add(simpleInfo.get(i));
+				
+			}
+			else if(simpleInfo.get(i).getPlayType().equals("4")) {
+				simpleInfo4.add(simpleInfo.get(i));
+				
+			}
+		}
 		
-	//	Log.d("picnicSimpleInfo", simpleInfo.get(0).getPlayAddress()+"I'm null");
+		Log.d("simpleInfo1", String.valueOf(simpleInfo1.size()));
+		Log.d("simpleInfo2", String.valueOf(simpleInfo2.size()));
+		Log.d("simpleInfo3", String.valueOf(simpleInfo3.size()));
+		Log.d("simpleInfo4", String.valueOf(simpleInfo4.size()));
 		
+		int count1 = 1;
+		int count2 = -1;
 			
+		if(simpleInfo1.size() == 0) {
+			count2++;
+		}
+		else {
+			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "공연/전시", mContext, count1));
+			for(int i=0; i<simpleInfo1.size(); i++) {
+				recommendCardAdapter[count2].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "공연/전시", mContext, count1, simpleInfo1.get(i)));
+			}
+			count1++;
+			count2++;
+		}
+	
+		if(simpleInfo2.size() == 0) {
+			count2++;
+		} 
+		else {
+			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "놀이", mContext, count1));
+			for(int i=0; i<simpleInfo2.size(); i++) {
+				recommendCardAdapter[count2].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "놀이", mContext, count1, simpleInfo2.get(i)));
+			}
+			count1++;
+			count2++;
+		}
+			
+				
+		if(simpleInfo3.size() == 0) {
+			count2++;
+		} 
+		else {
+			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "체험", mContext, count1));
+			for(int i=0; i<simpleInfo3.size(); i++) {
+				recommendCardAdapter[count2].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "체험", mContext, count1, simpleInfo3.get(i)));
+			}
+			count1++;
+			count2++;
+		}
+					
+		if(simpleInfo4.size() == 0) {
+			count2++;
+		} 
+		else {
+			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "기타", mContext, count1));
+			for(int i=0; i<simpleInfo4.size(); i++) {
+				recommendCardAdapter[count2].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "기타", mContext, count1, simpleInfo4.get(i)));	
+			}
+			count1++;
+			count2++;
+		}			
+		
+		simpleInfo1.clear();
+		simpleInfo2.clear();
+		simpleInfo3.clear();
+		simpleInfo4.clear();
+		
+		mainListView.setAdapter(cardAdapter);
+		
+		for(int i=1;i<=count2;i++){
+			ListView recommendmainListView = (ListView)mainListView.getAdapter().getView(i, null, mainListView).findViewById(R.id.main_recommend_card_item_list);
+			recommendmainListView.setAdapter(recommendCardAdapter[i-1]);
+		}
+		
+		
+		
 	}
+	
+	
+	
 	
 	
 	
