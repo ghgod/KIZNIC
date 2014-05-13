@@ -1,5 +1,11 @@
 package com.hhh.kiznic;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import com.hhh.kiznic.SearchcategoryDialog.onSubmitListener;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
@@ -9,24 +15,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 @SuppressLint("ValidFragment")
-public class SearchActivity extends Fragment implements OnClickListener{
+public class SearchActivity extends Fragment implements OnClickListener, onSubmitListener{
 
-	private Button title_home_button;
-	private Button title_mypage_button;
-	
 	private View search_category1_relativelayout;
 	private View search_category2_relativelayout;
 	private View search_category3_relativelayout;
 	private View search_category4_relativelayout;
 	
 	private SearchcategoryDialog listdialog;
-	
-	private AdapterView.OnItemClickListener singleListListener = null;
-	private AdapterView.OnItemClickListener firstListListener = null;
-	private AdapterView.OnItemClickListener secondListListener = null;
 	
 	private Context context;
 	
@@ -103,34 +103,64 @@ public class SearchActivity extends Fragment implements OnClickListener{
 	
 	private void showListDialog(String title){
 		
+		listdialog = new SearchcategoryDialog();
+		
 		if(!title.equals("장소")){
-			singleListListener = new AdapterView.OnItemClickListener() {
+			AdapterView.OnItemClickListener singleListListener = new AdapterView.OnItemClickListener() {
 		        @Override
 		        public void onItemClick(AdapterView<?> parent, View view, int position, long l_position) {
 		            //String tv = (String)parent.getAdapter().getItem(position);
 		        }
 		    };
 		    
-		    listdialog = new SearchcategoryDialog(context, title, singleListListener);
+		    // list item set
+		    
+		    String[] list_item = this.context.getResources().getStringArray(R.array.dialog_list_genre);
+		    List<String> listItem = Arrays.asList(list_item);
+			ArrayList<String> itemArrayList = new ArrayList<String> (listItem);
+			ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this.context, android.R.layout.simple_list_item_1, itemArrayList);
+		
+		    listdialog.dialog_title = title;
+		    listdialog.first_arrayAdapter = arrayAdapter;
+		    listdialog.firstlistClickListener = singleListListener;
+		
 		}
 		else{
-			firstListListener = new AdapterView.OnItemClickListener() {
+			AdapterView.OnItemClickListener firstListListener = new AdapterView.OnItemClickListener() {
 		        @Override
 		        public void onItemClick(AdapterView<?> parent, View view, int position, long l_position) {
 		            //String tv = (String)parent.getAdapter().getItem(position);
 		        }
 		    };
-		    secondListListener = new AdapterView.OnItemClickListener() {
+		    AdapterView.OnItemClickListener secondListListener = new AdapterView.OnItemClickListener() {
 		        @Override
 		        public void onItemClick(AdapterView<?> parent, View view, int position, long l_position) {
 		            //String tv = (String)parent.getAdapter().getItem(position);
 		        }
 		    };
 		    
-		    listdialog = new SearchcategoryDialog(context, title, firstListListener, secondListListener);
+		    String[] list_item = this.context.getResources().getStringArray(R.array.dialog_list_genre);
+			List<String> listItem = Arrays.asList(list_item);
+			ArrayList<String> itemArrayList = new ArrayList<String> (listItem);
+			ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this.context, android.R.layout.simple_list_item_1, itemArrayList);
+			
+			String[] list_item2 = this.context.getResources().getStringArray(R.array.dialog_list_genre);
+			List<String> listItem2 = Arrays.asList(list_item2);
+			ArrayList<String> itemArrayList2 = new ArrayList<String> (listItem2);
+			ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(this.context, android.R.layout.simple_list_item_1, itemArrayList2);
+			
+			listdialog.dialog_title = title;
+			listdialog.first_arrayAdapter = arrayAdapter;
+			listdialog.second_arrayAdapter = arrayAdapter2;
+		    listdialog.firstlistClickListener = firstListListener;
+		    listdialog.secondlistClickListener = secondListListener;
 		}
 		
-		listdialog.show();
+		listdialog.show(getFragmentManager(), "categorylist");
 	}
 	
+	@Override
+	public void setListener(String arg){
+		
+	}
 }

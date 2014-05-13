@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="250dip"
+    android:layout_height="300dip"
     android:gravity="center"
     android:orientation="vertical" >
-    
-    <LinearLayout
-        android:layout_width="250dip"
-        android:layout_height="300dip"
-        android:orientation="vertical">
-
+   
         <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
@@ -18,9 +13,8 @@
         android:background="#ACACAC">
         
             <LinearLayout
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="9">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
                 
                 <TextView
                     android:id="@+id/search_dailog_title_text"
@@ -31,18 +25,6 @@
 	                android:text="기간 선택"
 	                android:textColor="#000000"
 	                android:textSize="16sp"/>
-                
-            </LinearLayout>
-            
-            <LinearLayout
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-                
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/rainfall"/>
                 
             </LinearLayout>
             
@@ -65,7 +47,8 @@
 				android:listSelector="@android:color/transparent"
 				android:cacheColorHint="@android:color/transparent"
 				android:divider="#ACACAC"
-				android:dividerHeight="1dip" />
+				android:dividerHeight="1dip" 
+				android:scrollbars="none"/>
 	        
 	        <ListView
 				android:id="@+id/search_dialog_secondlist_list"
@@ -78,11 +61,9 @@
 				android:listSelector="@android:color/transparent"
 				android:cacheColorHint="@android:color/transparent"
 				android:divider="#ACACAC"
-				android:dividerHeight="1dip" />
+				android:dividerHeight="1dip" 
+				android:scrollbars="none"/>
 	        
 	    </LinearLayout>
 	        
-        
-    </LinearLayout>
-
 </LinearLayout>

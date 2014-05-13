@@ -44,7 +44,8 @@
 		android:listSelector="@android:color/transparent"
 		android:cacheColorHint="@android:color/transparent"
 		android:divider="#DEE7E7"
-		android:dividerHeight="1dip" />
+		android:dividerHeight="1dip" 
+		android:scrollbars="none"/>
 	    
 	    <!-- more receommend list -->
 	    
