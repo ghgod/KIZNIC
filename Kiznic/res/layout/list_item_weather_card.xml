@@ -21,7 +21,7 @@
 		 <LinearLayout
 		     android:layout_width="match_parent"
 		     android:layout_height="0dip"
-		     android:layout_weight="4"
+		     android:layout_weight="45"
 		     android:background="#606AC2C7"
 		     android:orientation="horizontal">
 		     
@@ -48,7 +48,7 @@
 		 <LinearLayout
 		     android:layout_width="match_parent"
 		     android:layout_height="0dip"
-		     android:layout_weight="3"
+		     android:layout_weight="35"
 		     android:orientation="horizontal">
 		         
 		     <LinearLayout
@@ -96,13 +96,14 @@
 		 <LinearLayout
 		     android:layout_width="match_parent"
 		     android:layout_height="0dip"
-		     android:layout_weight="18"
+		     android:layout_weight="130"
 		     android:orientation="horizontal">
 		     
 		     <LinearLayout
 		         android:layout_width="0dip"
 		         android:layout_height="match_parent"
 		         android:layout_weight="28"
+		         android:layout_marginRight="1dip"
 		         android:background="#606AC2C7"
 		         android:orientation="vertical">
 		         
@@ -115,196 +116,57 @@
 		             	<LinearLayout
 		             	    android:layout_width="0dip"
 		             	    android:layout_height="match_parent"
-		             	    android:layout_weight="10">
+		             	    android:layout_weight="145"
+		             	    android:gravity="center">
 		             	    
 		             	    <ImageView
-		                     android:id="@+id/weather_weatherimage_image"
-		                     android:layout_width="match_parent"
-		                     android:layout_height="match_parent"
-		                     android:layout_marginLeft="10dip"
-		                     android:layout_gravity="center"
-		                     android:src="@drawable/weather_image"/>
+			                     android:id="@+id/weather_weatherimage_image"
+			                     android:layout_width="match_parent"
+			                     android:layout_height="match_parent"
+			                     android:layout_gravity="center"
+			                     android:padding="5dip"
+			                     android:src="@drawable/weather_image"/>
 		             	    
 		             	</LinearLayout>
 
 		             	<LinearLayout
 		             	    android:layout_width="0dip"
 		             	    android:layout_height="match_parent"
-		             	    android:layout_weight="17"
+		             	    android:layout_weight="180"
+		             	    android:gravity="center"
 		             	    android:orientation="vertical" >
 		             	    
-		             	    <RelativeLayout
-		             	        android:layout_width="match_parent"
-		             	        android:layout_height="0dip"
-		             	        android:layout_weight="13">
-		             	        
-		             	        <TextView
-				                    android:id="@+id/weather_temperature_text"
-				                    android:layout_width="wrap_content"
-				                    android:layout_height="wrap_content"
-									android:layout_centerInParent="true"
-				                    android:text="18.5°"
-				                    android:textColor="#000000"
-				                    android:textSize="40sp"/>
-		             	        
-		             	    </RelativeLayout>
-		             	    
-		             	    <LinearLayout
-		             	        android:layout_width="match_parent"
-		             	        android:layout_height="0dip"
-		             	        android:layout_weight="5"
-		             	        android:orientation="horizontal">
-
-		             	        <RelativeLayout
-		             	            android:layout_width="match_parent"
-		             	            android:layout_height="match_parent" >
-
-		             	            <TextView
-		             	                android:id="@+id/weather_windcilltemperature_text"
-		             	                android:layout_width="wrap_content"
-		             	                android:layout_height="wrap_content"
-		             	                android:layout_centerInParent="true"
-		             	                android:text="체감온도 -9.3°"
-		             	                android:textColor="#FFFFFF"
-		             	                android:textSize="10sp" />
-		             	        </RelativeLayout>
-		             	        
-		             	    </LinearLayout>
+		             	    <TextView
+				                android:id="@+id/weather_temperature_text"
+				                android:layout_width="wrap_content"
+				                android:layout_height="wrap_content"
+				                android:layout_gravity="center"
+	 		                    android:text="18.5°"
+	 		                    android:textColor="#000000"
+			                    android:textSize="45sp"/>
+		            	    
+		                    <TextView
+		             	        android:id="@+id/weather_windcilltemperature_text"
+		                        android:layout_width="wrap_content"
+		      	                android:layout_height="wrap_content"
+								android:layout_gravity="center"
+		             	        android:text="체감온도 -9.3°"
+		             	        android:textColor="#FFFFFF"
+		             	        android:textSize="15sp" />
 		             	    
 		             	</LinearLayout>
 		             
 		         </LinearLayout>
-		         
-		         <LinearLayout
-		             android:layout_width="match_parent"
-		             android:layout_height="0dip"
-		             android:layout_weight="8"
-		             android:orientation="horizontal">
-		             
-		             <LinearLayout
-		                 android:layout_width="0dip"
-		                 android:layout_height="match_parent"
-		                 android:layout_weight="10"
-		                 android:orientation="vertical">
-		             	    
-		                 <RelativeLayout
-		                     android:layout_width="match_parent"
-		                     android:layout_height="0dip"
-		                     android:layout_weight="1">
-		                     
-		                     <ImageView
-					             android:id="@+id/weather_rainfall_image"
-						         android:layout_width="15dip"
-						         android:layout_height="15dip"
-						         android:layout_centerVertical="true"
-						         android:layout_marginLeft="20dip"
-						         android:src="@drawable/rainfall"/>
-					         
-					     	 <TextView
-					     	     android:id="@+id/weather_rainfallpercent_text"
-						         android:layout_width="wrap_content"
-						         android:layout_height="wrap_content"
-						         android:layout_gravity="center"
-						         android:layout_centerVertical="true"
-						         android:layout_toRightOf="@id/weather_rainfall_image"
-						         android:text="100%"
-						         android:textColor="#FFFFFF"
-						         android:textSize="10sp"/>
-		                     
-		                 </RelativeLayout>
-		                 
-		                 <RelativeLayout
-		                     android:layout_width="match_parent"
-		                     android:layout_height="0dip"
-		                     android:layout_weight="1">
-					     	 
-		                     <ImageView
-				     	         android:id="@+id/weather_windspeed_image"
-					             android:layout_width="15dip"
-					             android:layout_height="15dip"
-						         android:layout_centerVertical="true"
-						         android:layout_marginLeft="20dip"
-					             android:src="@drawable/windspeed"/>
-				         
-				     	     <TextView
-				     	         android:id="@+id/weather_windspeedpercent_text"
-					             android:layout_width="wrap_content"
-					             android:layout_height="wrap_content"
-						         android:layout_centerVertical="true"
-						         android:layout_toRightOf="@id/weather_windspeed_image"
-					             android:text="100%"
-					             android:textColor="#FFFFFF"
-					             android:textSize="10sp"/>
-		                     
-		                 </RelativeLayout>
-		                 
-		             </LinearLayout>
-
-		             <LinearLayout
-		             	 android:layout_width="0dip"
-		              	 android:layout_height="match_parent"
-		             	 android:layout_weight="17"
-		                 android:orientation="vertical" >
-		                 
-		                 <RelativeLayout
-		                     android:layout_width="match_parent"
-		                     android:layout_height="0dip"
-		                     android:layout_weight="3">
-				     	     
-			                 <ImageView
-			                     android:id="@+id/weather_finedustimage_image"
-			                     android:layout_width="40dip"
-			                     android:layout_height="40dip"
-								 android:layout_centerInParent="true"
-			                     android:src="@drawable/finedust"/>
-		                     
-			                 <TextView
-			                     android:layout_width="wrap_content"
-			                     android:layout_height="wrap_content"
-			                     android:layout_centerInParent="true"
-			                     android:text="보통"
-			                     android:textColor="#000000"
-			                     android:textSize="12sp"/>
-			                 
-		                 </RelativeLayout>
-		                 
-		                 <RelativeLayout
-		                     android:layout_width="match_parent"
-		                     android:layout_height="0dip"
-		                     android:layout_weight="2">
-
-		                     <TextView
-			                     android:id="@+id/weather_finedusttext_text"
-			                     android:layout_width="wrap_content"
-			                     android:layout_height="wrap_content"
-			                     android:layout_marginTop="5dip"
-								 android:layout_centerInParent="true"
-			                     android:text="미세먼지 농도 50"
-			                     android:textColor="#FFFFFF"
-			                     android:textSize="10sp"/>
-		                     
-		                 </RelativeLayout>
-		                 
-		                 
-		                 
-		             </LinearLayout>
-		             
-		         </LinearLayout>
-		         
+		      
 		     </LinearLayout>
 
 		     <LinearLayout
 		         android:layout_width="0dip"
 		         android:layout_height="match_parent"
 		         android:layout_weight="15"
-		         android:background = "#20F1F2F2"
-		         android:orientation="vertical">
-		             
-		         <LinearLayout
-		             android:layout_width="match_parent"
-		             android:layout_height="0dip"
-		             android:layout_weight="87"
-		             android:orientation="horizontal">
+		         android:layout_marginLeft="1dip"
+		         android:background = "#606AC2C7"
+		         android:orientation="horizontal">
 		             
 		             <LinearLayout
 		                 android:layout_width="0dip"
@@ -316,6 +178,7 @@
 		                     android:layout_width="match_parent"
 		                     android:layout_height="match_parent"
 		                     android:layout_gravity="center"
+		                     android:padding="3dip"
 		                     android:src="@drawable/weather_image"/>
 		                 
 		             </LinearLayout>
@@ -336,33 +199,168 @@
 		                 
 		             </RelativeLayout>
 		             
+		     </LinearLayout>
+		     
+		 </LinearLayout>
+		 
+		 <LinearLayout
+		     android:layout_width="match_parent"
+		     android:layout_height="0dip"
+		     android:layout_weight="45"
+		     android:layout_marginTop="1dip"
+		     android:background="#606AC2C7"
+		     android:orientation="horizontal">
+		     
+		     <LinearLayout
+		         android:layout_width="0dip"
+		         android:layout_height="match_parent"
+		         android:layout_weight="28"
+		         android:orientation="horizontal">
+		         
+		         <LinearLayout
+		             android:layout_width="0dip"
+		             android:layout_height="match_parent"
+		             android:layout_weight="1"
+		             android:gravity="center"
+		             android:orientation="horizontal">
+		             
+		             <ImageView
+					     android:id="@+id/weather_rainfall_image"
+				         android:layout_width="20dip"
+					     android:layout_height="20dip"
+				         android:layout_gravity="center_vertical"
+				         android:src="@drawable/rainfall"/>
+					         
+			     	 <TextView
+			     	     android:id="@+id/weather_rainfallpercent_text"
+				         android:layout_width="wrap_content"
+				         android:layout_height="wrap_content"
+				         android:layout_gravity="center_vertical"
+				         android:layout_marginLeft="3dip"
+				         android:text="100%"
+				         android:textColor="#FFFFFF"
+				         android:textSize="12sp"/>
+					     	 
 		         </LinearLayout>
 		         
 		         <LinearLayout
-		             	 android:layout_width="match_parent"
-			             android:layout_height="0dip"
-			             android:layout_weight="93"
-		                 android:orientation="vertical" >
+		             android:layout_width="0dip"
+		             android:layout_height="match_parent"
+		             android:layout_weight="1"
+		             android:gravity="center"
+		             android:orientation="horizontal">
+		             
+		             <ImageView
+				         android:layout_width="20dip"
+					     android:layout_height="20dip"
+				         android:layout_gravity="center_vertical"
+				         android:src="@drawable/rainfall"/>
+					         
+			     	 <TextView
+				         android:layout_width="wrap_content"
+				         android:layout_height="wrap_content"
+				         android:layout_gravity="center_vertical"
+				         android:layout_marginLeft="3dip"
+				         android:text="45%"
+				         android:textColor="#FFFFFF"
+				         android:textSize="12sp"/>
+		             
+		         </LinearLayout>
+		         
+		         <LinearLayout
+		             android:layout_width="0dip"
+		             android:layout_height="match_parent"
+		             android:layout_weight="1"
+		             android:gravity="center"
+		             android:orientation="horizontal">
+		             
+		             <ImageView
+		                 android:id="@+id/weather_windspeed_image"
+				         android:layout_width="20dip"
+					     android:layout_height="20dip"
+				         android:layout_gravity="center_vertical"
+				         android:src="@drawable/windspeed"/>
+					         
+			     	 <TextView
+			     	     android:id="@+id/weather_windspeedpercent_text"
+				         android:layout_width="wrap_content"
+				         android:layout_height="wrap_content"
+				         android:layout_gravity="center_vertical"
+				         android:layout_marginLeft="3dip"
+				         android:text="4m/s"
+				         android:textColor="#FFFFFF"
+				         android:textSize="12sp"/>
+			     	 
+		         </LinearLayout>
+		         
+		     </LinearLayout>
+		     
+		     <LinearLayout
+		         android:layout_width="0dip"
+		         android:layout_height="match_parent"
+		         android:layout_weight="15"
+		         android:gravity="center"
+		         android:orientation="horizontal">
+		         
+		         <ImageView
+		             android:id="@+id/weather_finedustimage_image"
+			         android:layout_width="20dip"
+			         android:layout_height="20dip"
+			         android:layout_gravity="center_vertical"
+			         android:src="@drawable/rainfall"/>
+		                     
+		         <TextView
+			         android:id="@+id/weather_finedusttext_text"
+			         android:layout_width="wrap_content"
+			         android:layout_height="wrap_content"
+					 android:layout_gravity="center_vertical"
+					 android:layout_marginLeft="3dip"
+			         android:text="미세먼지 농도 50"
+			         android:textColor="#FFFFFF"
+			         android:textSize="10sp"/>
+		                     
+		     </LinearLayout>
+		     
+		     <!-- 
+		     <RelativeLayout
+		                     android:layout_width="match_parent"
+		                     android:layout_height="0dip"
+		                     android:layout_weight="1">
+		                     
+		                     
+		                     
+		                 </RelativeLayout>
+		                 
+		                 <RelativeLayout
+		                     android:layout_width="match_parent"
+		                     android:layout_height="0dip"
+		                     android:layout_weight="1">
+					     	 
+		                     <ImageView
+				     	         android:id="@+id/weather_windspeed_image"
+					             android:layout_width="15dip"
+					             android:layout_height="15dip"
+						         android:layout_centerVertical="true"
+						         android:layout_marginLeft="20dip"
+					             android:src="@drawable/windspeed"/>
+				         
+				     	     <TextView
+				     	         
+					             android:layout_width="wrap_content"
+					             android:layout_height="wrap_content"
+						         android:layout_centerVertical="true"
+						         android:layout_toRightOf="@id/weather_windspeed_image"
+					             android:text="100%"
+					             android:textColor="#FFFFFF"
+					             android:textSize="10sp"/>
+		                     
+		                 </RelativeLayout>
 		                 
 		                 <RelativeLayout
 		                     android:layout_width="match_parent"
 		                     android:layout_height="0dip"
 		                     android:layout_weight="3">
 				     	     
-			                 <ImageView
-			                     android:id="@+id/weather_nextfinedustimage_image"
-			                     android:layout_width="40dip"
-			                     android:layout_height="40dip"
-								 android:layout_centerInParent="true"
-			                     android:src="@drawable/finedust"/>
-		                     
-			                 <TextView
-			                     android:layout_width="wrap_content"
-			                     android:layout_height="wrap_content"
-			                     android:layout_centerInParent="true"
-			                     android:text="보통"
-			                     android:textColor="#000000"
-			                     android:textSize="12sp"/>
 			                 
 		                 </RelativeLayout>
 		                 
@@ -371,22 +369,11 @@
 		                     android:layout_height="0dip"
 		                     android:layout_weight="2">
 
-		                     <TextView
-			                     android:id="@+id/weather_nextfinedusttext_text"
-			                     android:layout_width="wrap_content"
-			                     android:layout_height="wrap_content"
-			                     android:layout_marginTop="5dip"
-								 android:layout_centerInParent="true"
-			                     android:text="미세먼지 농도 50"
-			                     android:textColor="#FFFFFF"
-			                     android:textSize="10sp"/>
 		                     
 		                 </RelativeLayout>
 		                 
-		             </LinearLayout>
-		         
-		     </LinearLayout>
-		     
+		                  -->
+		                 
 		 </LinearLayout>
 		 
 	 </LinearLayout>

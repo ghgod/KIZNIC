@@ -35,13 +35,8 @@ public class MainActivity extends Fragment {
 	private CardAdapter cardAdapter;
 	private CardAdapter[] recommendCardAdapter = new CardAdapter[4];
 	private int cardCount = -1, recommendcardCount = -1;
-	private View profile;
+	//private View profile;
 	private ImageView weather_finedust;
-	
-	private Button title_home_button;
-	private Button title_search_button;
-	private Button title_mypage_button;
-	
 	
 	private TextView weather_mylocation;
 	private TextView weather_today_timedesc;
@@ -51,16 +46,12 @@ public class MainActivity extends Fragment {
 	private TextView weather_next_timedesc;
 	private TextView weather_next_temp;
 	private TextView weather_today_pm10value;
-	private TextView weather_next_pm10Info;
 	private TextView wewather_today_feeltemp;
 	
 	
 	private ImageView weather_refresh_button;
-	private ImageView weather_next_dustmeter;
 	private ImageView weather_image;
 	private ImageView weather_next_image;
-	
-	private ToggleButton inside;
 	
 	private Context context;
 	
@@ -114,47 +105,17 @@ public class MainActivity extends Fragment {
 		weather_today_pm10value = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_finedusttext_text);
 		weather_next_timedesc = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextdaysimpleinfo_text);
 		weather_next_temp = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nexttemperature_text);
-		weather_next_pm10Info  = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextfinedusttext_text);
 		weather_refresh_button = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_getlocation_imagebutton);
 		wewather_today_feeltemp = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_windcilltemperature_text);
 		weather_finedust = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_finedustimage_image);
-		weather_next_dustmeter = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextfinedustimage_image);
-		
+	
 		weather_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_weatherimage_image);
 		weather_next_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextweatherimage_image);
-		
-		inside = (ToggleButton)view.findViewById(R.id.condition_inout_image);
 		
 	}
 	
 	private void clicklistener(){
 		
-		/*
-		profile.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Intent mypageActivity = new Intent(MainActivity.this, MyPageActivity.class);
-				startActivity(mypageActivity);
-			}
-		});
-		
-		title_search_button.setOnClickListener(new OnClickListener(){
-			public void onClick(View v){
-				title_search_button.setSelected(true);
-				Intent searchActivity = new Intent(MainActivity.this, SearchActivity.class);
-				searchActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-				startActivity(searchActivity);
-			}
-		});
-		
-		title_mypage_button.setOnClickListener(new OnClickListener(){
-			public void onClick(View v){
-				title_mypage_button.setSelected(true);
-				Intent mypageActivity = new Intent(MainActivity.this, MyPageActivity.class);
-				mypageActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-				startActivity(mypageActivity);
-			}
-		});
-		*/
 		weather_refresh_button.setOnClickListener(new ImageView.OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -162,21 +123,10 @@ public class MainActivity extends Fragment {
 					
 				new GetWeatherAsync(getActivity().getBaseContext(), weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, wewather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image).execute("");
 				new GetPollutionAsync(getActivity().getBaseContext(), weather_today_pm10value, weather_finedust).execute("");
-				new GetNextPollutionAsync(getActivity().getBaseContext(),weather_next_pm10Info, weather_next_dustmeter).execute("");
+				//new GetNextPollutionAsync(getActivity().getBaseContext(),weather_next_pm10Info, weather_next_dustmeter).execute("");
 			}
 			
 		});
-		
-		inside.setOnClickListener(new Button.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "15" ).execute("");
-			}
-			
-		});
-
 	}
 	
 	private void profile_circleimage(){
@@ -190,7 +140,7 @@ public class MainActivity extends Fragment {
 		        paint.setShader(shader);
 
 		Canvas c = new Canvas(circleBitmap);
-		c.drawCircle(bitmap.getWidth()/2, bitmap.getHeight()/2, bitmap.getWidth()/2, paint);
+		c.drawCircle(bitmap.getWidth()/2, bitmap.getHeight()/2, bitmap.getHeight()/2, paint);
 
 		profile_image.setImageBitmap(circleBitmap);
 	}

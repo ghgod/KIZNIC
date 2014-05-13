@@ -35,11 +35,11 @@
 	            android:layout_weight="7"
 	            android:orientation="vertical">
 	            
-	            <LinearLayout
+	            <RelativeLayout
 	                android:layout_width="match_parent"
 	                android:layout_height="0dip"
 	                android:layout_weight="1"
-	                android:orientation="vertical">
+	                android:orientation="horizontal">
 	                
 	                <!-- recommend title -->
 	                
@@ -47,6 +47,7 @@
 	                    android:id="@+id/recommend_itemtitle_text"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
+	                    android:layout_centerVertical="true"
 	                    android:text="배고픈 애벌레"
 	                    android:textColor="#000000"
 	                    android:textSize="13sp"/>
@@ -55,11 +56,14 @@
 	                    android:id="@+id/recommend_itemage_text"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
+	                    android:layout_marginLeft="3dip"
+	                    android:layout_alignBottom="@id/recommend_itemtitle_text"
+	                    android:layout_toRightOf="@id/recommend_itemtitle_text"
 	                    android:text="만 36개월 이상"
 	                    android:textColor="#000000"
-	                    android:textSize="8sp"/>
+	                    android:textSize="10sp"/>
 	                
-	            </LinearLayout>
+	            </RelativeLayout>
 	            
 	            <LinearLayout
 	                android:layout_width="match_parent"
