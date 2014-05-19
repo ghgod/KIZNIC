@@ -5,26 +5,40 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.hhh.kiznic.SearchcategoryDialog.onSubmitListener;
+import com.hhh.kiznic.card.CardAdapter;
+import com.hhh.kiznic.card.MainRecommendCarditemCard;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 @SuppressLint("ValidFragment")
-public class SearchActivity extends Fragment implements OnClickListener, onSubmitListener{
+public class SearchActivity extends Fragment implements OnClickListener, onSubmitListener, OnEditorActionListener{
 
 	private View search_category1_relativelayout;
 	private View search_category2_relativelayout;
 	private View search_category3_relativelayout;
 	private View search_category4_relativelayout;
+	
+	private EditText search_search_edittext;
+	private ImageView search_searchbutton_image;
+	private ListView search_list_view;
+	private CardAdapter searchcardAdapter;
 	
 	private SearchcategoryDialog listdialog;
 	
@@ -46,41 +60,54 @@ public class SearchActivity extends Fragment implements OnClickListener, onSubmi
 		
 		clicklistener();
 		
+		listsetting();
+		
     	return view;
 	}
 	
 	//////////////////////////////////////////////////////
 
 	public void init(){
+		
+		// Button 
+		
 		search_category1_relativelayout = (View)view.findViewById(R.id.search_category1_relativelayout);
 		search_category2_relativelayout = (View)view.findViewById(R.id.search_category2_relativelayout);
 		search_category3_relativelayout = (View)view.findViewById(R.id.search_category3_relativelayout);
 		search_category4_relativelayout = (View)view.findViewById(R.id.search_category4_relativelayout);
+		
+		// Search
+		
+		search_search_edittext = (EditText)view.findViewById(R.id.search_search_edittext);
+		search_search_edittext.requestFocus();
+		search_search_edittext.setOnEditorActionListener(this);
+		
+		search_searchbutton_image = (ImageView)view.findViewById(R.id.search_searchbutton_image);
+		
+		// List
+		
+		search_list_view = (ListView)view.findViewById(R.id.search_list_view);
+		searchcardAdapter = new CardAdapter(getActivity().getApplicationContext());
 	}
 	
+	@Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (EditorInfo.IME_ACTION_DONE == actionId) {
+            // Return input text to activity
+        	Toast t = Toast.makeText(view.getContext(), search_search_edittext.getText().toString() + " 검색", Toast.LENGTH_LONG);
+            t.show();
+        	return true;
+        }
+        return false;
+    }
+	
 	public void clicklistener(){	
-		/*
-		title_home_button.setOnClickListener(new Button.OnClickListener(){
-			public void onClick(View v){
-				title_home_button.setSelected(true);
-				Intent homeActivity = new Intent(SearchActivity.this, MainActivity.class);
-				homeActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-				startActivity(homeActivity);
-			}
-		});
-		title_mypage_button.setOnClickListener(new Button.OnClickListener(){
-			public void onClick(View v){
-				title_mypage_button.setSelected(true);
-				Intent mypageActivity = new Intent(SearchActivity.this, MyPageActivity.class);
-				mypageActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-				startActivity(mypageActivity);
-			}
-		});
-		*/
+
 		search_category1_relativelayout.setOnClickListener(this);
 		search_category2_relativelayout.setOnClickListener(this);
 		search_category3_relativelayout.setOnClickListener(this);
 		search_category4_relativelayout.setOnClickListener(this);
+		search_searchbutton_image.setOnClickListener(this);
 	}
 	
 	@Override
@@ -98,6 +125,9 @@ public class SearchActivity extends Fragment implements OnClickListener, onSubmi
 		case R.id.search_category4_relativelayout:
 			showListDialog("정렬");
 			break;
+		case R.id.search_searchbutton_image:
+			Toast t = Toast.makeText(view.getContext(), search_search_edittext.getText().toString() + " 검색", Toast.LENGTH_LONG);
+            t.show();
 		}
 	}
 	
@@ -157,6 +187,13 @@ public class SearchActivity extends Fragment implements OnClickListener, onSubmi
 		}
 		
 		listdialog.show(getFragmentManager(), "categorylist");
+	}
+	
+	private void listsetting(){
+		for(int i=0;i<10;i++){
+			searchcardAdapter.addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "Search Card", getActivity().getApplicationContext(), i));
+		}
+		search_list_view.setAdapter(searchcardAdapter);
 	}
 	
 	@Override

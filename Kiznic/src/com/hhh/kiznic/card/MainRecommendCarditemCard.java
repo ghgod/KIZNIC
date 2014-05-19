@@ -30,11 +30,11 @@ public class MainRecommendCarditemCard extends Card implements View.OnClickListe
 	
 	Context context;
 
-	public MainRecommendCarditemCard(int layout, String cardName, Context context, int cardId, PicnicSimpleInfo simpleInfo){
+	public MainRecommendCarditemCard(int layout, String cardName, Context context, int cardId/*, PicnicSimpleInfo simpleInfo*/){
 		super(layout, cardName, context, cardId);
 		
 		this.context = context;
-		this.simpleInfo = simpleInfo;
+		//this.simpleInfo = simpleInfo;
 		init();
 		setListener();
 	}

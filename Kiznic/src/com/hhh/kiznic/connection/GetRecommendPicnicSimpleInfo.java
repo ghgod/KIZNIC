@@ -187,7 +187,7 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 		else {
 			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "공연/전시", mContext, count1));
 			for(int i=0; i<simpleInfo1.size(); i++) {
-				recommendCardAdapter[count2].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "공연/전시", mContext, count1, simpleInfo1.get(i)));
+				//recommendCardAdapter[count2].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "공연/전시", mContext, count1, simpleInfo1.get(i)));
 			}
 			count1++;
 			count2++;
@@ -199,7 +199,7 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 		else {
 			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "놀이", mContext, count1));
 			for(int i=0; i<simpleInfo2.size(); i++) {
-				recommendCardAdapter[count2].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "놀이", mContext, count1, simpleInfo2.get(i)));
+				//recommendCardAdapter[count2].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "놀이", mContext, count1, simpleInfo2.get(i)));
 			}
 			count1++;
 			count2++;
@@ -212,7 +212,7 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 		else {
 			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "체험", mContext, count1));
 			for(int i=0; i<simpleInfo3.size(); i++) {
-				recommendCardAdapter[count2].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "체험", mContext, count1, simpleInfo3.get(i)));
+				//recommendCardAdapter[count2].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "체험", mContext, count1, simpleInfo3.get(i)));
 			}
 			count1++;
 			count2++;
@@ -224,7 +224,7 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 		else {
 			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "기타", mContext, count1));
 			for(int i=0; i<simpleInfo4.size(); i++) {
-				recommendCardAdapter[count2].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "기타", mContext, count1, simpleInfo4.get(i)));	
+				//recommendCardAdapter[count2].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "기타", mContext, count1, simpleInfo4.get(i)));	
 			}
 			count1++;
 			count2++;

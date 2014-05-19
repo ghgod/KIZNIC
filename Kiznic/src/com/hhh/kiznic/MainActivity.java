@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.androidquery.AQuery;
 import com.hhh.kiznic.card.CardAdapter;
 import com.hhh.kiznic.card.MainRecommendCard;
 import com.hhh.kiznic.card.MainRecommendCarditemCard;
@@ -38,7 +40,7 @@ public class MainActivity extends Fragment {
 	private CardAdapter cardAdapter;
 	private CardAdapter[] recommendCardAdapter = new CardAdapter[4];
 	private int cardCount = -1, recommendcardCount = -1;
-	//private View profile;
+	
 	private ImageView weather_finedust;
 	
 	private TextView weather_mylocation;
@@ -51,11 +53,12 @@ public class MainActivity extends Fragment {
 	private TextView weather_today_pm10value;
 	private TextView wewather_today_feeltemp;
 	
-	
 	private ImageView weather_refresh_button;
 	private ImageView weather_image;
 	private ImageView weather_next_image;
+	private ImageView profile_kidimage_image;
 	
+	private Button recommend_morelist_button;
 	Databasehelper dbHelper;
 	
 	private Context context;
@@ -75,6 +78,7 @@ public class MainActivity extends Fragment {
 		
 		//KiznicTitle a = new KiznicTitle(this);
 		dbHelper = new Databasehelper(getActivity().getBaseContext());
+		
 		init();
 		
 		clicklistener();
@@ -96,6 +100,8 @@ public class MainActivity extends Fragment {
 			recommendCardAdapter[i] = new CardAdapter(getActivity().getApplicationContext());
 		}
 		
+		profile_kidimage_image = (ImageView)view.findViewById(R.id.profile_kidimage_image);
+		
 		listsetting();
 		
 		weather_mylocation = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_location_text);
@@ -115,6 +121,14 @@ public class MainActivity extends Fragment {
 	}
 	
 	private void clicklistener(){
+		
+		profile_kidimage_image.setOnClickListener(new ImageView.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				MainFragmentActivity mf = new MainFragmentActivity();
+				mf.getViewPager().setCurrentItem(2);
+			}
+		});
 		
 		weather_refresh_button.setOnClickListener(new ImageView.OnClickListener(){
 			@Override
@@ -151,7 +165,7 @@ public class MainActivity extends Fragment {
 		});
 		*/
 	}
-	
+
 	private void profile_circleimage(){
 		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kid);
 		Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
@@ -172,16 +186,30 @@ public class MainActivity extends Fragment {
 		
 		// weather
 		
-		cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
+		cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), cardCount++));
 		
-		// recommend
-				
-		new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "15", cardAdapter, mainListView, recommendCardAdapter ).execute("");
+		// recommend_card
+		
+		for(int i=0;i<4;i++)
+			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "Recommend Card", getActivity().getApplicationContext(), cardCount++));
 		
 		mainListView.setAdapter(cardAdapter);
 		
+		//new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "15", cardAdapter, mainListView, recommendCardAdapter ).execute("");
 		
-	
+		// recommend_card_item_card
+		
+		for(int i=1;i<=4;i++){
+			ListView recommendmainListView = (ListView)mainListView.getAdapter().getView(i, null, mainListView).findViewById(R.id.main_recommend_card_item_list);
+			
+			for(int j=0;j<2;j++){
+				
+				// GetRecommendPicnicSimpleInfo 주석처리 및 MainRecommendCarditemCard의 simple info 주석처리
+				recommendCardAdapter[i-1].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "Recommend Card item Card", getActivity().getApplicationContext(), j));
+			}
+			
+			recommendmainListView.setAdapter(recommendCardAdapter[i-1]);
+		}
 	}
 	
 	public void getDBWeatherInfo() {
