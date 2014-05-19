@@ -43,7 +43,7 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 	
 	Databasehelper dbHelper;
 	String mySiDo;
-	String nextPollutionState;
+	
 	
 	String[] addressArray;
 	LocationHelper location;
@@ -53,8 +53,8 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 	public GetWeatherAsync(Context mContext, int flag, Databasehelper dbHelper, TextView weather_mylocation, TextView weather_today_timedesc,  
 			TextView weather_today_temp, TextView weather_today_rainprob, TextView weather_today_windspeed,
 			TextView weather_today_feeltemp, TextView weather_next_timedesc, TextView weather_next_temp,
-			ImageView weather_image,ImageView weather_next_image, ImageView weather_finedust, TextView weather_today_pm10value,
-			TextView weather_next_pm10Info, ImageView weather_next_dustmeter) 
+			ImageView weather_image,ImageView weather_next_image, ImageView weather_finedust, TextView weather_today_pm10value
+			) 
 	{
 		this.mContext = mContext;
 		this.flag = flag;
@@ -73,8 +73,7 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 		this.weather_finedust = weather_finedust;
 		this.weather_today_pm10value = weather_today_pm10value;
 		
-		this.weather_next_pm10Info = weather_next_pm10Info;
-		this.weather_next_dustmeter = weather_next_dustmeter;
+
 	}
 	
 	
@@ -101,13 +100,11 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 		}
 		String weatherXML = util.getXMLHttp(url);
 		String pollutionXML = util.getXMLHttp("http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?sidoName="+mySiDo+"&pageNo=1&numOfRows=10&ServiceKey="+mContext.getResources().getString(R.string.openApiKey));
-		String nextPollutionXML = util.getXMLHttp("http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getMinuDustFrcstDspth?searchDate="+util.yesterdayDate()+"&ServiceKey="+mContext.getResources().getString(R.string.openApiKey));
 		
 		Log.d("util.yesterdayDate()", util.yesterdayDate());
 		
 		result[0] = weatherXML;
 		result[1] = pollutionXML;
-		result[2] = nextPollutionXML;
 		//Log.d("Weather", xmlResult);
 		return result;
 	}
@@ -116,54 +113,30 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
         //tv4.setText(result);
 		ArrayList<WeatherInfo> weatherInfo = null;
 		ArrayList<PollutionInfo> pollutionInfo = null;
-		ArrayList<NextPollutionInfo> nextPollutionInfo = null;
+		
 		Util util = new Util();
 		
-		Log.d("result[2]", result[2]);
 		try {
 			weatherInfo = util.parseWeatherXML(result[0]);
 			pollutionInfo = util.parseCurrentPollutionXML(result[1]);
-			nextPollutionInfo = util.parseNextPollutionXML(result[2]);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	
-		//Databasehelper dbHelper = new Databasehelper(mContext);
-		//SQLiteDatabase mDB = dbHelper.getWritableDatabase();
-		//dbHelper.onCreate(mDB);
+		Log.d("getFeelTemp", weatherInfo.get(0).getFeelTemp());
 		
-		switch(util.sidoToArea(mySiDo)){
-		case 0 :
-			nextPollutionState = nextPollutionInfo.get(0).getSudoInfo();
-			break;
-		case 1 :
-			nextPollutionState = nextPollutionInfo.get(0).getJejuInfo();
-			break;
-		case 2 :
-			nextPollutionState = nextPollutionInfo.get(0).getYoungnamInfo();
-			break;
-		case 3 :
-			nextPollutionState = nextPollutionInfo.get(0).getHonamInfo();
-			break;
-		case 4 :
-			nextPollutionState = nextPollutionInfo.get(0).getGangwonInfo();
-			break;
-		case 5 :
-			nextPollutionState = nextPollutionInfo.get(0).getChungchungInfo();
-			break;
-		}
+		
 		if(flag == 0) {
-			dbHelper.createWeather(weatherInfo.get(0), weatherInfo.get(1), pollutionInfo.get(0), nextPollutionState);
+			dbHelper.createWeather(weatherInfo.get(0), weatherInfo.get(1), pollutionInfo.get(0));
 		} else {
-			dbHelper.updateWeather(weatherInfo.get(0), weatherInfo.get(1), pollutionInfo.get(0), nextPollutionState);
+			dbHelper.updateWeather(weatherInfo.get(0), weatherInfo.get(1), pollutionInfo.get(0));
 		}
 		
 		
 		WeatherInfo dbTodayWeatherInfo = dbHelper.getTodayWeatherInfo();
 		WeatherInfo dbNextWeatherInfo = dbHelper.getNextWeatherInfo();
 		PollutionInfo dbTodayPollutionInfo = dbHelper.getPollutionInfo();
-		String dbNextPollutionInfo = dbHelper.getNextPollutionInfo();
 		
 		
 		weather_mylocation.setText(location.getMyLocation());
@@ -180,8 +153,7 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 		weather_today_pm10value.setText("미세먼지 농도 " + dbTodayPollutionInfo.getPM10Value());
 		util.weather_finedust_set(weather_finedust,(int)((1.2 * Integer.parseInt(dbTodayPollutionInfo.getPM10Value()))), false, null);
 		
-		weather_next_pm10Info.setText("미세먼지  " + dbNextPollutionInfo);
-		util.weather_finedust_set(weather_next_dustmeter, 0, true, dbNextPollutionInfo);
+	
 		
 		/*
 		weather_mylocation.setText(location.getMyLocation());

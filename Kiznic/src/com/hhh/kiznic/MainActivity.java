@@ -34,10 +34,10 @@ import com.hhh.kiznic.util.Util;
 @SuppressLint("ValidFragment")
 public class MainActivity extends Fragment {
 	
-	private ListView mainListView, recommendmainListView;
+	private ListView mainListView;
 	private CardAdapter cardAdapter;
-	private CardAdapter[] recommendCardAdapter = new CardAdapter[4];
-	private int cardCount = -1, recommendcardCount = -1;
+	//private CardAdapter[] recommendCardAdapter = new CardAdapter[4];
+	//private int cardCount = -1, recommendcardCount = -1;
 	//private View profile;
 	private ImageView weather_finedust;
 	
@@ -46,11 +46,11 @@ public class MainActivity extends Fragment {
 	private TextView weather_today_temp;
 	private TextView weather_today_rainprob;
 	private TextView weather_today_windspeed;
+	private TextView weather_today_feeltemp;
+	private TextView weather_today_pm10value;
+	
 	private TextView weather_next_timedesc;
 	private TextView weather_next_temp;
-	private TextView weather_today_pm10value;
-	private TextView wewather_today_feeltemp;
-	
 	
 	private ImageView weather_refresh_button;
 	private ImageView weather_image;
@@ -58,8 +58,7 @@ public class MainActivity extends Fragment {
 	
 	Databasehelper dbHelper;
 	
-	private Context context;
-	
+	private Context context;	
 	private View view;
 	
 	//////////////////////////////////////////////
@@ -80,7 +79,7 @@ public class MainActivity extends Fragment {
 		clicklistener();
 		
 		profile_circleimage();
-		//new GetWeatherAsync(getActivity().getBaseContext(), 0, dbHelper,  weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, weather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image, weather_finedust, weather_today_pm10value,  weather_next_pm10Info, weather_next_dustmeter).execute("");
+		//new GetWeatherAsync(getActivity().getBaseContext(), 0, dbHelper,  weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, weather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image, weather_finedust, weather_today_pm10value ).execute("");
 
 		
 		return view;
@@ -92,9 +91,9 @@ public class MainActivity extends Fragment {
 		mainListView = (ListView)view.findViewById(R.id.main_list_view);
 		cardAdapter = new CardAdapter(getActivity().getApplicationContext());
 		
-		for(int i=0;i<4;i++){
-			recommendCardAdapter[i] = new CardAdapter(getActivity().getApplicationContext());
-		}
+	//	for(int i=0;i<4;i++){
+	//		recommendCardAdapter[i] = new CardAdapter(getActivity().getApplicationContext());
+	//	}
 		
 		listsetting();
 		
@@ -103,9 +102,11 @@ public class MainActivity extends Fragment {
 		weather_today_temp= (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_temperature_text);
 		weather_today_rainprob = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_rainfallpercent_text);
 		weather_today_windspeed = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_windspeedpercent_text);
+		weather_today_feeltemp = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_windcilltemperature_text);
 		weather_today_pm10value = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_finedusttext_text);
 		weather_next_timedesc = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextdaysimpleinfo_text);
 		weather_next_temp = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nexttemperature_text);
+		
 		weather_refresh_button = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_getlocation_imagebutton);
 		weather_finedust = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_finedustimage_image);
 	
@@ -120,10 +121,8 @@ public class MainActivity extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
-				//new GetWeatherAsync(getActivity().getBaseContext(),1, dbHelper, weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, weather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image, weather_finedust, weather_today_pm10value,  weather_next_pm10Info, weather_next_dustmeter).execute("");				
+				new GetWeatherAsync(getActivity().getBaseContext(),1, dbHelper, weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, weather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image, weather_finedust, weather_today_pm10value).execute("");				
 			}
-			
 		});
 		/*
 		inside.setOnClickListener(new Button.OnClickListener() {
@@ -155,33 +154,23 @@ public class MainActivity extends Fragment {
 	private void profile_circleimage(){
 		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kid);
 		Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-
 		ImageView profile_image = (ImageView)view.findViewById(R.id.profile_kidimage_image);
-		
 		BitmapShader shader = new BitmapShader (bitmap,  TileMode.CLAMP, TileMode.CLAMP);
 		Paint paint = new Paint();
-		        paint.setShader(shader);
-
+        paint.setShader(shader);
 		Canvas c = new Canvas(circleBitmap);
 		c.drawCircle(bitmap.getWidth()/2, bitmap.getHeight()/2, bitmap.getHeight()/2, paint);
-
 		profile_image.setImageBitmap(circleBitmap);
 	}
 	
 	private void listsetting(){
-		
 		// weather
-		
 		cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
-		
 		// recommend
-				
-		new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "15", cardAdapter, mainListView, recommendCardAdapter ).execute("");
-		
+		//new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "15", cardAdapter, mainListView, recommendCardAdapter ).execute("");
+		new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "15", cardAdapter, mainListView ).execute("");
+
 		mainListView.setAdapter(cardAdapter);
-		
-		
-	
 	}
 	
 	public void getDBWeatherInfo() {
@@ -189,7 +178,6 @@ public class MainActivity extends Fragment {
 		WeatherInfo dbTodayWeatherInfo = dbHelper.getTodayWeatherInfo();
 		WeatherInfo dbNextWeatherInfo = dbHelper.getNextWeatherInfo();
 		PollutionInfo dbTodayPollutionInfo = dbHelper.getPollutionInfo();
-		String dbNextPollutionInfo = dbHelper.getNextPollutionInfo();
 		Util util = new Util();
 		
 		LocationHelper location = new LocationHelper(getActivity().getBaseContext());

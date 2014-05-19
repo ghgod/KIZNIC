@@ -1,6 +1,5 @@
 package com.hhh.kiznic.databasemanager;
 
-import com.hhh.kiznic.dataclass.NextPollutionInfo;
 import com.hhh.kiznic.dataclass.PollutionInfo;
 import com.hhh.kiznic.dataclass.WeatherInfo;
 
@@ -28,6 +27,7 @@ public class Databasehelper extends SQLiteOpenHelper{
 	
 	// Weather Table - column names
 	
+	//private static final String KEY_WEATHER_ID = "weather_id";
 	private static final String KEY_TODAY_DAYSTATE = "weather_today_daystate";
 	private static final String KEY_TODAY_TIME = "weather_today_time";
 	private static final String KEY_TODAY_DESC = "weather_today_desc";
@@ -61,7 +61,7 @@ public class Databasehelper extends SQLiteOpenHelper{
 	// Table Create Statements
 	
 	// Table Create Statement
-	private static final String CREATE_TABLE_WEATHER = "CREATE TABLE " + TABLE_WEATHER + "(" + "_id" + " INTEGER PRIMARY KEY AUTOINCREMENT,"+ KEY_TODAY_DAYSTATE 
+	private static final String CREATE_TABLE_WEATHER = "CREATE TABLE " + TABLE_WEATHER + "(" + "_id" + " TEXT,"+ KEY_TODAY_DAYSTATE 
 			+ " TEXT," + KEY_TODAY_TIME + " TEXT," + KEY_TODAY_DESC +" TEXT," + KEY_TODAY_TEMP + " TEXT," + KEY_TODAY_FEELTEMP + " TEXT," + KEY_TODAY_RAINPROB 
 			+ " TEXT," + KEY_TODAY_WINDSPEED + " TEXT," + KEY_TODAY_HUMIDITY + " TEXT," + KEY_TODAY_POLLUTIONSTATE + " TEXT," + KEY_TODAY_POLLUTIONCONCENTRATION 
 			+ " TEXT," + KEY_NEXT_DAYSTATE	+ " TEXT," + KEY_NEXT_TIME + " TEXT," + KEY_NEXT_DESC + " TEXT," + KEY_NEXT_TEMP + " TEXT," + KEY_NEXT_POLLUTIONSTATE + " TEXT" + ")";
@@ -100,7 +100,7 @@ public class Databasehelper extends SQLiteOpenHelper{
 	 * Insert Weather
 	 */
 	
-	public String createWeather(WeatherInfo weatherTodayInfo, WeatherInfo weatherNextInfo, PollutionInfo pollutionInfo, String nextPollutionState ) {
+	public String createWeather(WeatherInfo weatherTodayInfo, WeatherInfo weatherNextInfo, PollutionInfo pollutionInfo ) {
 		
 		SQLiteDatabase db = this.getWritableDatabase();
 		
@@ -118,7 +118,6 @@ public class Databasehelper extends SQLiteOpenHelper{
 	    values.put(KEY_NEXT_TIME, weatherNextInfo.getTime());
 	    values.put(KEY_NEXT_DESC, weatherNextInfo.getWeatherDesc());
 	    values.put(KEY_NEXT_TEMP, weatherNextInfo.getTemperature());
-	    values.put(KEY_NEXT_POLLUTIONSTATE, nextPollutionState);
 		
 	 // insert row
 	    long account_row_ID = db.insert(TABLE_WEATHER, null, values);
@@ -166,7 +165,7 @@ public class Databasehelper extends SQLiteOpenHelper{
 	 * Update weather
 	 */
 	
-	public void updateWeather(WeatherInfo weatherTodayInfo, WeatherInfo weatherNextInfo, PollutionInfo pollutionInfo, String nextPollutionState ) {
+	public void updateWeather(WeatherInfo weatherTodayInfo, WeatherInfo weatherNextInfo, PollutionInfo pollutionInfo) {
 		
 		SQLiteDatabase db = this.getWritableDatabase();
 		
@@ -186,9 +185,8 @@ public class Databasehelper extends SQLiteOpenHelper{
 	    values.put(KEY_NEXT_DESC, weatherNextInfo.getWeatherDesc());
 	    values.put(KEY_NEXT_TEMP, weatherNextInfo.getTemperature());
 	    
-	    values.put(KEY_NEXT_POLLUTIONSTATE, nextPollutionState);
 	    
-	    db.update(TABLE_WEATHER, values, "_id=" + 1, null);
+	    db.update(TABLE_WEATHER, values, "_id=1", null);
 		
 	}
 	
@@ -200,7 +198,7 @@ public class Databasehelper extends SQLiteOpenHelper{
 		SQLiteDatabase db = this.getReadableDatabase();
 		 
 	    String selectQuery = "SELECT  * FROM " + TABLE_WEATHER + " WHERE "
-	            + "_id = " + "1";
+	            + "_id=1";
 	    
 	    Cursor c = db.rawQuery(selectQuery, null);
 		 
@@ -229,7 +227,7 @@ public class Databasehelper extends SQLiteOpenHelper{
 		SQLiteDatabase db = this.getReadableDatabase();
 		 
 	    String selectQuery = "SELECT  * FROM " + TABLE_WEATHER + " WHERE "
-	            + "_id = " + "1";
+	            + "_id=1";
 	    
 	    Cursor c = db.rawQuery(selectQuery, null);
 		 
@@ -250,7 +248,7 @@ public class Databasehelper extends SQLiteOpenHelper{
 		SQLiteDatabase db = this.getReadableDatabase();
 		 
 	    String selectQuery = "SELECT  * FROM " + TABLE_WEATHER + " WHERE "
-	            + "_id = " + "1";
+	            + "_id=1";
 	    
 	    Cursor c = db.rawQuery(selectQuery, null);
 		 
@@ -263,22 +261,7 @@ public class Databasehelper extends SQLiteOpenHelper{
 	    return pollutionInfo;
 	}
 	
-	public String getNextPollutionInfo() {
-		
-		SQLiteDatabase db = this.getReadableDatabase();
-		 
-	    String selectQuery = "SELECT  * FROM " + TABLE_WEATHER + " WHERE "
-	            + "_id = " + "1";
-	    
-	    Cursor c = db.rawQuery(selectQuery, null);
-		 
-	    if (c != null)
-	        c.moveToFirst();
-		
-	    String nextPollutionState = c.getString(c.getColumnIndex(KEY_NEXT_POLLUTIONSTATE));
-	    
-		return nextPollutionState;
-	}
+
 	
 	/*
 	 * get single Account

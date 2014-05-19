@@ -83,6 +83,25 @@ public class Util {
 	    return string.toString();
 	}
 	
+	public Bitmap decompBitmap(String source) throws IOException {
+		final int BUFFER_SIZE = 32;
+		byte[] decodeSource = Base64.decode(source, Base64.DEFAULT);
+		ByteArrayInputStream is = new ByteArrayInputStream(decodeSource);
+		GZIPInputStream gis = new GZIPInputStream(is, BUFFER_SIZE);
+		//StringBuilder string = new StringBuilder();
+		
+		byte[] data = new byte[BUFFER_SIZE];
+		    int bytesRead;
+		    while ((bytesRead = gis.read(data)) != -1) {
+		        //string.append(new String(data, 0, bytesRead));
+		    	
+		    }
+		    gis.close();
+		    is.close();
+		    Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+		    return bitmap;
+	}
+	
 	public static String aesconvertedPW(String passWord, String keyString, String IVString, String sPadding) {
 		byte[] demoKeyBytes = keyString.getBytes();
 		byte[] demoIVBytes = IVString.getBytes();

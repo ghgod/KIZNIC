@@ -1,5 +1,7 @@
 package com.hhh.kiznic.card;
 
+import java.io.IOException;
+
 import android.content.Context;
 import android.content.Intent;
 import android.sax.StartElementListener;
@@ -14,6 +16,7 @@ import com.hhh.kiznic.MyPageActivity;
 import com.hhh.kiznic.R;
 import com.hhh.kiznic.SearchActivity;
 import com.hhh.kiznic.dataclass.PicnicSimpleInfo;
+import com.hhh.kiznic.util.Util;
 
 public class MainRecommendCarditemCard extends Card implements View.OnClickListener{
 
@@ -22,6 +25,7 @@ public class MainRecommendCarditemCard extends Card implements View.OnClickListe
 	TextView recommend_period_text;
 	TextView recommend_place_text;
 	TextView recommend_weathertemperature_text;
+	TextView recommend_distance_text;
 	ImageView recommend_posterimage_image;
 	ImageView recommend_weatherimage_image;
 	View recommend_recommendview_view;
@@ -44,10 +48,25 @@ public class MainRecommendCarditemCard extends Card implements View.OnClickListe
 		recommend_itemage_text = (TextView)cardView.findViewById(R.id.recommend_itemage_text);
 		recommend_period_text = (TextView)cardView.findViewById(R.id.recommend_period_text);
 		recommend_place_text = (TextView)cardView.findViewById(R.id.recommend_place_text);
+		recommend_distance_text = (TextView)cardView.findViewById(R.id.recommend_distance_text);
 		recommend_weathertemperature_text = (TextView)cardView.findViewById(R.id.recommend_weathertemperature_text);
 		recommend_posterimage_image = (ImageView)cardView.findViewById(R.id.recommend_posterimage_image);
 		recommend_weatherimage_image = (ImageView)cardView.findViewById(R.id.recommend_weatherimage_image);
 		recommend_recommendview_view = (View)cardView.findViewById(R.id.recommend_recommendview_view);
+	}
+	
+	public void setInfo() throws IOException {
+		
+		Util util = new Util();
+		
+		recommend_itemtitle_text.setText(simpleInfo.getPlayTitle());
+		
+		//recommend_itemage_text.setText(simpleInfo.get)
+		
+		recommend_period_text.setText(simpleInfo.getPlayStartDate() + "~" +simpleInfo.getPlayEndDate());
+		recommend_place_text.setText(simpleInfo.getPlayPlace());
+		recommend_distance_text.setText(simpleInfo.getPlayDistance());
+		recommend_posterimage_image.setImageBitmap(util.decompBitmap(simpleInfo.getPlayThumb()));
 	}
 	
 	@Override

@@ -1,6 +1,9 @@
 package com.hhh.kiznic.card;
 
 import com.hhh.kiznic.R;
+import com.hhh.kiznic.connection.GetWeatherAsync;
+import com.hhh.kiznic.databasemanager.Databasehelper;
+import com.hhh.kiznic.util.LocationHelper;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -32,11 +35,16 @@ public class MainWeatherCard extends Card implements View.OnClickListener{
 	ImageView weather_windspeed_image;
 	ImageView weather_nextweatherimage_image;
 	public LinearLayout weather_circlemeter_layout;
+	private Databasehelper dbHelper;
 	
 	public MainWeatherCard(int layout, String cardName, Context context, int cardId){
 		super(layout, cardName, context, cardId);
 		
 		init();
+		
+		new GetWeatherAsync(context, 0, dbHelper,  weather_location_text, weather_simpleinfo_text, weather_temperature_text, weather_rainfallpercent_text, weather_windspeedpercent_text, weather_windcilltemperature_text, weather_nextdaysimpleinfo_text, weather_nexttemperature_text,  weather_weatherimage_image, weather_nextweatherimage_image, weather_finedustimage_image, weather_finedusttext_text ).execute("");
+
+		
 		setListener();
 	}
 
@@ -56,6 +64,9 @@ public class MainWeatherCard extends Card implements View.OnClickListener{
 		weather_rainfall_image = (ImageView)cardView.findViewById(R.id.weather_rainfall_image);
 		weather_windspeed_image = (ImageView)cardView.findViewById(R.id.weather_windspeed_image);
 		weather_nextweatherimage_image = (ImageView)cardView.findViewById(R.id.weather_nextweatherimage_image);
+		
+		Databasehelper dbHelper = new Databasehelper(context);
+		this.dbHelper = dbHelper;
 	}
 	
 	@Override

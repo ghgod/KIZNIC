@@ -35,7 +35,7 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 	String mySiDo;
 	String[] addressArray;
 	ListView mainListView;
-	CardAdapter[] recommendCardAdapter;
+	CardAdapter[] recommendCardAdapter = new CardAdapter[4];
 	CardAdapter cardAdapter;
 	String ages;
 	String inSide;
@@ -46,14 +46,14 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 	
 	TextView categoryName[] = new TextView[4];
 	
-	public GetRecommendPicnicSimpleInfo(Context mContext, String ages, String inSide, String distance, CardAdapter cardAdapter, ListView mainListView, CardAdapter[] recommendCardAdapter) {
+	public GetRecommendPicnicSimpleInfo(Context mContext, String ages, String inSide, String distance, CardAdapter cardAdapter, ListView mainListView) {
 		this.mContext = mContext;
 		this.ages = ages;
 		this.inSide = inSide;
 		this.distance = distance;
 		this.cardAdapter = cardAdapter;
 		this.mainListView = mainListView;
-		this.recommendCardAdapter = recommendCardAdapter;
+		//this.recommendCardAdapter = recommendCardAdapter;
 	}
 	
 	protected void onPreExecute() {
@@ -104,7 +104,6 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 		conditionInfoforSimpleInfo.setLatitude(latitude);
 		conditionInfoforSimpleInfo.setLongitude(longitude);
 		
-		
 		sendConditionInfo = new JSONArray();
 		JSONObject conditionInfo = new JSONObject();
 		
@@ -115,7 +114,7 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 				conditionInfo.put("play_temp", conditionInfoforSimpleInfo.getWeatherInfo().getTemperature());
 				conditionInfo.put("play_feeltemp", util.convertFeelTemp(conditionInfoforSimpleInfo.getWeatherInfo().getTemperature(),conditionInfoforSimpleInfo.getWeatherInfo().getWindSpeed()));
 				conditionInfo.put("play_pm10value", conditionInfoforSimpleInfo.getPollutionInfo().getPM10Value());
-				conditionInfo.put("play_o3value", conditionInfoforSimpleInfo.getPollutionInfo().getO3Value());
+				//conditionInfo.put("play_o3value", conditionInfoforSimpleInfo.getPollutionInfo().getO3Value());
 				conditionInfo.put("play_humidity", conditionInfoforSimpleInfo.getWeatherInfo().getHumidity());
 				conditionInfo.put("play_ages", conditionInfoforSimpleInfo.getAges());
 				conditionInfo.put("play_place_type", conditionInfoforSimpleInfo.isInside());
@@ -146,6 +145,12 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 		ArrayList<PicnicSimpleInfo> simpleInfo2 = new ArrayList<PicnicSimpleInfo>();
 		ArrayList<PicnicSimpleInfo> simpleInfo3 = new ArrayList<PicnicSimpleInfo>();
 		ArrayList<PicnicSimpleInfo> simpleInfo4 = new ArrayList<PicnicSimpleInfo>();
+		
+		Boolean isExistSimpleInfo1 = false;
+		Boolean isExistSimpleInfo2 = false;
+		Boolean isExistSimpleInfo3 = false;
+		Boolean isExistSimpleInfo4 = false;
+		
 		
 		try {
 			simpleInfo = util.parsePicnicSimpleInfoJSON(result);
@@ -178,58 +183,65 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 		Log.d("simpleInfo3", String.valueOf(simpleInfo3.size()));
 		Log.d("simpleInfo4", String.valueOf(simpleInfo4.size()));
 		
-		int count1 = 1;
-		int count2 = -1;
-			
-		if(simpleInfo1.size() == 0) {
-			count2++;
-		}
-		else {
-			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "공연/전시", mContext, count1));
-			for(int i=0; i<simpleInfo1.size(); i++) {
-				recommendCardAdapter[count2].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "공연/전시", mContext, count1, simpleInfo1.get(i)));
-			}
-			count1++;
-			count2++;
-		}
-	
-		if(simpleInfo2.size() == 0) {
-			count2++;
-		} 
-		else {
-			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "놀이", mContext, count1));
-			for(int i=0; i<simpleInfo2.size(); i++) {
-				recommendCardAdapter[count2].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "놀이", mContext, count1, simpleInfo2.get(i)));
-			}
-			count1++;
-			count2++;
-		}
-			
-				
-		if(simpleInfo3.size() == 0) {
-			count2++;
-		} 
-		else {
-			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "체험", mContext, count1));
-			for(int i=0; i<simpleInfo3.size(); i++) {
-				recommendCardAdapter[count2].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "체험", mContext, count1, simpleInfo3.get(i)));
-			}
-			count1++;
-			count2++;
-		}
-					
-		if(simpleInfo4.size() == 0) {
-			count2++;
-		} 
-		else {
-			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "기타", mContext, count1));
-			for(int i=0; i<simpleInfo4.size(); i++) {
-				recommendCardAdapter[count2].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "기타", mContext, count1, simpleInfo4.get(i)));	
-			}
-			count1++;
-			count2++;
-		}			
+		int recommendCount = 0;
 		
+		if(simpleInfo1.size() != 0) {
+			isExistSimpleInfo1 = true;
+			recommendCount++;
+		} else if(simpleInfo2.size() != 0) {
+			isExistSimpleInfo2 = true;
+			recommendCount++;
+		} else if(simpleInfo3.size() != 0) {
+			isExistSimpleInfo3 = true;
+			recommendCount++;
+		} else if(simpleInfo4.size() != 0) {
+			isExistSimpleInfo4 = true;
+			recommendCount++;
+		}
+		
+		for(int i=0;i<recommendCount;i++){
+			recommendCardAdapter[i] = new CardAdapter(mContext);
+		}
+		
+		int genreCount = 1; 
+		int genreListCount = 0;
+			
+		if(isExistSimpleInfo1) {
+			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "공연/전시", mContext, genreCount));
+			for(int i=0; i<simpleInfo1.size(); i++) {
+				recommendCardAdapter[genreListCount].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "공연/전시", mContext, genreCount, simpleInfo1.get(i)));
+			}
+			genreCount++;
+			genreListCount++;
+		}
+		
+		if(isExistSimpleInfo2) {
+			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "놀이", mContext, genreCount));
+			for(int i=0; i<simpleInfo2.size(); i++) {
+				recommendCardAdapter[genreListCount].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "놀이", mContext, genreCount, simpleInfo2.get(i)));
+			}
+			genreCount++;
+			genreListCount++;
+		}
+		
+		if(isExistSimpleInfo3) {
+			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "체험", mContext, genreCount));
+			for(int i=0; i<simpleInfo3.size(); i++) {
+				recommendCardAdapter[genreListCount].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "체험", mContext, genreCount, simpleInfo3.get(i)));
+			}
+			genreCount++;
+			genreListCount++;
+		}
+		
+		if(isExistSimpleInfo4){
+			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "기타", mContext, genreCount));
+			for(int i=0; i<simpleInfo4.size(); i++) {
+				recommendCardAdapter[genreListCount].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "기타", mContext, genreCount, simpleInfo4.get(i)));
+			}
+			genreCount++;
+			genreListCount++;
+		}
+				
 		simpleInfo1.clear();
 		simpleInfo2.clear();
 		simpleInfo3.clear();
@@ -237,7 +249,7 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 		
 		mainListView.setAdapter(cardAdapter);
 		
-		for(int i=1;i<=count2;i++){
+		for(int i=1;i<=genreListCount;i++){
 			ListView recommendmainListView = (ListView)mainListView.getAdapter().getView(i, null, mainListView).findViewById(R.id.main_recommend_card_item_list);
 			recommendmainListView.setAdapter(recommendCardAdapter[i-1]);
 		}
