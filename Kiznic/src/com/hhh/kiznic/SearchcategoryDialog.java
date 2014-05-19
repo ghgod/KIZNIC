@@ -77,8 +77,7 @@ public class SearchcategoryDialog extends DialogFragment {
 	
 	private void setClickListener(AdapterView.OnItemClickListener first , AdapterView.OnItemClickListener second){
 		if(second == null){
-			//mLeftButton.setOnClickListener(left);
-			//mRightButton.setOnClickListener(right);
+			dialog_firstlist_listview.setOnItemClickListener(first);
 		}
 		else{
 			

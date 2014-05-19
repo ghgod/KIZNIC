@@ -139,7 +139,10 @@ public class SearchActivity extends Fragment implements OnClickListener, onSubmi
 			AdapterView.OnItemClickListener singleListListener = new AdapterView.OnItemClickListener() {
 		        @Override
 		        public void onItemClick(AdapterView<?> parent, View view, int position, long l_position) {
-		            //String tv = (String)parent.getAdapter().getItem(position);
+		            String tv = (String)parent.getAdapter().getItem(position);
+		        
+		            Toast.makeText(context, "" + position, Toast.LENGTH_SHORT).show();
+		            
 		        }
 		    };
 		    
@@ -153,7 +156,7 @@ public class SearchActivity extends Fragment implements OnClickListener, onSubmi
 		    listdialog.dialog_title = title;
 		    listdialog.first_arrayAdapter = arrayAdapter;
 		    listdialog.firstlistClickListener = singleListListener;
-		
+		    
 		}
 		else{
 			AdapterView.OnItemClickListener firstListListener = new AdapterView.OnItemClickListener() {
