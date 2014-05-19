@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.androidquery.AQuery;
 import com.hhh.kiznic.card.CardAdapter;
 import com.hhh.kiznic.card.MainRecommendCard;
 import com.hhh.kiznic.card.MainRecommendCarditemCard;
@@ -38,7 +40,7 @@ public class MainActivity extends Fragment {
 	private CardAdapter cardAdapter;
 	//private CardAdapter[] recommendCardAdapter = new CardAdapter[4];
 	//private int cardCount = -1, recommendcardCount = -1;
-	//private View profile;
+
 	private ImageView weather_finedust;
 	
 	private TextView weather_mylocation;
@@ -48,14 +50,15 @@ public class MainActivity extends Fragment {
 	private TextView weather_today_windspeed;
 	private TextView weather_today_feeltemp;
 	private TextView weather_today_pm10value;
-	
 	private TextView weather_next_timedesc;
 	private TextView weather_next_temp;
 	
 	private ImageView weather_refresh_button;
 	private ImageView weather_image;
 	private ImageView weather_next_image;
+	private ImageView profile_kidimage_image;
 	
+	private Button recommend_morelist_button;
 	Databasehelper dbHelper;
 	
 	private Context context;	
@@ -74,6 +77,7 @@ public class MainActivity extends Fragment {
 		
 		//KiznicTitle a = new KiznicTitle(this);
 		dbHelper = new Databasehelper(getActivity().getBaseContext());
+		
 		init();
 		
 		clicklistener();
@@ -94,6 +98,8 @@ public class MainActivity extends Fragment {
 	//	for(int i=0;i<4;i++){
 	//		recommendCardAdapter[i] = new CardAdapter(getActivity().getApplicationContext());
 	//	}
+		
+		profile_kidimage_image = (ImageView)view.findViewById(R.id.profile_kidimage_image);
 		
 		listsetting();
 		
@@ -116,6 +122,14 @@ public class MainActivity extends Fragment {
 	}
 	
 	private void clicklistener(){
+		
+		profile_kidimage_image.setOnClickListener(new ImageView.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				MainFragmentActivity mf = new MainFragmentActivity();
+				mf.getViewPager().setCurrentItem(2);
+			}
+		});
 		
 		weather_refresh_button.setOnClickListener(new ImageView.OnClickListener(){
 			@Override
@@ -150,7 +164,7 @@ public class MainActivity extends Fragment {
 		});
 		*/
 	}
-	
+
 	private void profile_circleimage(){
 		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kid);
 		Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
@@ -165,6 +179,7 @@ public class MainActivity extends Fragment {
 	
 	private void listsetting(){
 		// weather
+
 		cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
 		// recommend
 		//new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "15", cardAdapter, mainListView, recommendCardAdapter ).execute("");

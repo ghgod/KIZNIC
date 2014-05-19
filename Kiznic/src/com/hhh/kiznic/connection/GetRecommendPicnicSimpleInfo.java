@@ -210,6 +210,7 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "공연/전시", mContext, genreCount));
 			for(int i=0; i<simpleInfo1.size(); i++) {
 				recommendCardAdapter[genreListCount].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "공연/전시", mContext, genreCount, simpleInfo1.get(i)));
+
 			}
 			genreCount++;
 			genreListCount++;
