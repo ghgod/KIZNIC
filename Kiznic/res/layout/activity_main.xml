@@ -3,20 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F1F2F2" >
+    android:background="#EEEEEF" >
     
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="100dip"
-		android:background="#FDF9F2"
-		android:layout_marginTop="5dip"
-		android:layout_marginRight="5dip"
-		android:layout_marginLeft="5dip"
+		android:background="#FFFFFF"
         android:orientation="horizontal">
     
         <LinearLayout
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_weight="14">
+            android:layout_weight="17">
             
             <ImageView 
                 android:id="@+id/profile_kidimage_image"
@@ -36,50 +33,37 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_weight="1">
+                android:layout_weight="2">
                 
                 <TextView 
 	                android:id="@+id/profile_kidname_text"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:text="닉네이이임의 상태입력"
+	                android:layout_gravity="center_vertical"
+	                android:text="누구지님 오늘은 어디까지 갈까요?"
 	               	android:textColor="#000000"
-	               	android:textSize="14sp"/>
+	               	android:textSize="15sp"/>
 	                
             </LinearLayout>
             
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_weight="4"
-                android:layout_marginRight="5dip"
-                android:layout_marginBottom="5dip"
-                android:background="@drawable/condition_background">
-                
-                <TextView
-                        
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="나들이 이동 반경"
-                        android:textColor="#000000"
-                        android:textSize="13sp"
-                        android:layout_marginRight="5dip"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"/>
-                      
+                android:layout_weight="3"
+                android:background="@drawable/condition_seekbar_background_image">
+ 
                     <SeekBar android:id="@+id/condition_range_seekbar"
                         android:layout_width="match_parent"
                         android:layout_height="40dip"
-                        android:layout_centerInParent="true"
-                        android:layout_marginLeft="20dip"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginRight="20dip"
                         android:max="4"
                         android:progress="0"
-                        android:secondaryProgress="0"
-                        android:progressDrawable="@drawable/condition_seekbar"
-                        android:thumbOffset="5dip"/> 
-                
-            </RelativeLayout>
+       					android:secondaryProgress="0"
+                        android:progressDrawable="@drawable/seekbar_progress"
+                        android:thumb="@null"/> 
+                        
+            </LinearLayout>
             
         </LinearLayout>
         

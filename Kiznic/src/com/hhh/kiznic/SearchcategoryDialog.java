@@ -6,12 +6,15 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 @SuppressLint("ValidFragment")
 public class SearchcategoryDialog extends DialogFragment {
@@ -77,10 +80,42 @@ public class SearchcategoryDialog extends DialogFragment {
 	
 	private void setClickListener(AdapterView.OnItemClickListener first , AdapterView.OnItemClickListener second){
 		if(second == null){
-			dialog_firstlist_listview.setOnItemClickListener(first);
+			dialog_firstlist_listview.setOnItemClickListener(new OnItemClickListener(){
+				@Override
+		        public void onItemClick(AdapterView<?> parent, View view, int position, long l_position) {
+		           
+					String tv = (String)parent.getAdapter().getItem(position);
+		        
+		            Toast.makeText(getActivity().getBaseContext(), String.valueOf(position), Toast.LENGTH_SHORT).show();
+		            
+		            if(dialog != null)
+		            dialog.dismiss();
+		        }
+			});
 		}
 		else{
+			dialog_firstlist_listview.setOnItemClickListener(new OnItemClickListener(){
+				@Override
+		        public void onItemClick(AdapterView<?> parent, View view, int position, long l_position) {
+		           
+					String tv = (String)parent.getAdapter().getItem(position);
+		        
+		            Toast.makeText(getActivity().getBaseContext(), String.valueOf(position) + "의 값으로 바뀜", Toast.LENGTH_SHORT).show();
+		        }
+			});
 			
+			dialog_secondlist_listview.setOnItemClickListener(new OnItemClickListener(){
+				@Override
+		        public void onItemClick(AdapterView<?> parent, View view, int position, long l_position) {
+		           
+					String tv = (String)parent.getAdapter().getItem(position);
+		        
+		            Toast.makeText(getActivity().getBaseContext(), String.valueOf(position), Toast.LENGTH_SHORT).show();
+		            
+		            if(dialog != null)
+		            dialog.dismiss();
+		        }
+			});
 		}
 	}
 	

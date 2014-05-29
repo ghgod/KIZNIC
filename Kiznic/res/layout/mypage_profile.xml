@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF" >
+                
+                <RelativeLayout
+	                android:layout_width="match_parent"
+	                android:layout_height="70dip"
+	                android:orientation="horizontal">
+	                
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="2dip"
+                        android:text="누구지"
+                        android:textColor="#ACACAC"
+                        android:textSize="18sp"/>
+                    
+                    <ImageView 
+                        android:id="@+id/mypage_profileamend_button"
+                        android:layout_width="30dip"
+                        android:layout_height="30dip"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="2dip"
+                        android:src="@drawable/mypage_profileamend_image"/>
+                    
+                </RelativeLayout>
+                
+                <LinearLayout
+	                android:layout_width="match_parent"
+	                android:layout_height="20dip"
+	                android:background="@drawable/carditem_background">
+                    
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="남아"
+                        android:textSize="12sp"/>
+                    
+                </LinearLayout>
+                
+                <LinearLayout
+	                android:layout_width="match_parent"
+	                android:layout_height="35dip">
+                    
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="11.09.21(만 36개월)"
+                        android:textSize="12sp"/>
+                    
+                </LinearLayout>
+                
+            
+</LinearLayout>

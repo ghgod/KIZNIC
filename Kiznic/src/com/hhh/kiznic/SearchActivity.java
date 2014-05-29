@@ -9,6 +9,7 @@ import com.hhh.kiznic.card.CardAdapter;
 import com.hhh.kiznic.card.MainRecommendCarditemCard;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -30,21 +31,21 @@ import android.widget.Toast;
 @SuppressLint("ValidFragment")
 public class SearchActivity extends Fragment implements OnClickListener, onSubmitListener, OnEditorActionListener{
 
-	private View search_category1_relativelayout;
-	private View search_category2_relativelayout;
-	private View search_category3_relativelayout;
-	private View search_category4_relativelayout;
+	private static View search_category1_relativelayout;
+	private static View search_category2_relativelayout;
+	private static View search_category3_relativelayout;
+	private static View search_category4_relativelayout;
 	
-	private EditText search_search_edittext;
-	private ImageView search_searchbutton_image;
-	private ListView search_list_view;
-	private CardAdapter searchcardAdapter;
+	private static EditText search_search_edittext;
+	private static ImageView search_searchbutton_image;
+	private static ListView search_list_view;
+	private static CardAdapter searchcardAdapter;
 	
-	private SearchcategoryDialog listdialog;
+	private static SearchcategoryDialog listdialog;
 	
-	private Context context;
+	private static Context context;
 	
-	private View view;
+	private static View view;
 
 	//////////////////////////////////////////////////////
 	
@@ -63,6 +64,14 @@ public class SearchActivity extends Fragment implements OnClickListener, onSubmi
 		listsetting();
 		
     	return view;
+	}
+	
+	@Override
+	public void onDestroy(){
+		RecycleUtils.recursiveRecycle(((Activity) context).getWindow().getDecorView());
+		System.gc();
+		
+		super.onDestroy();
 	}
 	
 	//////////////////////////////////////////////////////
@@ -155,7 +164,7 @@ public class SearchActivity extends Fragment implements OnClickListener, onSubmi
 		
 		    listdialog.dialog_title = title;
 		    listdialog.first_arrayAdapter = arrayAdapter;
-		    listdialog.firstlistClickListener = singleListListener;
+		    //listdialog.firstlistClickListener = singleListListener;
 		    
 		}
 		else{
@@ -193,7 +202,7 @@ public class SearchActivity extends Fragment implements OnClickListener, onSubmi
 	}
 	
 	private void listsetting(){
-		for(int i=0;i<10;i++){
+		for(int i=0;i<1;i++){
 			searchcardAdapter.addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "Search Card", getActivity().getApplicationContext(), i));
 		}
 		search_list_view.setAdapter(searchcardAdapter);

@@ -1,75 +1,71 @@
 package com.hhh.kiznic;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 @SuppressLint("ValidFragment")
-public class MyPageNicknameDialog extends DialogFragment implements OnEditorActionListener{
+public class MyPageNicknameDialog extends DialogFragment{
 
 	Context context;
 	
 	EditText nickname_dialog_edittext;
 	
 	Dialog dialog;
+	
+	View dialogView;
 
 	public MyPageNicknameDialog(Context context){
 		this.context = context;
 	}
 	
 	public interface onNicknameListener{
-		public void setNicknameListener(String arg);
+		void setNicknameListener(String arg);
 	}
 	
-	private onNicknameListener mListener;
+	//private onNicknameListener mListener;
 	
 	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState){
-		dialog = new Dialog(getActivity());
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		
-		mListener = (onNicknameListener) context;
+		dialogView = inflater.inflate(R.layout.dialog_nickname_mypage, container, false);
 		
-		dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);  
-		dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); 
-	
-		dialog.setContentView(R.layout.dialog_nickname_mypage);
+		getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);  
+		getDialog().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); 
 		
-		//dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+		nickname_dialog_edittext = (EditText)dialogView.findViewById(R.id.nickname_dialog_edittext);
+		nickname_dialog_edittext.requestFocus();
+		nickname_dialog_edittext.setOnEditorActionListener( new OnEditorActionListener() {
+			
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				
+				onNicknameListener activity = (onNicknameListener) getParentFragment();
+	        	activity.setNicknameListener(nickname_dialog_edittext.getText().toString());
+	            getDialog().dismiss();
+				
+				return false;
+			}
+		});
 		
-		init();
+		//init();
 		
-		dialog.show();
-		
-		return dialog;
+		return dialogView;
 	}
+	
 
 	public void init(){
-		nickname_dialog_edittext = (EditText)dialog.findViewById(R.id.nickname_dialog_edittext);
-		nickname_dialog_edittext.requestFocus();
-		nickname_dialog_edittext.setOnEditorActionListener(this);
+		
 	}
-	
-	@Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        if (EditorInfo.IME_ACTION_DONE == actionId) {
-            // Return input text to activity
-        	mListener.setNicknameListener(nickname_dialog_edittext.getText().toString());
-            this.dismiss();
-            return true;
-        }
-        return false;
-    }
 }

@@ -157,8 +157,8 @@
 			android:footerDividersEnabled="true"
 			android:listSelector="@android:color/transparent"
 			android:cacheColorHint="@android:color/transparent"
-			android:divider="@null"
-			android:dividerHeight="10dp" 
+			android:divider="#76C4C1"
+			android:dividerHeight="1dip"
 			android:scrollbars="none"/>
 	
 	</LinearLayout>

@@ -18,7 +18,6 @@ import com.hhh.kiznic.dataclass.PicnicSimpleInfo;
 public class MainRecommendCarditemCard extends Card implements View.OnClickListener{
 
 	TextView recommend_itemtitle_text;
-	TextView recommend_itemage_text;
 	TextView recommend_period_text;
 	TextView recommend_place_text;
 	TextView recommend_weathertemperature_text;
@@ -41,7 +40,6 @@ public class MainRecommendCarditemCard extends Card implements View.OnClickListe
 	
 	public void init(){
 		recommend_itemtitle_text = (TextView)cardView.findViewById(R.id.recommend_itemtitle_text);
-		recommend_itemage_text = (TextView)cardView.findViewById(R.id.recommend_itemage_text);
 		recommend_period_text = (TextView)cardView.findViewById(R.id.recommend_period_text);
 		recommend_place_text = (TextView)cardView.findViewById(R.id.recommend_place_text);
 		recommend_weathertemperature_text = (TextView)cardView.findViewById(R.id.recommend_weathertemperature_text);
@@ -62,6 +60,7 @@ public class MainRecommendCarditemCard extends Card implements View.OnClickListe
 		case R.id.recommend_recommendview_view:
 			Intent a = new Intent(context, DetailPageActivity.class);
 			context.startActivity(a.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+			a = null;
 		}
 	}
 }

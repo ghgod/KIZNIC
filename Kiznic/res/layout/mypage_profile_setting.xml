@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF" >
+    <RelativeLayout
+	                android:layout_width="match_parent"
+	                android:layout_height="70dip"
+	                android:orientation="horizontal">
+	                
+                    <EditText
+                        android:id="@+id/mypage_profilename_edittext"
+                        android:layout_width="120dip"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="2dip"
+                        android:singleLine="true"
+                        android:paddingLeft="5dip"
+                        android:hint="아이 이름"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:maxLength="5"
+                        android:background="@drawable/search_edittext_background"/>
+                    
+                    <ImageView 
+                        android:id="@+id/mypage_profileset_button"
+                        android:layout_width="30dip"
+                        android:layout_height="30dip"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="2dip"
+                        android:src="@drawable/mypage_profileset_image"/>
+                    
+                </RelativeLayout>
+                
+                <LinearLayout
+	                android:layout_width="match_parent"
+	                android:layout_height="20dip"
+	                android:background="@drawable/carditem_background">
+                    
+                    <RadioGroup
+				        android:id="@+id/profile_kidsex_radiogroup"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:layout_gravity="center_vertical"
+				        android:inputType="text"
+				        android:orientation="horizontal" >
+				 
+				        <RadioButton
+				            android:id="@+id/profile_male_radiobutton"
+				            android:layout_width="15dip"
+				            android:layout_height="15dip"
+				            android:checked="true"
+				            android:button="@android:drawable/btn_radio"/>
+				            
+				        <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:layout_gravity="center_vertical"
+	                        android:layout_marginLeft="3dip"
+	                        android:text="남아"
+	                        android:textSize="12sp"/>
+				        
+				        <RadioButton
+				            android:id="@+id/profile_female_radiobutton"
+				            android:layout_width="15dip"
+				            android:layout_height="15dip"
+				            android:layout_marginLeft="3dip"
+				            android:button="@android:drawable/btn_radio" />
+				 
+				        <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:layout_gravity="center_vertical"
+	                        android:layout_marginLeft="3dip"
+	                        android:text="여아"
+	                        android:textSize="12sp"/>
+				        
+				    </RadioGroup>
+                    
+                </LinearLayout>
+                
+                <LinearLayout
+	                android:layout_width="match_parent"
+	                android:layout_height="35dip">
+                    
+                    <EditText
+                        android:id="@+id/mypage_profilebirth_edittext"
+                        android:layout_width="120dip"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dip"
+                        android:singleLine="true"
+                        android:maxLength="6"
+                        android:inputType="number"
+                        android:hint="00.00.00"
+                        android:textColor="#000000"
+                        android:textSize="12sp"
+                        android:background="@drawable/search_edittext_background"/>
+                    
+                </LinearLayout>
+
+</LinearLayout>

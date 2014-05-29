@@ -10,10 +10,10 @@
 		android:orientation="vertical"
 		android:layout_width="match_parent"
 		android:layout_height="200dip"
-		android:layout_marginTop="5dip"
-		android:layout_marginRight="5dip"
-		android:layout_marginLeft="5dip"
-		android:background="#DEE7E7"
+		android:layout_marginTop="10dip"
+		android:layout_marginRight="10dip"
+		android:layout_marginLeft="10dip"
+		android:background="#FFFFFF"
 		android:descendantFocusability="afterDescendants">
 		
 		 <!-- location -->
@@ -22,8 +22,8 @@
 		     android:layout_width="match_parent"
 		     android:layout_height="0dip"
 		     android:layout_weight="45"
-		     android:background="#606AC2C7"
-		     android:orientation="horizontal">
+		     android:orientation="horizontal"
+		     android:background="@drawable/detail_underline_background">
 		     
 		     <TextView
 		             android:id="@+id/weather_location_text"
@@ -97,6 +97,7 @@
 		     android:layout_width="match_parent"
 		     android:layout_height="0dip"
 		     android:layout_weight="130"
+		     android:background="@drawable/detail_underline_background"
 		     android:orientation="horizontal">
 		     
 		     <LinearLayout
@@ -104,7 +105,6 @@
 		         android:layout_height="match_parent"
 		         android:layout_weight="28"
 		         android:layout_marginRight="1dip"
-		         android:background="#606AC2C7"
 		         android:orientation="vertical">
 		         
 		         <LinearLayout
@@ -125,7 +125,7 @@
 			                     android:layout_height="match_parent"
 			                     android:layout_gravity="center"
 			                     android:padding="5dip"
-			                     android:src="@drawable/weather_image"/>
+			                     android:src="@drawable/weather_rain_image_sky"/>
 		             	    
 		             	</LinearLayout>
 
@@ -165,7 +165,6 @@
 		         android:layout_height="match_parent"
 		         android:layout_weight="15"
 		         android:layout_marginLeft="1dip"
-		         android:background = "#606AC2C7"
 		         android:orientation="horizontal">
 		             
 		             <LinearLayout
@@ -178,8 +177,7 @@
 		                     android:layout_width="match_parent"
 		                     android:layout_height="match_parent"
 		                     android:layout_gravity="center"
-		                     android:padding="3dip"
-		                     android:src="@drawable/weather_image"/>
+		                     android:src="@drawable/weather_sunny_image_sky"/>
 		                 
 		             </LinearLayout>
 		             
@@ -208,7 +206,6 @@
 		     android:layout_height="0dip"
 		     android:layout_weight="45"
 		     android:layout_marginTop="1dip"
-		     android:background="#606AC2C7"
 		     android:orientation="horizontal">
 		     
 		     <LinearLayout
@@ -224,23 +221,37 @@
 		             android:gravity="center"
 		             android:orientation="horizontal">
 		             
-		             <ImageView
+		             <LinearLayout
+		                 android:layout_width="0dip"
+		                 android:layout_height="match_parent"
+		                 android:layout_weight="1">
+		             	
+		                 <ImageView
 					     android:id="@+id/weather_rainfall_image"
-				         android:layout_width="20dip"
-					     android:layout_height="20dip"
+				         android:layout_width="match_parent"
+					     android:layout_height="match_parent"
 				         android:layout_gravity="center_vertical"
-				         android:src="@drawable/rainfall"/>
-					         
-			     	 <TextView
+				         android:src="@drawable/weather_rainfall_image"/>
+					 
+		             </LinearLayout>
+		             
+		             <LinearLayout
+		                 android:layout_width="0dip"
+		                 android:layout_height="match_parent"
+		                 android:layout_weight="1">
+		                 
+		                 <TextView
 			     	     android:id="@+id/weather_rainfallpercent_text"
 				         android:layout_width="wrap_content"
 				         android:layout_height="wrap_content"
 				         android:layout_gravity="center_vertical"
 				         android:layout_marginLeft="3dip"
 				         android:text="100%"
-				         android:textColor="#FFFFFF"
+				         android:textColor="#000000"
 				         android:textSize="12sp"/>
-					     	 
+				
+		             </LinearLayout>
+		         	 	     	 
 		         </LinearLayout>
 		         
 		         <LinearLayout
@@ -250,21 +261,36 @@
 		             android:gravity="center"
 		             android:orientation="horizontal">
 		             
-		             <ImageView
-				         android:layout_width="20dip"
-					     android:layout_height="20dip"
+		             <LinearLayout
+		                 android:layout_width="0dip"
+		                 android:layout_height="match_parent"
+		                 android:layout_weight="1">
+		             
+		                 <ImageView
+				         android:layout_width="match_parent"
+					     android:layout_height="match_parent"
 				         android:layout_gravity="center_vertical"
-				         android:src="@drawable/rainfall"/>
-					         
-			     	 <TextView
+				         android:src="@drawable/weather_humidity_image"/>
+					 
+		             </LinearLayout>
+		             
+		             <LinearLayout
+		                 android:layout_width="0dip"
+		                 android:layout_height="match_parent"
+		                 android:layout_weight="1">
+		                 
+		                 <TextView
 				         android:layout_width="wrap_content"
 				         android:layout_height="wrap_content"
 				         android:layout_gravity="center_vertical"
 				         android:layout_marginLeft="3dip"
 				         android:text="45%"
-				         android:textColor="#FFFFFF"
+				         android:textColor="#000000"
 				         android:textSize="12sp"/>
-		             
+		         
+		             </LinearLayout>
+		                     
+			     	     
 		         </LinearLayout>
 		         
 		         <LinearLayout
@@ -274,23 +300,38 @@
 		             android:gravity="center"
 		             android:orientation="horizontal">
 		             
-		             <ImageView
+		             <LinearLayout
+		                 android:layout_width="0dip"
+		                 android:layout_height="match_parent"
+		                 android:layout_weight="1">
+		                 
+		                 <ImageView
 		                 android:id="@+id/weather_windspeed_image"
-				         android:layout_width="20dip"
-					     android:layout_height="20dip"
+				         android:layout_width="match_parent"
+					     android:layout_height="match_parent"
 				         android:layout_gravity="center_vertical"
-				         android:src="@drawable/windspeed"/>
-					         
-			     	 <TextView
+				         android:src="@drawable/weather_wind_image"/>
+					 
+		             </LinearLayout>
+		                 
+		             <LinearLayout
+		                 android:layout_width="0dip"
+		                 android:layout_height="match_parent"
+		                 android:layout_weight="1">
+		                 
+		                 <TextView
 			     	     android:id="@+id/weather_windspeedpercent_text"
 				         android:layout_width="wrap_content"
 				         android:layout_height="wrap_content"
 				         android:layout_gravity="center_vertical"
 				         android:layout_marginLeft="3dip"
 				         android:text="4m/s"
-				         android:textColor="#FFFFFF"
+				         android:textColor="#000000"
 				         android:textSize="12sp"/>
-			     	 
+			 
+		             </LinearLayout>
+		                     
+			     	     	 
 		         </LinearLayout>
 		         
 		     </LinearLayout>
@@ -306,8 +347,7 @@
 		             android:id="@+id/weather_finedustimage_image"
 			         android:layout_width="20dip"
 			         android:layout_height="20dip"
-			         android:layout_gravity="center_vertical"
-			         android:src="@drawable/rainfall"/>
+			         android:layout_gravity="center_vertical"/>
 		                     
 		         <TextView
 			         android:id="@+id/weather_finedusttext_text"
@@ -316,7 +356,7 @@
 					 android:layout_gravity="center_vertical"
 					 android:layout_marginLeft="3dip"
 			         android:text="미세먼지 농도 50"
-			         android:textColor="#FFFFFF"
+			         android:textColor="#000000"
 			         android:textSize="10sp"/>
 		                     
 		     </LinearLayout>

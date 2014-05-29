@@ -1,6 +1,7 @@
 package com.hhh.kiznic;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -36,34 +37,34 @@ import com.hhh.kiznic.util.Util;
 @SuppressLint("ValidFragment")
 public class MainActivity extends Fragment {
 	
-	private ListView mainListView, recommendmainListView;
-	private CardAdapter cardAdapter;
-	private CardAdapter[] recommendCardAdapter = new CardAdapter[4];
-	private int cardCount = -1, recommendcardCount = -1;
+	private static ListView mainListView, recommendmainListView;
+	private static CardAdapter cardAdapter;
+	private static CardAdapter[] recommendCardAdapter = new CardAdapter[4];
+	private static int cardCount = -1, recommendcardCount = -1;
 	
-	private ImageView weather_finedust;
+	private static ImageView weather_finedust;
 	
-	private TextView weather_mylocation;
-	private TextView weather_today_timedesc;
-	private TextView weather_today_temp;
-	private TextView weather_today_rainprob;
-	private TextView weather_today_windspeed;
-	private TextView weather_next_timedesc;
-	private TextView weather_next_temp;
-	private TextView weather_today_pm10value;
-	private TextView wewather_today_feeltemp;
+	private static TextView weather_mylocation;
+	private static TextView weather_today_timedesc;
+	private static TextView weather_today_temp;
+	private static TextView weather_today_rainprob;
+	private static TextView weather_today_windspeed;
+	private static TextView weather_next_timedesc;
+	private static TextView weather_next_temp;
+	private static TextView weather_today_pm10value;
+	private static TextView wewather_today_feeltemp;
 	
-	private ImageView weather_refresh_button;
-	private ImageView weather_image;
-	private ImageView weather_next_image;
-	private ImageView profile_kidimage_image;
+	private static ImageView weather_refresh_button;
+	private static ImageView weather_image;
+	private static ImageView weather_next_image;
+	private static ImageView profile_kidimage_image;
 	
-	private Button recommend_morelist_button;
-	Databasehelper dbHelper;
+	private static Button recommend_morelist_button;
+	static Databasehelper dbHelper;
 	
-	private Context context;
+	private static Context context;
 	
-	private View view;
+	private static View view;
 	
 	//////////////////////////////////////////////
 	
@@ -77,7 +78,7 @@ public class MainActivity extends Fragment {
 		view = inflater.inflate(R.layout.activity_main, null);
 		
 		//KiznicTitle a = new KiznicTitle(this);
-		dbHelper = new Databasehelper(getActivity().getBaseContext());
+		//dbHelper = new Databasehelper(getActivity().getBaseContext());
 		
 		init();
 		
@@ -89,6 +90,15 @@ public class MainActivity extends Fragment {
 		
 		return view;
 	}
+	
+	@Override
+	public void onDestroy(){
+		RecycleUtils.recursiveRecycle(((Activity) context).getWindow().getDecorView());
+		System.gc();
+		
+		super.onDestroy();
+	}
+	
 	//////////////////////////////////////////////
 	
 	private void init() {
@@ -99,24 +109,35 @@ public class MainActivity extends Fragment {
 		for(int i=0;i<4;i++){
 			recommendCardAdapter[i] = new CardAdapter(getActivity().getApplicationContext());
 		}
-		
+		if(profile_kidimage_image == null)
 		profile_kidimage_image = (ImageView)view.findViewById(R.id.profile_kidimage_image);
 		
 		listsetting();
-		
-		weather_mylocation = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_location_text);
-		weather_today_timedesc = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_simpleinfo_text);
-		weather_today_temp= (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_temperature_text);
-		weather_today_rainprob = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_rainfallpercent_text);
-		weather_today_windspeed = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_windspeedpercent_text);
-		weather_today_pm10value = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_finedusttext_text);
-		weather_next_timedesc = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextdaysimpleinfo_text);
-		weather_next_temp = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nexttemperature_text);
-		weather_refresh_button = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_getlocation_imagebutton);
-		weather_finedust = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_finedustimage_image);
+		if(weather_mylocation == null)
+			weather_mylocation = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_location_text);
+		if(weather_today_timedesc == null)
+			weather_today_timedesc = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_simpleinfo_text);
+		if(weather_today_temp == null)
+			weather_today_temp= (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_temperature_text);
+		if(weather_today_rainprob == null)
+			weather_today_rainprob = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_rainfallpercent_text);
+		if(weather_today_windspeed == null)
+			weather_today_windspeed = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_windspeedpercent_text);
+		if(weather_today_pm10value == null)
+			weather_today_pm10value = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_finedusttext_text);
+		if(weather_next_timedesc == null)
+			weather_next_timedesc = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextdaysimpleinfo_text);
+		if(weather_next_temp == null)
+			weather_next_temp = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nexttemperature_text);
+		if(weather_refresh_button == null)
+			weather_refresh_button = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_getlocation_imagebutton);
+		if(weather_finedust == null)
+			weather_finedust = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_finedustimage_image);
 	
-		weather_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_weatherimage_image);
-		weather_next_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextweatherimage_image);
+		if(weather_image == null)
+			weather_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_weatherimage_image);
+		if(weather_next_image == null)
+			weather_next_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextweatherimage_image);
 		
 	}
 	
@@ -129,7 +150,7 @@ public class MainActivity extends Fragment {
 				mf.getViewPager().setCurrentItem(2);
 			}
 		});
-		
+		/*
 		weather_refresh_button.setOnClickListener(new ImageView.OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -139,7 +160,7 @@ public class MainActivity extends Fragment {
 			}
 			
 		});
-		/*
+		
 		inside.setOnClickListener(new Button.OnClickListener() {
 
 			@Override
@@ -173,12 +194,23 @@ public class MainActivity extends Fragment {
 		ImageView profile_image = (ImageView)view.findViewById(R.id.profile_kidimage_image);
 		
 		BitmapShader shader = new BitmapShader (bitmap,  TileMode.CLAMP, TileMode.CLAMP);
-		Paint paint = new Paint();
-		        paint.setShader(shader);
-
+		
 		Canvas c = new Canvas(circleBitmap);
-		c.drawCircle(bitmap.getWidth()/2, bitmap.getHeight()/2, bitmap.getHeight()/2, paint);
+		
+		Paint paint_stroke = new Paint();
+		
+		paint_stroke.setARGB(255, 36, 176, 205);
+		paint_stroke.setAntiAlias(true);
 
+		c.drawCircle(bitmap.getWidth()/2, bitmap.getHeight()/2, bitmap.getHeight()/2, paint_stroke);
+		
+		Paint paint = new Paint();
+		paint.setShader(shader);
+		paint.setAntiAlias(true);
+		
+		
+		c.drawCircle(bitmap.getWidth()/2, bitmap.getHeight()/2, bitmap.getHeight()/2-5, paint);
+		
 		profile_image.setImageBitmap(circleBitmap);
 	}
 	

@@ -17,29 +17,19 @@
 	     	    android:layout_width="match_parent"
 	     	    android:layout_height="wrap_content"
 	     	    android:orientation="vertical">
+	     	   
 			    <LinearLayout
 			        android:layout_width="match_parent"
 			        android:layout_height="wrap_content"
 			        android:orientation="vertical"
-			        android:layout_marginTop="5dip"
-			        android:layout_marginLeft="5dip"
-			        android:layout_marginRight="5dip"
-			        android:background="#FDF9F2">
+			        android:layout_marginTop="10dip"
+			        android:layout_marginLeft="10dip"
+			        android:layout_marginRight="10dip"
+			        android:background="#FFFFFF">
 			        
 			        <LinearLayout
 			            android:layout_width="match_parent"
-			            android:layout_height="wrap_content">
-			            
-			            <ImageView
-			                android:layout_width="match_parent"
-			                android:layout_height="300dip"
-			                android:src="@drawable/recommend"/>
-			            
-			        </LinearLayout>
-			        
-			        <LinearLayout
-			            android:layout_width="match_parent"
-			            android:layout_height="100dip"
+			            android:layout_height="50dip"
 			            android:gravity="center">
 			            
 			            <TextView
@@ -48,7 +38,19 @@
 			                android:layout_gravity="center"
 			                android:text="[성남 아트센터] 배고픈 애벌레"
 			                android:textColor="#000000"
-			                android:textSize="25sp"/>
+			                android:textSize="23sp"/>
+			            
+			        </LinearLayout>
+			        
+			        <LinearLayout
+			            android:layout_width="match_parent"
+			            android:layout_height="wrap_content">
+			            
+			            <ImageView
+			                android:id="@+id/detail_mainposter_image"
+			                android:layout_width="match_parent"
+			                android:layout_height="300dip"
+			                android:src="@drawable/recommend"/>
 			            
 			        </LinearLayout>
 			        
@@ -56,12 +58,78 @@
 			    
 			    <LinearLayout
 			        android:layout_width="match_parent"
+			        android:layout_height="40dip"
+			        android:orientation="horizontal"
+			        android:layout_marginLeft="10dip"
+			        android:layout_marginRight="10dip"
+			        android:background="#FFFFFF">
+			        
+			        <LinearLayout
+			            android:layout_width="0dip"
+			            android:layout_height="match_parent"
+			            android:layout_weight="1">
+			            
+			            <ImageView
+			                android:id="@+id/detail_phone_image"
+			                android:layout_width="match_parent"
+			                android:layout_height="match_parent"
+			                android:padding="5dip"
+			                android:src="@drawable/detail_phone"/>
+			            
+			        </LinearLayout>
+			         
+			        <LinearLayout
+			            android:layout_width="0dip"
+			            android:layout_height="match_parent"
+			            android:layout_weight="1">
+			             
+			            <ImageView
+			                android:id="@+id/detail_link_image"
+			                android:layout_width="match_parent"
+			                android:layout_height="match_parent"
+			                android:padding="5dip"
+			                android:src="@drawable/detail_link"/>
+			            
+			        </LinearLayout>
+			        
+			        <LinearLayout
+			            android:layout_width="0dip"
+			            android:layout_height="match_parent"
+			            android:layout_weight="1">
+			             
+			            <ImageView
+			                android:id="@+id/detail_bookmark_image"
+			                android:layout_width="match_parent"
+			                android:layout_height="match_parent"
+			                android:padding="5dip"
+			                android:src="@drawable/detail_bookmark"/>
+			            
+			        </LinearLayout>
+			        
+			        <LinearLayout
+			            android:layout_width="0dip"
+			            android:layout_height="match_parent"
+			            android:layout_weight="1">
+			             
+			            <ImageView
+			                android:id="@+id/detail_sharing_image" 
+			                android:layout_width="match_parent"
+			                android:layout_height="match_parent"
+			                android:padding="5dip"
+			                android:src="@drawable/detail_sharing"/>
+			            
+			        </LinearLayout> 
+			    </LinearLayout>
+			     
+			    
+			    <LinearLayout
+			        android:layout_width="match_parent"
 			        android:layout_height="wrap_content"
 			        android:orientation="vertical"
-			        android:layout_marginTop="5dip"
-			        android:layout_marginLeft="5dip"
-			        android:layout_marginRight="5dip"
-			        android:background="#FDF9F2">
+			        android:layout_marginTop="10dip"
+			        android:layout_marginLeft="10dip"
+			        android:layout_marginRight="10dip"
+			        android:background="#FFFFFF">
 			        
 			        <LinearLayout
 			            android:layout_width="match_parent"
@@ -104,7 +172,7 @@
 			                android:text="더보기"
 			                android:textColor="#000000"
 			                android:textSize="12sp"
-			                android:background="#FDF9F2"/>
+			                android:background="#5076C4C1"/>
 			            
 			        </LinearLayout>
 			        
@@ -114,10 +182,10 @@
 			        android:id="@+id/detail_listview_layout"
 			        android:layout_width="match_parent"
 			        android:layout_height="wrap_content"
-			        android:layout_marginTop="5dip"
-			        android:layout_marginLeft="5dip"
-			        android:layout_marginRight="5dip"
-			        android:background="#FDF9F2">
+			        android:layout_marginTop="10dip"
+			        android:layout_marginLeft="10dip"
+			        android:layout_marginRight="10dip"
+			        android:background="#FFFFFF">
 			        
 			        <ListView
 						android:id="@+id/detail_list_view"
@@ -134,75 +202,12 @@
 			    
 			    <LinearLayout
 			        android:layout_width="match_parent"
-			        android:layout_height="60dip"
-			        android:orientation="horizontal"
-			        android:layout_marginTop="5dip"
-			        android:layout_marginLeft="5dip"
-			        android:layout_marginRight="5dip"
-			        android:background="#FDF9F2">
-			        
-			        <LinearLayout
-			            android:layout_width="0dip"
-			            android:layout_height="match_parent"
-			            android:layout_weight="1">
-			            
-			            <ImageView
-			                android:layout_width="match_parent"
-			                android:layout_height="match_parent"
-			                android:padding="5dip"
-			                android:src="@drawable/detail_phone"/>
-			            
-			        </LinearLayout>
-			        
-			        <LinearLayout
-			            android:layout_width="0dip"
-			            android:layout_height="match_parent"
-			            android:layout_weight="1">
-			             
-			            <ImageView
-			                android:layout_width="match_parent"
-			                android:layout_height="match_parent"
-			                android:padding="5dip"
-			                android:src="@drawable/detail_link"/>
-			            
-			        </LinearLayout>
-			        
-			        <LinearLayout
-			            android:layout_width="0dip"
-			            android:layout_height="match_parent"
-			            android:layout_weight="1">
-			             
-			            <ImageView
-			                android:layout_width="match_parent"
-			                android:layout_height="match_parent"
-			                android:padding="5dip"
-			                android:src="@drawable/detail_bookmark"/>
-			            
-			        </LinearLayout>
-			        
-			        <LinearLayout
-			            android:layout_width="0dip"
-			            android:layout_height="match_parent"
-			            android:layout_weight="1">
-			             
-			            <ImageView
-			                android:layout_width="match_parent"
-			                android:layout_height="match_parent"
-			                android:padding="5dip"
-			                android:src="@drawable/detail_sharing"/>
-			            
-			        </LinearLayout> 
-			        
-			    </LinearLayout>
-			    
-			    <LinearLayout
-			        android:layout_width="match_parent"
 			        android:layout_height="180dip"
 			        android:orientation="vertical"
-			        android:layout_marginTop="5dip"
-			        android:layout_marginLeft="5dip"
-			        android:layout_marginRight="5dip"
-			        android:background="#FDF9F2">
+			        android:layout_marginTop="10dip"
+			        android:layout_marginLeft="10dip"
+			        android:layout_marginRight="10dip"
+			        android:background="#FFFFFF">
 			    
 			        <LinearLayout
 			            android:id="@+id/mapViewContainer"
@@ -210,12 +215,7 @@
 			            android:layout_height="0dip"
 			            android:layout_weight="10"
 			            android:orientation="vertical">
-			            <!-- 
-			            <com.nhn.android.maps.NMapView 
-						    android:layout_width="match_parent" 
-						    android:layout_height="match_parent" 
-						    android:id="@+id/mapView"/>
-			             -->
+			            
 			        </LinearLayout>
 			        
 			        <LinearLayout
@@ -269,10 +269,10 @@
 			        android:layout_width="match_parent"
 			        android:layout_height="wrap_content"
 			        android:orientation="vertical"
-			        android:layout_marginTop="5dip"
-			        android:layout_marginLeft="5dip"
-			        android:layout_marginRight="5dip"
-			        android:background="#FDF9F2">
+			        android:layout_marginTop="10dip"
+			        android:layout_marginLeft="10dip"
+			        android:layout_marginRight="10dip"
+			        android:background="#FFFFFF">
 			        
 			        <LinearLayout
 			            android:layout_width="match_parent"
@@ -289,7 +289,7 @@
 			                android:textSize="12sp"/>
 			            
 			        </LinearLayout>
-			        
+			         
 			        <LinearLayout
 			            android:id="@+id/detail_nevigation_layout"
 			            android:layout_width="match_parent"
@@ -307,9 +307,7 @@
 							android:scrollbars="none"/>
 			            
 			        </LinearLayout>
-			        
 			    </LinearLayout>
-			    
 		    </LinearLayout>
 	    </ScrollView>
    </LinearLayout>   
