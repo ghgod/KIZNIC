@@ -178,23 +178,26 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 			}
 		}
 		
-		Log.d("simpleInfo1", String.valueOf(simpleInfo1.size()));
-		Log.d("simpleInfo2", String.valueOf(simpleInfo2.size()));
-		Log.d("simpleInfo3", String.valueOf(simpleInfo3.size()));
-		Log.d("simpleInfo4", String.valueOf(simpleInfo4.size()));
+		Log.d("simpleInfo1", String.valueOf(simpleInfo1.get(0).getPlayTitle()));
+		Log.d("simpleInfo2", String.valueOf(simpleInfo2.get(0).getPlayTitle()));
+		Log.d("simpleInfo3", String.valueOf(simpleInfo3.get(0).getPlayTitle()));
+		Log.d("simpleInfo4", String.valueOf(simpleInfo4.get(0).getPlayTitle()));
 		
 		int recommendCount = 0;
 		
 		if(simpleInfo1.size() != 0) {
 			isExistSimpleInfo1 = true;
 			recommendCount++;
-		} else if(simpleInfo2.size() != 0) {
+		} 
+		if(simpleInfo2.size() != 0) {
 			isExistSimpleInfo2 = true;
 			recommendCount++;
-		} else if(simpleInfo3.size() != 0) {
+		} 
+		if(simpleInfo3.size() != 0) {
 			isExistSimpleInfo3 = true;
 			recommendCount++;
-		} else if(simpleInfo4.size() != 0) {
+		} 
+		if(simpleInfo4.size() != 0) {
 			isExistSimpleInfo4 = true;
 			recommendCount++;
 		}
@@ -210,7 +213,6 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "공연/전시", mContext, genreCount));
 			for(int i=0; i<simpleInfo1.size(); i++) {
 				recommendCardAdapter[genreListCount].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "공연/전시", mContext, genreCount, simpleInfo1.get(i)));
-
 			}
 			genreCount++;
 			genreListCount++;
@@ -243,10 +245,10 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 			genreListCount++;
 		}
 				
-		simpleInfo1.clear();
-		simpleInfo2.clear();
-		simpleInfo3.clear();
-		simpleInfo4.clear();
+		//simpleInfo1.clear();
+		//simpleInfo2.clear();
+		//simpleInfo3.clear();
+		//simpleInfo4.clear();
 		
 		mainListView.setAdapter(cardAdapter);
 		

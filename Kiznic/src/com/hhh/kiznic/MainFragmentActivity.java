@@ -25,7 +25,7 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
-	static ViewPager mViewPager;
+	public static ViewPager mViewPager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -157,9 +157,5 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 			
 			return null;
 		}
-	}
-	
-	public ViewPager getViewPager(){
-		return mViewPager;
 	}
 }

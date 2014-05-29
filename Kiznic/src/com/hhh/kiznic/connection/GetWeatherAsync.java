@@ -128,9 +128,13 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 		
 		
 		if(flag == 0) {
-			dbHelper.createWeather(weatherInfo.get(0), weatherInfo.get(1), pollutionInfo.get(0));
+			Log.d("createWeather", "Table 생성");
+			String booleanCreateWeather = dbHelper.createWeather(weatherInfo.get(0), weatherInfo.get(1), pollutionInfo.get(0));
+			Log.d("booleanCreateWeather", booleanCreateWeather);
 		} else {
+			//Log.d("createWeather", "Table 업데이트");
 			dbHelper.updateWeather(weatherInfo.get(0), weatherInfo.get(1), pollutionInfo.get(0));
+			//Log.d("booleanUpdateweather", booleanUpdateWeather);
 		}
 		
 		

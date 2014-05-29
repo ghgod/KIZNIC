@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class Databasehelper extends SQLiteOpenHelper{
 	
@@ -105,6 +106,7 @@ public class Databasehelper extends SQLiteOpenHelper{
 		SQLiteDatabase db = this.getWritableDatabase();
 		
 		ContentValues values = new ContentValues();
+		values.put("_id", "1");
 		values.put(KEY_TODAY_DAYSTATE, weatherTodayInfo.getDayState());
 		values.put(KEY_TODAY_TIME, weatherTodayInfo.getTime());
 	    values.put(KEY_TODAY_DESC, weatherTodayInfo.getWeatherDesc());
@@ -121,13 +123,16 @@ public class Databasehelper extends SQLiteOpenHelper{
 		
 	 // insert row
 	    long account_row_ID = db.insert(TABLE_WEATHER, null, values);
-	 
+	    
+	    db.close();
+	    
 	    if(account_row_ID != 1) {
 	    	return "success";
 	    }
 	    else {
 	    	return "fail";
 	    }
+	    
 	}
 	
 	
@@ -170,6 +175,7 @@ public class Databasehelper extends SQLiteOpenHelper{
 		SQLiteDatabase db = this.getWritableDatabase();
 		
 		ContentValues values = new ContentValues();
+		values.put("_id", "1");
 	    values.put(KEY_TODAY_DAYSTATE, weatherTodayInfo.getDayState());
 		values.put(KEY_TODAY_TIME,  weatherTodayInfo.getTime());
 	    values.put(KEY_TODAY_DESC, weatherTodayInfo.getWeatherDesc());
@@ -179,15 +185,14 @@ public class Databasehelper extends SQLiteOpenHelper{
 	    values.put(KEY_TODAY_WINDSPEED, weatherTodayInfo.getWindSpeed());
 	    values.put(KEY_TODAY_HUMIDITY, weatherTodayInfo.getHumidity());
 	    values.put(KEY_TODAY_POLLUTIONCONCENTRATION, pollutionInfo.getPM10Value());
-	    
 	    values.put(KEY_NEXT_DAYSTATE, weatherNextInfo.getDayState());
 	    values.put(KEY_NEXT_TIME, weatherNextInfo.getTime());
 	    values.put(KEY_NEXT_DESC, weatherNextInfo.getWeatherDesc());
 	    values.put(KEY_NEXT_TEMP, weatherNextInfo.getTemperature());
 	    
-	    
 	    db.update(TABLE_WEATHER, values, "_id=1", null);
 		
+	    db.close();
 	}
 	
 	/*
@@ -196,16 +201,16 @@ public class Databasehelper extends SQLiteOpenHelper{
 	public WeatherInfo getTodayWeatherInfo() {
 		
 		SQLiteDatabase db = this.getReadableDatabase();
-		 
-	    String selectQuery = "SELECT  * FROM " + TABLE_WEATHER + " WHERE "
-	            + "_id=1";
+		WeatherInfo weatherInfo = new WeatherInfo();
+	    String selectQuery = "SELECT  * FROM " + TABLE_WEATHER + " WHERE " + "_id=1";
 	    
 	    Cursor c = db.rawQuery(selectQuery, null);
-		 
-	    if (c != null)
-	        c.moveToFirst();
+		//Log.d("cursorSuccess", "cursorOK"); 
 	    
-	    WeatherInfo weatherInfo = new WeatherInfo();
+		if (c != null ) 
+	    	c.moveToFirst();
+	    
+		Log.d("cursorSuccess", "cursorOK"); 
 	    weatherInfo.setDayState(c.getString(c.getColumnIndex(KEY_TODAY_DAYSTATE)));
 	    weatherInfo.setTime(c.getString(c.getColumnIndex(KEY_TODAY_TIME)));
 	    weatherInfo.setWeatherDesc(c.getString(c.getColumnIndex(KEY_TODAY_DESC)));
@@ -214,7 +219,9 @@ public class Databasehelper extends SQLiteOpenHelper{
 	    weatherInfo.setRainProb(c.getString(c.getColumnIndex(KEY_TODAY_RAINPROB)));
 	    weatherInfo.setWindSpeed(c.getString(c.getColumnIndex(KEY_TODAY_WINDSPEED)));
 	    weatherInfo.setHumidity(c.getString(c.getColumnIndex(KEY_TODAY_HUMIDITY)));
-	
+	    
+	    c.close();	    
+	    db.close();
 	    return weatherInfo;
 	}
 	
@@ -240,6 +247,7 @@ public class Databasehelper extends SQLiteOpenHelper{
 	    weatherInfo.setTemperature(c.getString(c.getColumnIndex(KEY_NEXT_TEMP)));
 	    weatherInfo.setWeatherDesc(c.getString(c.getColumnIndex(KEY_NEXT_DESC)));
 	    
+	    db.close();
 	    return weatherInfo;
 	}
 	
@@ -258,6 +266,7 @@ public class Databasehelper extends SQLiteOpenHelper{
 	    PollutionInfo pollutionInfo = new PollutionInfo();
 	    pollutionInfo.setPM10Value(c.getString(c.getColumnIndex(KEY_TODAY_POLLUTIONCONCENTRATION)));
 	    
+	    db.close();
 	    return pollutionInfo;
 	}
 	

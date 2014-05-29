@@ -8,7 +8,6 @@
     <!-- ID -->
     
     <LinearLayout
-        android:id="@+id/mypage_login_view"
         android:layout_width="match_parent"
         android:layout_height="60dip"
         android:layout_marginTop="5dip"
@@ -53,7 +52,6 @@
     <!-- nickname -->
     
     <LinearLayout
-        android:id="@+id/mypage_nickname_view"
         android:layout_width="match_parent"
         android:layout_height="60dip"
         android:layout_marginTop="5dip"

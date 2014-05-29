@@ -40,6 +40,12 @@ public class MainRecommendCarditemCard extends Card implements View.OnClickListe
 		this.context = context;
 		this.simpleInfo = simpleInfo;
 		init();
+		try {
+			setInfo();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		setListener();
 	}
 	
@@ -66,7 +72,7 @@ public class MainRecommendCarditemCard extends Card implements View.OnClickListe
 		recommend_period_text.setText(simpleInfo.getPlayStartDate() + "~" +simpleInfo.getPlayEndDate());
 		recommend_place_text.setText(simpleInfo.getPlayPlace());
 		recommend_distance_text.setText(simpleInfo.getPlayDistance());
-		recommend_posterimage_image.setImageBitmap(util.decompBitmap(simpleInfo.getPlayThumb()));
+		//recommend_posterimage_image.setImageBitmap(util.decompBitmap(simpleInfo.getPlayThumb()));
 	}
 	
 	@Override

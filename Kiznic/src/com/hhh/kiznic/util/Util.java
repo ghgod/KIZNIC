@@ -184,7 +184,7 @@ public class Util {
 			nameValuePairs.add(new BasicNameValuePair("recommend_info", sendConditionInfo.toString()));
 			
 			HttpParams params = http.getParams();
-			HttpConnectionParams.setConnectionTimeout(params, 5000);
+			HttpConnectionParams.setConnectionTimeout(params, 10000);
 			HttpConnectionParams.setSoTimeout(params, 5000);
 			
 			//Log.d("downLoadHttp_URL", url);
