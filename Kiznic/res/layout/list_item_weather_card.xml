@@ -40,8 +40,7 @@
 		             android:layout_width="15dip"
 		             android:layout_height="15dip"
 		             android:layout_marginLeft="5dip"
-		             android:layout_gravity="center"
-		             android:src="@drawable/weather_gps"/>
+		             android:layout_gravity="center"/>
 		     
 		 </LinearLayout>
 		 
@@ -124,8 +123,7 @@
 			                     android:layout_width="match_parent"
 			                     android:layout_height="match_parent"
 			                     android:layout_gravity="center"
-			                     android:padding="5dip"
-			                     android:src="@drawable/weather_rain_image_sky"/>
+			                     android:padding="5dip"/>
 		             	    
 		             	</LinearLayout>
 
@@ -176,8 +174,7 @@
 		                     android:id="@+id/weather_nextweatherimage_image"
 		                     android:layout_width="match_parent"
 		                     android:layout_height="match_parent"
-		                     android:layout_gravity="center"
-		                     android:src="@drawable/weather_sunny_image_sky"/>
+		                     android:layout_gravity="center"/>
 		                 
 		             </LinearLayout>
 		             
@@ -230,8 +227,7 @@
 					     android:id="@+id/weather_rainfall_image"
 				         android:layout_width="match_parent"
 					     android:layout_height="match_parent"
-				         android:layout_gravity="center_vertical"
-				         android:src="@drawable/weather_rainfall_image"/>
+				         android:layout_gravity="center_vertical"/>
 					 
 		             </LinearLayout>
 		             
@@ -269,8 +265,7 @@
 		                 <ImageView
 				         android:layout_width="match_parent"
 					     android:layout_height="match_parent"
-				         android:layout_gravity="center_vertical"
-				         android:src="@drawable/weather_humidity_image"/>
+				         android:layout_gravity="center_vertical"/>
 					 
 		             </LinearLayout>
 		             
@@ -309,8 +304,7 @@
 		                 android:id="@+id/weather_windspeed_image"
 				         android:layout_width="match_parent"
 					     android:layout_height="match_parent"
-				         android:layout_gravity="center_vertical"
-				         android:src="@drawable/weather_wind_image"/>
+				         android:layout_gravity="center_vertical"/>
 					 
 		             </LinearLayout>
 		                 

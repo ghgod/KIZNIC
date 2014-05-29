@@ -5,6 +5,7 @@ import com.androidquery.AQuery;
 import com.hhh.kiznic.MyPageNicknameDialog.onNicknameListener;
 import com.hhh.kiznic.SearchcategoryDialog.onSubmitListener;
 
+import android.R.string;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Shader.TileMode;
 import android.os.Bundle;
@@ -36,24 +38,55 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 	private static Context context;
 	
 	private static View view;
-	private static View mypage_nickname_view;
-	private static LinearLayout mypage_profile_layout;
-	private static LinearLayout mypage_smart_setting_layout;
+	//private static View mypage_nickname_view;
+	
+	// id
 	
 	private static ImageView mypage_idinput_image;
+	
+	// profile
+	
+	private static LinearLayout mypage_profile_layout;
+	
 	private static ImageView mypage_profileamend_button;
 	
+	// profile setting
+	
+	private static LinearLayout mypage_profilesetting_layout;
+	
 	private static ImageView mypage_profileset_button; 
-
-	private static ImageView mypage_am_alarm_button;
-	private static ImageView mypage_pm_alarm_button;
+	
+	// setting 
 	
 	private static ImageView mypage_smartpush_button;
 	private static ImageView mypage_smartwatch_button;
 	
-	private AQuery aq;
+	// smartalarm
+	
+	private static LinearLayout mypage_smartalarm_layout;
+	private static LinearLayout mypage_amalarm_layout;
+	private static LinearLayout mypage_pmalarm_layout;
+
+	private static ImageView mypage_am_alarm_button;
+	private static ImageView mypage_pm_alarm_button;
 	
 	static boolean am_alarm_flag, pm_alarm_flag;
+	
+	// smartwatch
+	
+	private static LinearLayout mypage_smartwatch_layout;
+	
+	// alarmset
+	
+	private static LinearLayout mypage_alarmset_layout;
+
+	private static NumberPicker mypage_hoursetting_np;
+	private static NumberPicker mypage_minutesetting_np;
+	
+	private static ImageView mypage_alarmsetting_image;
+	
+	private static TextView mypage_amalarm_text;
+	private static TextView mypage_pmalarm_text;
 	
 	//private TextView mypage_nickname_text;
 	
@@ -71,6 +104,8 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 		
 		profile_circleimage();
 		profile_small_circleimage();
+		
+		setNumberpicker();
 		
     	return view;
 	}
@@ -94,66 +129,91 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 				logindialog.show(getFragmentManager(), "login");
 			}
 		});
-		profile_view_setlistener();
+		
+		mypage_profileamend_button.setOnClickListener(new ImageView.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				mypage_profilesetting_layout.setVisibility(LinearLayout.VISIBLE);
+				mypage_profile_layout.setVisibility(LinearLayout.INVISIBLE);
+			}
+		});
+		
+		mypage_profileset_button.setOnClickListener(new ImageView.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				mypage_profilesetting_layout.setVisibility(LinearLayout.INVISIBLE);
+				mypage_profile_layout.setVisibility(LinearLayout.VISIBLE);
+			}
+		});
+		
+		mypage_am_alarm_button.setOnClickListener(new ImageView.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				if(!am_alarm_flag){
+					mypage_am_alarm_button.setImageResource(R.drawable.mypage_pushalarm_image_focus);
+					am_alarm_flag = true;
+				}
+				else{
+					mypage_am_alarm_button.setImageResource(R.drawable.mypage_pushalarm_image_up);
+					am_alarm_flag = false;
+				}
+			}
+		});
+		
+		mypage_pm_alarm_button.setOnClickListener(new ImageView.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				if(!pm_alarm_flag){
+					mypage_pm_alarm_button.setImageResource(R.drawable.mypage_pushalarm_image_focus);
+					pm_alarm_flag = true;
+				}
+				else{
+					mypage_pm_alarm_button.setImageResource(R.drawable.mypage_pushalarm_image_up);
+					pm_alarm_flag = false;
+				}
+			}
+		});
 		
 		mypage_smartpush_button.setOnClickListener(new ImageView.OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				
-				mypage_smartpush_button.setImageResource(R.drawable.mypage_push_image_focus);
-				mypage_smartwatch_button.setImageResource(R.drawable.mypage_smartwatch_image_up);
-				
-				mypage_smart_setting_layout = (LinearLayout)view.findViewById(R.id.mypage_smart_setting_layout);
-				mypage_smart_setting_layout.removeAllViews();
-				
-				LayoutInflater inflater2 = getActivity().getLayoutInflater();
-				mypage_smart_setting_layout.addView(inflater2.inflate(R.layout.mypage_pushalarm_setting, null));
-				
-				mypage_am_alarm_button = (ImageView)view.findViewById(R.id.mypage_am_alarm_button);
-				mypage_pm_alarm_button = (ImageView)view.findViewById(R.id.mypage_pm_alarm_button);
-				
-				mypage_am_alarm_button.setOnClickListener(new ImageView.OnClickListener(){
-					@Override
-					public void onClick(View v) {
-						if(!am_alarm_flag){
-							mypage_am_alarm_button.setImageResource(R.drawable.mypage_pushalarm_image_focus);
-							am_alarm_flag = true;
-						}
-						else{
-							mypage_am_alarm_button.setImageResource(R.drawable.mypage_pushalarm_image_up);
-							am_alarm_flag = false;
-						}
-					}
-				});
-				
-				mypage_pm_alarm_button.setOnClickListener(new ImageView.OnClickListener(){
-					@Override
-					public void onClick(View v) {
-						if(!pm_alarm_flag){
-							mypage_pm_alarm_button.setImageResource(R.drawable.mypage_pushalarm_image_focus);
-							pm_alarm_flag = true;
-						}
-						else{
-							mypage_pm_alarm_button.setImageResource(R.drawable.mypage_pushalarm_image_up);
-							pm_alarm_flag = false;
-						}
-					}
-				});
+				mypage_smartalarm_layout.setVisibility(LinearLayout.VISIBLE);
+				mypage_smartwatch_layout.setVisibility(LinearLayout.INVISIBLE);
 			}
 		});
 		
 		mypage_smartwatch_button.setOnClickListener(new ImageView.OnClickListener(){
 			@Override
 			public void onClick(View v) {
+				mypage_smartalarm_layout.setVisibility(LinearLayout.INVISIBLE);
+				mypage_smartwatch_layout.setVisibility(LinearLayout.VISIBLE);
+			}
+		});
+		
+		mypage_amalarm_layout.setOnClickListener(new LinearLayout.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				mypage_alarmset_layout.setVisibility(LinearLayout.VISIBLE);
 				
-				mypage_smartpush_button.setImageResource(R.drawable.mypage_push_image_up);
-				mypage_smartwatch_button.setImageResource(R.drawable.mypage_smartwatch_image_focus);
-				
-				mypage_smart_setting_layout = (LinearLayout)view.findViewById(R.id.mypage_smart_setting_layout);
-				mypage_smart_setting_layout.removeAllViews();
-				
-				LayoutInflater inflater2 = getActivity().getLayoutInflater();
-				mypage_smart_setting_layout.addView(inflater2.inflate(R.layout.mypage_smartwatch_setting, null));
+				mypage_amalarm_text.setTextColor(Color.parseColor("#FFFF00"));
+				mypage_pmalarm_text.setTextColor(Color.parseColor("#FFFFFF"));
+			}
+		});
+		
+		mypage_pmalarm_layout.setOnClickListener(new LinearLayout.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				mypage_alarmset_layout.setVisibility(LinearLayout.VISIBLE);
+
+				mypage_amalarm_text.setTextColor(Color.parseColor("#FFFFFF"));
+				mypage_pmalarm_text.setTextColor(Color.parseColor("#FFFF00"));
+			}
+		});
+		
+		mypage_alarmsetting_image.setOnClickListener(new ImageView.OnClickListener(){
+			@Override
+			public void onClick(View v){
+				mypage_alarmset_layout.setVisibility(LinearLayout.INVISIBLE);
 			}
 		});
 		
@@ -227,17 +287,28 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 	
 	public void init() {
 		
-		mypage_profile_layout = (LinearLayout)view.findViewById(R.id.mypage_profile_layout);
-		mypage_profile_layout.removeAllViews();
-		
-		LayoutInflater inflater = getActivity().getLayoutInflater();
-		mypage_profile_layout.addView(inflater.inflate(R.layout.mypage_profile, null));
-		
 		mypage_idinput_image = (ImageView)view.findViewById(R.id.mypage_idinput_image);
-		mypage_profileamend_button = (ImageView)view.findViewById(R.id.mypage_profileamend_button);
-		//mypage_nickname_view = (View)view.findViewById(R.id.mypage_nickname_view);
-		//mypage_nickname_text = (TextView)view.findViewById(R.id.mypage_nickname_text);
+		
+		// mypage profile
+		
+		mypage_profile_layout = (LinearLayout)view.findViewById(R.id.mypage_profile_layout);
+		mypage_profilesetting_layout = (LinearLayout)view.findViewById(R.id.mypage_profilesetting_layout);
+		
+		mypage_profilesetting_layout.setVisibility(LinearLayout.INVISIBLE);
 
+		mypage_profileamend_button = (ImageView)view.findViewById(R.id.mypage_profileamend_button);
+		mypage_profileset_button = (ImageView)view.findViewById(R.id.mypage_profileset_button);
+		
+		// mypage smartpush, mypage smartwatch
+		
+		mypage_amalarm_layout = (LinearLayout)view.findViewById(R.id.mypage_amalarm_layout);
+		mypage_pmalarm_layout = (LinearLayout)view.findViewById(R.id.mypage_pmalarm_layout);
+		
+		mypage_smartalarm_layout = (LinearLayout)view.findViewById(R.id.mypage_smartalarm_layout);
+		mypage_smartwatch_layout = (LinearLayout)view.findViewById(R.id.mypage_smartwatch_layout);
+		
+		mypage_smartwatch_layout.setVisibility(LinearLayout.INVISIBLE);
+		
 		mypage_am_alarm_button = (ImageView)view.findViewById(R.id.mypage_am_alarm_button);
 		mypage_pm_alarm_button = (ImageView)view.findViewById(R.id.mypage_pm_alarm_button);
 		
@@ -249,42 +320,24 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 		
 		mypage_smartpush_button.setImageResource(R.drawable.mypage_push_image_focus);
 		
-		mypage_smart_setting_layout = (LinearLayout)view.findViewById(R.id.mypage_smart_setting_layout);
-		mypage_smart_setting_layout.removeAllViews();
+		// alarm set
 		
-		LayoutInflater inflater2 = getActivity().getLayoutInflater();
-		mypage_smart_setting_layout.addView(inflater2.inflate(R.layout.mypage_pushalarm_setting, null));
+		mypage_alarmset_layout = (LinearLayout)view.findViewById(R.id.mypage_alarmset_layout);
+		
+		mypage_alarmset_layout.setVisibility(LinearLayout.INVISIBLE);
+		
+		mypage_hoursetting_np = (NumberPicker)view.findViewById(R.id.mypage_hoursetting_np);
+		mypage_minutesetting_np = (NumberPicker)view.findViewById(R.id.mypage_minutesetting_np);
+		
+		mypage_alarmsetting_image = (ImageView)view.findViewById(R.id.mypage_alarmsetting_image);
 
-	}
-	
-	public void profile_view_setlistener(){
-		mypage_profileamend_button.setOnClickListener(new ImageView.OnClickListener(){
-			
-			@Override
-			public void onClick(View v){
-				mypage_profile_layout.removeAllViews();
-				LayoutInflater inflater = getActivity().getLayoutInflater();
-				mypage_profile_layout.addView(inflater.inflate(R.layout.mypage_profile_setting, null));
-				if(mypage_profileset_button == null)
-					mypage_profileset_button = (ImageView)view.findViewById(R.id.mypage_profileset_button);
-				profilesetting_view_setlistener();
-			}
-		});
-	}
-	public void profilesetting_view_setlistener(){
-		mypage_profileset_button.setOnClickListener(new ImageView.OnClickListener(){
-			
-			@Override
-			public void onClick(View v){
-				mypage_profile_layout.removeAllViews();
-				LayoutInflater inflater = getActivity().getLayoutInflater();
-				mypage_profile_layout.addView(inflater.inflate(R.layout.mypage_profile, null));
-				
-				if(mypage_profileamend_button == null)
-					mypage_profileamend_button = (ImageView)view.findViewById(R.id.mypage_profileamend_button);
-				profile_view_setlistener();
-			}
-		});
+		mypage_amalarm_text = (TextView)view.findViewById(R.id.mypage_amalarm_text);
+		mypage_pmalarm_text = (TextView)view.findViewById(R.id.mypage_pmalarm_text);
+		
+		//mypage_nickname_view = (View)view.findViewById(R.id.mypage_nickname_view);
+		//mypage_nickname_text = (TextView)view.findViewById(R.id.mypage_nickname_text);
+
+		
 	}
 	
 	@Override
@@ -294,6 +347,25 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 
 	@Override
 	public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-		Log.i("value is",""+newVal);
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setNumberpicker(){
+		View hour_upbutton = mypage_hoursetting_np.getChildAt(0);
+		View hour_text = mypage_hoursetting_np.getChildAt(1);
+		View hour_downbutton = mypage_hoursetting_np.getChildAt(2);
+		
+		View minute_upbutton = mypage_minutesetting_np.getChildAt(0);
+		View minute_text = mypage_minutesetting_np.getChildAt(1);
+		View minute_downView = mypage_minutesetting_np.getChildAt(2);
+		
+		mypage_hoursetting_np.setMaxValue(12);
+		mypage_hoursetting_np.setMinValue(1);
+		mypage_hoursetting_np.setWrapSelectorWheel(true);
+		
+		mypage_minutesetting_np.setMaxValue(60);
+		mypage_minutesetting_np.setMinValue(1);
+		mypage_minutesetting_np.setWrapSelectorWheel(true);
 	}
 }

@@ -66,6 +66,8 @@ public class MainActivity extends Fragment {
 	
 	private static View view;
 	
+	AQuery aq;
+	
 	//////////////////////////////////////////////
 	
 	public MainActivity(Context context){
@@ -139,6 +141,8 @@ public class MainActivity extends Fragment {
 		if(weather_next_image == null)
 			weather_next_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextweatherimage_image);
 		
+		aq = new AQuery(mainListView.getAdapter().getView(0, null, mainListView));
+		aq.id(R.id.weather_weatherimage_image).image("http://bufferblog.wpengine.netdna-cdn.com/wp-content/uploads/2014/05/145.jpg");
 	}
 	
 	private void clicklistener(){
@@ -150,7 +154,6 @@ public class MainActivity extends Fragment {
 				mf.getViewPager().setCurrentItem(2);
 			}
 		});
-		/*
 		weather_refresh_button.setOnClickListener(new ImageView.OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -160,7 +163,8 @@ public class MainActivity extends Fragment {
 			}
 			
 		});
-		
+
+		/*
 		inside.setOnClickListener(new Button.OnClickListener() {
 
 			@Override

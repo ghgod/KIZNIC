@@ -11,6 +11,8 @@
     <string name="sPadding">PKCS5Padding</string>
     <string name="openApiKey">VOkSUpz7nEopmqMzB%2FuxEbYc38fdppOA3nw%2FI%2FReAWcwC%2BmQZl1acj0vs%2B2hJUUA6W%2FRYIICIH2FMkUOw%2BloYw%3D%3D</string>
 
+    <string name="str_done">완료</string>
+    
     <string-array name = "dialog_list_genre">
         
         <item> 전체 </item>

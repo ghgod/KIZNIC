@@ -47,38 +47,202 @@
             
         	</RelativeLayout>
             
-        </LinearLayout>
+        	</LinearLayout>
         
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight="10"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="13" >
-	            
-                <ImageView 
-	                android:id="@+id/mypage_kidimage_image"
-	                android:layout_width="match_parent"
+        	<LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="0dip"
+	            android:layout_weight="10"
+	            android:orientation="horizontal">
+	
+	            <LinearLayout
+	                android:layout_width="0dip"
 	                android:layout_height="match_parent"
-	                android:layout_gravity="center"
-	                android:padding="5dip"/>
-                
-            </LinearLayout>
+	                android:layout_weight="13" >
+		            
+	                <ImageView 
+		                android:id="@+id/mypage_kidimage_image"
+		                android:layout_width="match_parent"
+		                android:layout_height="match_parent"
+		                android:layout_gravity="center"
+		                android:padding="5dip"/>
+	                
+	            </LinearLayout>
             
-            <LinearLayout
-                android:id="@+id/mypage_profile_layout"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="18"
-                android:orientation="vertical">
-                
-                
-                
-            </LinearLayout>
+	            <FrameLayout
+	                android:layout_width="0dip"
+	                android:layout_height="match_parent"
+	                android:layout_weight="18">
+	                
+	                <LinearLayout 
+						android:id="@+id/mypage_profile_layout"
+					    android:layout_width="fill_parent"
+					    android:layout_height="fill_parent"
+					    android:orientation="vertical"
+					    android:background="#FFFFFF" >
+					                
+		                <RelativeLayout
+			                android:layout_width="match_parent"
+			                android:layout_height="70dip"
+			                android:orientation="horizontal">
+			                
+		                    <TextView
+		                        android:layout_width="wrap_content"
+		                        android:layout_height="wrap_content"
+		                        android:layout_gravity="bottom"
+		                        android:layout_alignParentBottom="true"
+		                        android:layout_marginBottom="2dip"
+		                        android:text="누구지"
+		                        android:textColor="#ACACAC"
+		                        android:textSize="18sp"/>
+		                    
+		                    <ImageView 
+		                        android:id="@+id/mypage_profileamend_button"
+		                        android:layout_width="30dip"
+		                        android:layout_height="30dip"
+		                        android:layout_alignParentBottom="true"
+		                        android:layout_alignParentRight="true"
+		                        android:layout_marginBottom="2dip"
+		                        android:src="@drawable/mypage_profileamend_image"/>
+		                    
+		                </RelativeLayout>
+	                
+		                <LinearLayout
+			                android:layout_width="match_parent"
+			                android:layout_height="20dip"
+			                android:background="@drawable/carditem_background">
+		                    
+		                    <TextView
+		                        android:layout_width="wrap_content"
+		                        android:layout_height="wrap_content"
+		                        android:layout_gravity="center_vertical"
+		                        android:text="남아"
+		                        android:textSize="12sp"/>
+		                    
+		                </LinearLayout>
+		                
+		                <LinearLayout
+			                android:layout_width="match_parent"
+			                android:layout_height="35dip">
+		                    
+		                    <TextView
+		                        android:layout_width="wrap_content"
+		                        android:layout_height="wrap_content"
+		                        android:text="11.09.21(만 36개월)"
+		                        android:textSize="12sp"/>
+		                    
+		                </LinearLayout>
+					</LinearLayout>
+					
+	            <!-- profile setting -->
+	                
+	                <LinearLayout 
+	                    android:id="@+id/mypage_profilesetting_layout"
+					    android:layout_width="match_parent"
+					    android:layout_height="match_parent"
+					    android:orientation="vertical"
+					    android:background="#FFFFFF" >
+	    			<RelativeLayout
+	    			    android:layout_width="match_parent"
+		                android:layout_height="70dip"
+		                android:orientation="horizontal">
+		                
+	                    <EditText
+	                        android:id="@+id/mypage_profilename_edittext"
+	                        android:layout_width="120dip"
+	                        android:layout_height="wrap_content"
+	                        android:layout_gravity="bottom"
+	                        android:layout_alignParentBottom="true"
+	                        android:layout_marginBottom="2dip"
+	                        android:singleLine="true"
+	                        android:paddingLeft="5dip"
+	                        android:hint="아이 이름"
+	                        android:textColor="#000000"
+	                        android:textSize="18sp"
+	                        android:maxLength="5"
+	                        android:background="@drawable/search_edittext_background"/>
+	                    
+	                    <ImageView 
+	                        android:id="@+id/mypage_profileset_button"
+	                        android:layout_width="30dip"
+	                        android:layout_height="30dip"
+	                        android:layout_alignParentBottom="true"
+	                        android:layout_alignParentRight="true"
+	                        android:layout_marginBottom="2dip"
+	                        android:src="@drawable/mypage_profileset_image"/>
+	                    
+	                </RelativeLayout>
+	                
+	                <LinearLayout
+		                android:layout_width="match_parent"
+		                android:layout_height="20dip"
+		                android:background="@drawable/carditem_background">
+	                    
+	                    <RadioGroup
+					        android:id="@+id/profile_kidsex_radiogroup"
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+					        android:layout_gravity="center_vertical"
+					        android:inputType="text"
+					        android:orientation="horizontal" >
+					 
+					        <RadioButton
+					            android:id="@+id/profile_male_radiobutton"
+					            android:layout_width="15dip"
+					            android:layout_height="15dip"
+					            android:checked="true"
+					            android:button="@android:drawable/btn_radio"/>
+					            
+					        <TextView
+		                        android:layout_width="wrap_content"
+		                        android:layout_height="wrap_content"
+		                        android:layout_gravity="center_vertical"
+		                        android:layout_marginLeft="3dip"
+		                        android:text="남아"
+		                        android:textSize="12sp"/>
+					        
+					        <RadioButton
+					            android:id="@+id/profile_female_radiobutton"
+					            android:layout_width="15dip"
+					            android:layout_height="15dip"
+					            android:layout_marginLeft="3dip"
+					            android:button="@android:drawable/btn_radio" />
+					 
+					        <TextView
+		                        android:layout_width="wrap_content"
+		                        android:layout_height="wrap_content"
+		                        android:layout_gravity="center_vertical"
+		                        android:layout_marginLeft="3dip"
+		                        android:text="여아"
+		                        android:textSize="12sp"/>
+					        
+					    </RadioGroup>
+	                    
+	                </LinearLayout>
+	                
+	                <LinearLayout
+		                android:layout_width="match_parent"
+		                android:layout_height="35dip">
+	                    
+	                    <EditText
+	                        android:id="@+id/mypage_profilebirth_edittext"
+	                        android:layout_width="120dip"
+	                        android:layout_height="wrap_content"
+	                        android:paddingLeft="5dip"
+	                        android:singleLine="true"
+	                        android:maxLength="6"
+	                        android:inputType="number"
+	                        android:hint="00.00.00"
+	                        android:textColor="#000000"
+	                        android:textSize="12sp"
+	                        android:background="@drawable/search_edittext_background"/>
+	                    
+	                </LinearLayout>
+
+				</LinearLayout>
+	                
+	                
+	        </FrameLayout>
             
             <LinearLayout
                 android:layout_width="0dip"
@@ -105,8 +269,7 @@
                     android:id="@+id/mypage_smallkidimage_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dip"
-                    android:src="@drawable/mypage_smallprofile_image"/>
+                    android:layout_margin="5dip"/>
                 
             </LinearLayout>
             
@@ -118,8 +281,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dip"
-                    android:src="@drawable/mypage_smallprofile_image"/>
+                    android:layout_margin="5dip"/>
                 
             </LinearLayout>
             
@@ -131,8 +293,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dip"
-                    android:src="@drawable/mypage_smallprofile_image"/>
+                    android:layout_margin="5dip"/>
                 
             </LinearLayout>
 
@@ -173,8 +334,7 @@
 	                android:layout_width="match_parent"
 	                android:layout_height="match_parent"
 	                android:layout_gravity="center_vertical"
-	                android:clickable="true"
-	                android:src="@drawable/mypage_push_button_background" />
+	                android:clickable="true" />
                 
 
 		</LinearLayout> 
@@ -193,23 +353,425 @@
 	                android:layout_width="match_parent"
 	                android:layout_height="match_parent"
 	                android:layout_gravity="center_vertical"
-	                android:clickable="true"
-	                android:src="@drawable/mypage_smartwatch_button_background" />
+	                android:clickable="true" />
                 
 		    		
 		</LinearLayout>  
 		
         </LinearLayout>
         
-	    <LinearLayout
-	        android:id="@+id/mypage_smart_setting_layout"
+	    <FrameLayout
 	        android:layout_width="match_parent"
 	        android:layout_height="0dip"
-	        android:layout_weight="2"
-	        android:orientation="vertical">
+	        android:layout_weight="2">
+		
 	            
+	            <FrameLayout 
+	                android:layout_width="match_parent"
+				    android:layout_height="match_parent">
+	                <!-- smartalarm -->
+	                <LinearLayout 
+	                android:id="@+id/mypage_smartalarm_layout"
+				    android:layout_width="match_parent"
+				    android:layout_height="match_parent"
+				    android:orientation="vertical"
+				    android:background="#FFFFFF" >
+    
+	           		<LinearLayout
+		                android:layout_width="match_parent"
+		                android:layout_height="0dip"
+		                android:layout_weight="1"
+		                android:orientation="horizontal"
+		                android:background="@drawable/detail_underline_background">
+	                
+		                <LinearLayout
+		                    android:id="@+id/mypage_amalarm_layout"
+		                    android:layout_width="0dip"
+		                    android:layout_height="match_parent"
+		                    android:layout_weight="4">
+	                
+		                    <LinearLayout
+		                        android:layout_width="0dip"
+		                        android:layout_height="match_parent"
+		                        android:layout_weight="9"
+		                        android:gravity="center">
+	                        
+		                        <TextView
+		                            android:layout_width="wrap_content"
+		                            android:layout_height="wrap_content"
+		                            android:text="오전"
+		                            android:textSize="25sp"/>
+	                        
+	                    	</LinearLayout>
+	                    
+		                    <LinearLayout
+		                        android:layout_width="0dip"
+		                        android:layout_height="match_parent"
+		                        android:layout_weight="9"
+		                        android:gravity="center">
+	                        
+		                        <TextView
+		                            android:layout_width="wrap_content"
+		                            android:layout_height="wrap_content"
+		                            android:text="9"
+		                            android:textSize="25sp"/>
+		                        
+		                    </LinearLayout>
+	                    
+		                    <LinearLayout
+		                        android:layout_width="0dip"
+		                        android:layout_height="match_parent"
+		                        android:layout_weight="1"
+		                        android:gravity="center">
+		                        
+		                        <TextView
+		                            android:layout_width="wrap_content"
+		                            android:layout_height="wrap_content"
+		                            android:text=":"
+		                            android:textSize="25sp"/>
+		                        
+		                    </LinearLayout>
+	                    
+		                    <LinearLayout
+		                        android:layout_width="0dip"
+		                        android:layout_height="match_parent"
+		                        android:layout_weight="9"
+		                        android:gravity="center">
+		                        
+		                        <TextView
+		                            android:layout_width="wrap_content"
+		                            android:layout_height="wrap_content"
+		                            android:text="20"
+		                            android:textSize="25sp"/>
+		                        
+		                    </LinearLayout>
+		                    
+	                	</LinearLayout>
+	                
+	                	<LinearLayout
+		                    android:layout_width="0dip"
+		                    android:layout_height="match_parent"
+		                    android:layout_weight="1"
+		                    android:layout_marginTop="7dip"
+		                    android:layout_marginBottom="7dip"
+		                    android:background="@drawable/sideline_background">
+		                    
+		                    <ImageView
+		                        android:id="@+id/mypage_am_alarm_button"
+		                        android:layout_width="match_parent"
+		                        android:layout_height="match_parent"
+		                        android:padding="3dip"
+		                        android:clickable="true"
+		                        android:src="@drawable/mypage_alarm_button_background"/>
+	                    
+	             	   </LinearLayout>
+	                
+	          	  </LinearLayout>
+	            
+		            <LinearLayout
+		                android:layout_width="match_parent"
+		                android:layout_height="0dip"
+		                android:layout_weight="1"
+		                android:orientation="horizontal">
+		                
+		                <LinearLayout
+		                    android:id="@+id/mypage_pmalarm_layout"
+		                    android:layout_width="0dip"
+		                    android:layout_height="match_parent"
+		                    android:layout_weight="4">
+		                
+		                    <LinearLayout
+		                        android:layout_width="0dip"
+		                        android:layout_height="match_parent"
+		                        android:layout_weight="9"
+		                        android:gravity="center">
+		                        
+		                        <TextView
+		                            android:layout_width="wrap_content"
+		                            android:layout_height="wrap_content"
+		                            android:text="오후"
+		                            android:textSize="25sp"/>
+		                        
+		                    </LinearLayout>
+		                    
+		                    <LinearLayout
+		                        android:layout_width="0dip"
+		                        android:layout_height="match_parent"
+		                        android:layout_weight="9"
+		                        android:gravity="center">
+		                        
+		                        <TextView
+		                            android:layout_width="wrap_content"
+		                            android:layout_height="wrap_content"
+		                            android:text="9"
+		                            android:textSize="25sp"/>
+		                        
+		                    </LinearLayout>
+		                    
+		                    <LinearLayout
+		                        android:layout_width="0dip"
+		                        android:layout_height="match_parent"
+		                        android:layout_weight="1"
+		                        android:gravity="center">
+		                        
+		                        <TextView
+		                            android:layout_width="wrap_content"
+		                            android:layout_height="wrap_content"
+		                            android:text=":"
+		                            android:textSize="25sp"/>
+		                        
+		                    </LinearLayout>
+		                    
+		                    <LinearLayout
+		                        android:layout_width="0dip"
+		                        android:layout_height="match_parent"
+		                        android:layout_weight="9"
+		                        android:gravity="center">
+		                        
+		                        <TextView
+		                            android:layout_width="wrap_content"
+		                            android:layout_height="wrap_content"
+		                            android:text="20"
+		                            android:textSize="25sp"/>
+		                        
+		                    </LinearLayout>
+		                    
+		                </LinearLayout>
+		                
+		                <LinearLayout
+		                    android:layout_width="0dip"
+		                    android:layout_height="match_parent"
+		                    android:layout_weight="1"
+		                    android:layout_marginTop="7dip"
+		                    android:layout_marginBottom="7dip"
+		                    android:background="@drawable/sideline_background">
+		                    
+		                    <ImageView
+		                        android:id="@+id/mypage_pm_alarm_button"
+		                        android:layout_width="match_parent"
+		                        android:layout_height="match_parent"
+		                        android:padding="3dip"
+		                        android:clickable="true"
+		                        android:src="@drawable/mypage_alarm_button_background"/>
+		                    
+		                </LinearLayout>
+		                
+		            	</LinearLayout>
+					</LinearLayout>
+	                
+	             <!-- setalarm -->
+	                
+	                <LinearLayout
+	                    android:id="@+id/mypage_alarmset_layout"
+	                    android:layout_width="match_parent"
+	                    android:layout_height="match_parent"
+	                    android:orientation="horizontal"
+	                    android:background="#70000000">
+	                    
+	                    <LinearLayout
+	                        android:layout_width="0dip"
+	                        android:layout_height="match_parent"
+	                        android:layout_weight="9"
+	                        android:orientation="vertical">
+	                        
+	                        <LinearLayout
+	                            android:layout_width="match_parent"
+	                            android:layout_height="0dip"
+	                            android:layout_weight="1"
+	                            android:gravity="center">
+		                    
+	                            <TextView
+		                            android:id="@+id/mypage_amalarm_text"
+		                            android:layout_width="wrap_content"
+		                            android:layout_height="wrap_content"
+		                            android:text="오전"
+		                            android:textSize="25sp"
+		                            android:textColor="#FFFF00"/>
+	                            
+	                        </LinearLayout>
+	                        
+	                        <LinearLayout
+	                            android:layout_width="match_parent"
+	                            android:layout_height="0dip"
+	                            android:layout_weight="1"
+	                            android:gravity="center">
+	                            
+	                            <TextView
+	                                android:id="@+id/mypage_pmalarm_text"
+		                            android:layout_width="wrap_content"
+		                            android:layout_height="wrap_content"
+		                            android:text="오후"
+		                            android:textSize="25sp"/>
+	                            
+	                        </LinearLayout>
+	                        
+	                    </LinearLayout>
+	                    
+	                    <LinearLayout
+	                        android:layout_width="0dip"
+	                        android:layout_height="match_parent"
+	                        android:layout_weight="10"
+	                        android:gravity="center">
+	                        
+	                        <NumberPicker
+	                            android:id="@+id/mypage_hoursetting_np"
+						        android:layout_width="wrap_content" 
+						        android:layout_height="wrap_content"/>
+	                        
+	                    </LinearLayout>
+	                    
+	                    <LinearLayout
+	                        android:layout_width="0dip"
+	                        android:layout_height="match_parent"
+	                        android:layout_weight="2"
+	                        android:gravity="center">
+	                        
+	                        <TextView
+	                            android:layout_width="wrap_content"
+	                            android:layout_height="wrap_content"
+	                            android:text=":"
+	                            android:textSize="30sp"/>
+	                        
+	                    </LinearLayout>
+	                    
+	                    <LinearLayout
+	                        android:layout_width="0dip"
+	                        android:layout_height="match_parent"
+	                        android:layout_weight="10"
+	                        android:gravity="center">
+	                        
+	                        <NumberPicker
+	                            android:id="@+id/mypage_minutesetting_np"
+						        android:layout_width="wrap_content" 
+						        android:layout_height="wrap_content"/>
+	                        
+	                    </LinearLayout>
+	                    
+	                    <LinearLayout
+	                        android:layout_width="0dip"
+	                        android:layout_height="match_parent"
+	                        android:layout_weight="4">
+	                        
+	                        <ImageView
+	                            android:id="@+id/mypage_alarmsetting_image"
+	                            android:layout_width="30dip"
+	                            android:layout_height="30dip"
+	                            android:layout_gravity="right"
+	                            android:src="@drawable/mypage_profileset_image"/>
+	                        
+	                    </LinearLayout>
+	                    
+	                </LinearLayout>
+	                
+	            </FrameLayout>
+	            
+	            <!-- smartwatch -->
 	        
-        </LinearLayout>
+	        <LinearLayout
+	            android:id="@+id/mypage_smartwatch_layout"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:orientation="horizontal"
+			    android:background="#FFFFFF" >
+			    
+	            <LinearLayout
+	                android:layout_width="0dip"
+	                android:layout_height="match_parent"
+	                android:layout_weight="6"
+	                android:orientation="vertical">
+	                
+	                <LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="0dip"
+						android:layout_weight="7"
+						android:orientation="vertical">
+			        
+			            <TextView
+				            android:layout_width="wrap_content"
+				            android:layout_height="wrap_content"
+							android:layout_marginLeft="10dip"
+							android:layout_marginTop="20dip"
+				            android:text="블루투스를 통한 미아 방지 기능"
+				            android:textColor="#000000"
+				            android:textSize="15sp"
+				            android:textStyle="bold"/>
+			            
+			            <TextView
+				            android:layout_width="wrap_content"
+				            android:layout_height="wrap_content"
+							android:layout_marginLeft="10dip"
+				            android:text="Galaxy gear와 Kiznic의 연동이 끊어질 경우"
+				            android:textColor="#000000"
+				            android:textSize="14sp"/>
+			            
+			            <RelativeLayout 
+			                android:layout_width="match_parent"
+			                android:layout_height="wrap_content">
+			                
+			                <TextView
+			                    android:id="@+id/smartwatch_text1"
+					            android:layout_width="wrap_content"
+					            android:layout_height="wrap_content"
+								android:layout_marginLeft="10dip"
+					            android:text="아이 프로필에 '"
+					            android:textColor="#000000"
+					            android:textSize="14sp"/>
+			                
+			                <ImageView 
+			                    android:id="@+id/smartwatch_image1"
+					            android:layout_width="15dip"
+			                    android:layout_height="15dip"
+			                    android:layout_marginLeft="5dip"
+			                    android:layout_toRightOf="@id/smartwatch_text1"
+			                    android:src="@drawable/weather_cloudy_image_sky"/>
+			                
+			                <TextView
+					            android:layout_width="wrap_content"
+					            android:layout_height="wrap_content"
+								android:layout_marginLeft="5dip"
+								android:layout_toRightOf="@id/smartwatch_image1"
+					            android:text="'가 생성됩니다."
+					            android:textColor="#000000"
+					            android:textSize="14sp"/>
+			                
+			            </RelativeLayout>
+			            
+			    	</LinearLayout>
+			    
+				    <RelativeLayout
+				        android:layout_width="match_parent"
+				        android:layout_height="0dip"
+				        android:layout_weight="3">
+			        
+				        <TextView
+				            android:layout_width="wrap_content"
+				            android:layout_height="wrap_content"
+				            android:layout_alignParentRight="true"
+				            android:layout_centerVertical="true"
+				            android:text="*Galaxy gear 연동"
+				            android:textColor="#000000"
+				            android:textSize="12sp"/>
+			        
+			    	</RelativeLayout>
+		    
+				</LinearLayout>
+				
+	            <LinearLayout
+	                android:layout_width="0dip"
+	                android:layout_height="match_parent"
+	                android:layout_weight="1"
+	                android:orientation="vertical">
+	            
+	                <Button 
+	                    android:id="@+id/mypage_smartwatch_onoff_button"
+	                    android:layout_width="match_parent"
+	                    android:layout_height="match_parent"/>
+	                
+	            </LinearLayout>
+	            
+	            </LinearLayout>
+	            
+        </FrameLayout>
         
     </LinearLayout>
 

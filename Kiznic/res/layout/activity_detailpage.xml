@@ -9,6 +9,7 @@
          android:layout_height="wrap_content"
          android:orientation="vertical">
 	     <ScrollView
+	         android:id="@+id/detail_scrollview"
 	         android:layout_width="match_parent"
 	         android:layout_height="wrap_content"
 	         android:orientation="vertical"
@@ -49,8 +50,7 @@
 			            <ImageView
 			                android:id="@+id/detail_mainposter_image"
 			                android:layout_width="match_parent"
-			                android:layout_height="300dip"
-			                android:src="@drawable/recommend"/>
+			                android:layout_height="300dip"/>
 			            
 			        </LinearLayout>
 			        
@@ -73,8 +73,7 @@
 			                android:id="@+id/detail_phone_image"
 			                android:layout_width="match_parent"
 			                android:layout_height="match_parent"
-			                android:padding="5dip"
-			                android:src="@drawable/detail_phone"/>
+			                android:padding="5dip"/>
 			            
 			        </LinearLayout>
 			         
@@ -87,8 +86,7 @@
 			                android:id="@+id/detail_link_image"
 			                android:layout_width="match_parent"
 			                android:layout_height="match_parent"
-			                android:padding="5dip"
-			                android:src="@drawable/detail_link"/>
+			                android:padding="5dip"/>
 			            
 			        </LinearLayout>
 			        
@@ -101,8 +99,7 @@
 			                android:id="@+id/detail_bookmark_image"
 			                android:layout_width="match_parent"
 			                android:layout_height="match_parent"
-			                android:padding="5dip"
-			                android:src="@drawable/detail_bookmark"/>
+			                android:padding="5dip"/>
 			            
 			        </LinearLayout>
 			        
@@ -115,8 +112,7 @@
 			                android:id="@+id/detail_sharing_image" 
 			                android:layout_width="match_parent"
 			                android:layout_height="match_parent"
-			                android:padding="5dip"
-			                android:src="@drawable/detail_sharing"/>
+			                android:padding="5dip"/>
 			            
 			        </LinearLayout> 
 			    </LinearLayout>
@@ -153,12 +149,13 @@
 			            android:background="@drawable/detail_underline_background">
 			            
 			            <TextView
+			                android:id="@+id/detail_infotext_text"
 			                android:layout_width="match_parent"
 			                android:layout_height="wrap_content"
 			                android:layout_marginLeft="10dip"
+			                android:layout_marginRight="10dip"
 			                android:layout_marginBottom="10dip"
-			                android:maxLines="5"
-			                android:text="배고픈 애벌레는 먹이를 찾으러 이곳 저곳을 돌아다니기 시작한다. 이러쿵 저러쿵 왔다가갔다 으흐흐흐 모라고 써야할까 배고픈 애벌레는 이곳저곳 돌아다니다 새밥이된다.동심파괴 젠장.. 몇자까지가 적당할까, 난 여기에 조금 더 써볼까해, 음... 아무래도 5줄 정도면 적당하겠지?"/>
+			                android:text="배고픈 애벌레는 먹이를 찾으러 이곳 저곳을 돌아다니기 시작한다. 이러쿵 저러쿵 왔다가갔다 으흐흐흐 모라고 써야할까 배고픈 애벌레는 이곳저곳 돌아다니다 새밥이된다.동심파괴 젠장.. 몇자까지가 적당할까, 난 여기에 조금 더 써볼까해, 음... 아무래도 5줄 정도면..."/>
 			            
 			        </LinearLayout>
 			        
@@ -167,6 +164,7 @@
 			            android:layout_height="30dip">
 			            
 			            <Button
+			                android:id="@+id/detail_moreinfo_button"
 			                android:layout_width="match_parent"
 			                android:layout_height="match_parent"
 			                android:text="더보기"
@@ -202,7 +200,7 @@
 			    
 			    <LinearLayout
 			        android:layout_width="match_parent"
-			        android:layout_height="180dip"
+			        android:layout_height="250dip"
 			        android:orientation="vertical"
 			        android:layout_marginTop="10dip"
 			        android:layout_marginLeft="10dip"
@@ -213,7 +211,7 @@
 			            android:id="@+id/mapViewContainer"
 			            android:layout_width="match_parent"
 			            android:layout_height="0dip"
-			            android:layout_weight="10"
+			            android:layout_weight="15"
 			            android:orientation="vertical">
 			            
 			        </LinearLayout>
@@ -257,7 +255,7 @@
 			                <ImageView
 			                    android:layout_width="match_parent"
 			                    android:layout_height="match_parent"
-			                    android:src="@drawable/detail_range"/>
+			                    />
 			                
 			            </LinearLayout>
 			            
