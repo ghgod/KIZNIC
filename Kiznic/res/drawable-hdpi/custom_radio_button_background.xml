@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:state_checked="true" android:state_window_focused="false"
+          android:drawable="@drawable/kid" />
+    <item android:state_checked="false" android:state_window_focused="false"
+          android:drawable="@drawable/weather_gps" />
+
+    <item android:state_checked="true" android:state_pressed="true"
+          android:drawable="@drawable/weather_cloudy_image_sky" />
+    <item android:state_checked="false" android:state_pressed="true"
+          android:drawable="@drawable/weather_humidity_image" />
+
+    <item android:state_checked="true" android:state_focused="true"
+          android:drawable="@drawable/weather_rain_image_sky" />
+    <item android:state_checked="false" android:state_focused="true"
+          android:drawable="@drawable/weather_rainfall_image" />
+
+    <item android:state_checked="false" android:drawable="@drawable/weather_gps" />
+    <item android:state_checked="true" android:drawable="@drawable/kid" />
+</selector>

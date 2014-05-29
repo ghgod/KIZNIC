@@ -5,10 +5,10 @@
     android:orientation="vertical" >
     
 	<LinearLayout
+	    android:id="@+id/detailpage_nevigationbackground_view"
 	    android:layout_width="match_parent"
 	    android:layout_height="60dip"
-	    android:orientation="horizontal"
-	    android:background="@drawable/detail_underline_background">
+	    android:orientation="horizontal">
 	    
 	    <LinearLayout
 	        android:layout_width="0dip"

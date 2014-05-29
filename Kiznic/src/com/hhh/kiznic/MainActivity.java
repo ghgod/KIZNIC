@@ -1,6 +1,7 @@
 package com.hhh.kiznic;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.androidquery.AQuery;
 import com.hhh.kiznic.card.CardAdapter;
 import com.hhh.kiznic.card.MainRecommendCard;
 import com.hhh.kiznic.card.MainRecommendCarditemCard;
@@ -34,33 +36,36 @@ import com.hhh.kiznic.util.Util;
 @SuppressLint("ValidFragment")
 public class MainActivity extends Fragment {
 	
-	private ListView mainListView;
-	private CardAdapter cardAdapter;
-	//private CardAdapter[] recommendCardAdapter = new CardAdapter[4];
-	//private int cardCount = -1, recommendcardCount = -1;
-	//private View profile;
-	private ImageView weather_finedust;
+	private static ListView mainListView, recommendmainListView;
+	private static CardAdapter cardAdapter;
+	//private static CardAdapter[] recommendCardAdapter = new CardAdapter[4];
+	//private static int cardCount = -1, recommendcardCount = -1;
 	
-	private TextView weather_mylocation;
-	private TextView weather_today_timedesc;
-	private TextView weather_today_temp;
-	private TextView weather_today_rainprob;
-	private TextView weather_today_windspeed;
-	private TextView weather_today_feeltemp;
-	private TextView weather_today_pm10value;
+	private static ImageView weather_finedust;
 	
-	private TextView weather_next_timedesc;
-	private TextView weather_next_temp;
+	private static TextView weather_mylocation;
+	private static TextView weather_today_timedesc;
+	private static TextView weather_today_temp;
+	private static TextView weather_today_rainprob;
+	private static TextView weather_today_windspeed;
+	private static TextView weather_next_timedesc;
+	private static TextView weather_next_temp;
+	private static TextView weather_today_pm10value;
+	private static TextView weather_today_feeltemp;
 	
-	private ImageView weather_refresh_button;
-	private ImageView weather_image;
-	private ImageView weather_next_image;
+	private static ImageView weather_refresh_button;
+	private static ImageView weather_image;
+	private static ImageView weather_next_image;
+	private static ImageView profile_kidimage_image;
 	
+	private static Button recommend_morelist_button;
+	static Databasehelper dbHelper;
 	
-	Databasehelper dbHelper;
+	private static Context context;
 	
-	private Context context;	
-	private View view;
+	private static View view;
+	
+	AQuery aq;
 	
 	//////////////////////////////////////////////
 	
@@ -75,6 +80,7 @@ public class MainActivity extends Fragment {
 		
 		//KiznicTitle a = new KiznicTitle(this);
 		dbHelper = new Databasehelper(getActivity().getBaseContext());
+		
 		init();
 		
 		clicklistener();
@@ -85,9 +91,20 @@ public class MainActivity extends Fragment {
 		
 		return view;
 	}
+	
+	@Override
+	public void onDestroy(){
+		RecycleUtils.recursiveRecycle(((Activity) context).getWindow().getDecorView());
+		System.gc();
+		
+		super.onDestroy();
+	}
+	
 	//////////////////////////////////////////////
 	
 	private void init() {
+		
+		profile_kidimage_image = (ImageView)view.findViewById(R.id.profile_kidimage_image);
 		
 		mainListView = (ListView)view.findViewById(R.id.main_list_view);
 		cardAdapter = new CardAdapter(getActivity().getApplicationContext());
@@ -114,10 +131,19 @@ public class MainActivity extends Fragment {
 		weather_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_weatherimage_image);
 		weather_next_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextweatherimage_image);
 		
+		aq = new AQuery(mainListView.getAdapter().getView(0, null, mainListView));
+		aq.id(R.id.weather_weatherimage_image).image("http://bufferblog.wpengine.netdna-cdn.com/wp-content/uploads/2014/05/145.jpg");
 	}
 	
 	private void clicklistener(){
 		
+		profile_kidimage_image.setOnClickListener(new ImageView.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				MainFragmentActivity mf = new MainFragmentActivity();
+				mf.mViewPager.setCurrentItem(2);
+			}
+		});
 		weather_refresh_button.setOnClickListener(new ImageView.OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -125,6 +151,7 @@ public class MainActivity extends Fragment {
 				new GetWeatherAsync(getActivity().getBaseContext(),1, dbHelper, weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, weather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image, weather_finedust, weather_today_pm10value).execute("");				
 			}
 		});
+
 		/*
 		inside.setOnClickListener(new Button.OnClickListener() {
 
@@ -157,10 +184,24 @@ public class MainActivity extends Fragment {
 		Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
 		ImageView profile_image = (ImageView)view.findViewById(R.id.profile_kidimage_image);
 		BitmapShader shader = new BitmapShader (bitmap,  TileMode.CLAMP, TileMode.CLAMP);
-		Paint paint = new Paint();
-        paint.setShader(shader);
+
+		
 		Canvas c = new Canvas(circleBitmap);
-		c.drawCircle(bitmap.getWidth()/2, bitmap.getHeight()/2, bitmap.getHeight()/2, paint);
+		
+		Paint paint_stroke = new Paint();
+		
+		paint_stroke.setARGB(255, 36, 176, 205);
+		paint_stroke.setAntiAlias(true);
+
+		c.drawCircle(bitmap.getWidth()/2, bitmap.getHeight()/2, bitmap.getHeight()/2, paint_stroke);
+		
+		Paint paint = new Paint();
+		paint.setShader(shader);
+		paint.setAntiAlias(true);
+		
+		
+		c.drawCircle(bitmap.getWidth()/2, bitmap.getHeight()/2, bitmap.getHeight()/2-5, paint);
+		
 		profile_image.setImageBitmap(circleBitmap);
 	}
 	

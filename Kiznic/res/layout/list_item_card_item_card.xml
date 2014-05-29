@@ -7,9 +7,9 @@
     <LinearLayout
        	android:id="@+id/recommend_recommendview_view"
 	        android:layout_width="match_parent"
-	        android:layout_height="85dip"
-	        android:background="#FDF9F2"
-	        android:orientation="horizontal">
+	        android:layout_height="89dip"
+	        android:orientation="horizontal"
+	        android:background="#FFFFFF">
 	        
 	        <!-- recommend item poster -->
 	        
@@ -24,8 +24,7 @@
 	                android:layout_width="match_parent"
 	                android:layout_height="match_parent"
 	                android:padding="3dip"
-	                android:layout_gravity="center"
-	                android:src="@drawable/recommend"/>
+	                android:layout_gravity="center"/>
 	            
 	        </LinearLayout>
 	        
@@ -51,17 +50,6 @@
 	                    android:text="배고픈 애벌레"
 	                    android:textColor="#000000"
 	                    android:textSize="13sp"/>
-	                
-	                <TextView
-	                    android:id="@+id/recommend_itemage_text"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:layout_marginLeft="3dip"
-	                    android:layout_alignBottom="@id/recommend_itemtitle_text"
-	                    android:layout_toRightOf="@id/recommend_itemtitle_text"
-	                    android:text="만 36개월 이상"
-	                    android:textColor="#000000"
-	                    android:textSize="10sp"/>
 	                
 	            </RelativeLayout>
 	            
@@ -133,7 +121,7 @@
 	                        android:layout_width="wrap_content"
 	                        android:layout_height="wrap_content"
 	                        android:layout_gravity="center"
-	                        android:text="거리"
+	                        android:text="나와의 거리"
 	                        android:textColor="#000000"
 	                        android:textSize="12sp"/>
 	                      
@@ -144,7 +132,7 @@
 		                    android:layout_marginLeft="5dip"
 	                        android:layout_gravity="center"
 		                    android:text="5km"
-		                    android:textColor="#000000"
+		                    android:textColor="#6AC1C6"
 		                    android:textSize="12sp"/>
 	                    
 	                </LinearLayout>
@@ -170,8 +158,7 @@
 		             android:layout_width="50dip"
 		             android:layout_height="50dip"
 		             android:layout_centerInParent="true"
-		             android:paddingTop="3dip"
-		             android:src="@drawable/weather_image"/>
+		             android:paddingTop="3dip"/>
 	                 
 	             </RelativeLayout>
 	             

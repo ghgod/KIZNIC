@@ -5,8 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.hhh.kiznic.SearchcategoryDialog.onSubmitListener;
+import com.hhh.kiznic.card.CardAdapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,22 +19,29 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 @SuppressLint("ValidFragment")
 public class SearchActivity extends Fragment implements OnClickListener, onSubmitListener{
 
-	private View search_category1_relativelayout;
-	private View search_category2_relativelayout;
-	private View search_category3_relativelayout;
-	private View search_category4_relativelayout;
+	private static View search_category1_relativelayout;
+	private static View search_category2_relativelayout;
+	private static View search_category3_relativelayout;
+	private static View search_category4_relativelayout;
 	
-	private SearchcategoryDialog listdialog;
+	private static EditText search_search_edittext;
+	private static ImageView search_searchbutton_image;
+	private static ListView search_list_view;
+	private static CardAdapter searchcardAdapter;
 	
+	private static SearchcategoryDialog listdialog;
 	
-	private Context context;
+	private static Context context;
 	
-	private View view;
+	private static View view;
 
 	//////////////////////////////////////////////////////
 	
@@ -49,6 +58,14 @@ public class SearchActivity extends Fragment implements OnClickListener, onSubmi
 		clicklistener();
 		
     	return view;
+	}
+	
+	@Override
+	public void onDestroy(){
+		RecycleUtils.recursiveRecycle(((Activity) context).getWindow().getDecorView());
+		System.gc();
+		
+		super.onDestroy();
 	}
 	
 	//////////////////////////////////////////////////////
@@ -111,7 +128,10 @@ public class SearchActivity extends Fragment implements OnClickListener, onSubmi
 			AdapterView.OnItemClickListener singleListListener = new AdapterView.OnItemClickListener() {
 		        @Override
 		        public void onItemClick(AdapterView<?> parent, View view, int position, long l_position) {
-		            //String tv = (String)parent.getAdapter().getItem(position);
+		            String tv = (String)parent.getAdapter().getItem(position);
+		        
+		            Toast.makeText(context, "" + position, Toast.LENGTH_SHORT).show();
+		            
 		        }
 		    };
 		    
@@ -124,8 +144,8 @@ public class SearchActivity extends Fragment implements OnClickListener, onSubmi
 		
 		    listdialog.dialog_title = title;
 		    listdialog.first_arrayAdapter = arrayAdapter;
-		    listdialog.firstlistClickListener = singleListListener;
-		
+		    //listdialog.firstlistClickListener = singleListListener;
+		    
 		}
 		else{
 			AdapterView.OnItemClickListener firstListListener = new AdapterView.OnItemClickListener() {
@@ -160,7 +180,14 @@ public class SearchActivity extends Fragment implements OnClickListener, onSubmi
 		
 		listdialog.show(getFragmentManager(), "categorylist");
 	}
-	
+	/*
+	private void listsetting(){
+		for(int i=0;i<1;i++){
+			searchcardAdapter.addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "Search Card", getActivity().getApplicationContext(), i));
+		}
+		search_list_view.setAdapter(searchcardAdapter);
+	}
+	*/
 	@Override
 	public void setListener(String arg){
 		

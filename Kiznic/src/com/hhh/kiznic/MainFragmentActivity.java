@@ -107,7 +107,7 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			//View rootView = inflater.inflate(R.layout.kiznic_title_bar,
-			//		container, false);
+					//container, false);
 			//return rootView;
 			
 			return null;

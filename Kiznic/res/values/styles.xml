@@ -14,14 +14,14 @@
 	    <item name="android:paddingLeft">0dp</item>
 	    <item name="android:paddingRight">0dp</item>
 	    <item name="android:actionBarSize">50dp</item>
-	    <item name="android:divider">#6ABED2</item>
+	    <item name="android:divider">#24B0CD</item>
 	     <item name="android:actionBarDivider">@null</item>
 	    
 	</style>
 	
 	<style name="ActionBarTabStyle" parent="@android:style/Widget.Holo.ActionBar.TabView">
-	    <item name="android:background">#6ABED2</item>
-	    <item name="android:divider">#6ABED2</item>
+	    <item name="android:background">#24B0CD</item>
+	    <item name="android:divider">#24B0CD</item>
 	    <item name="android:showDividers">none</item>
 	</style>
 </resources>

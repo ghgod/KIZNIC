@@ -10,8 +10,10 @@
 		android:orientation="vertical"
 		android:layout_width="match_parent"
 		android:layout_height="250dip"
-		android:layout_margin="5dip"
-		android:background="#FDF9F2"
+		android:layout_marginTop="10dip"
+		android:layout_marginRight="10dip"
+		android:layout_marginLeft="10dip"
+		android:background="#FFFFFF"
 		android:descendantFocusability="afterDescendants">
 	   
 	    <!-- recommend title -->
@@ -20,7 +22,8 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="0dip"
 	        android:layout_weight="1"
-	        android:orientation="horizontal">
+	        android:orientation="horizontal"
+	        android:background="@drawable/detail_underline_background">
 	        
 	        <TextView
 	            android:id="@+id/recommend_title_text"
@@ -38,14 +41,15 @@
 		android:id="@+id/main_recommend_card_item_list"
 		android:layout_width="match_parent"
 		android:layout_height="0dip"
-		android:layout_weight="4"
+		android:layout_weight="5"
 		android:headerDividersEnabled="true"
 		android:footerDividersEnabled="true"
 		android:listSelector="@android:color/transparent"
 		android:cacheColorHint="@android:color/transparent"
-		android:divider="#DEE7E7"
-		android:dividerHeight="1dip" 
-		android:scrollbars="none"/>
+		android:scrollbars="none"
+		android:divider="#76C4C1"
+		android:dividerHeight="1dip"
+		android:background="@drawable/detail_underline_background"/>
 	    
 	    <!-- more receommend list -->
 	    
@@ -59,10 +63,10 @@
 	            android:id="@+id/recommend_morelist_button"
 	            android:layout_width="match_parent"
 	            android:layout_height="match_parent"
-	            android:text="더보기"
-	            android:textSize="14sp"
+	            android:text="더 보 기"
+	            android:textSize="16sp"
 	            android:textColor="#000000"
-	            android:background="#FDF9F2"/>
+	            android:background="#5076C4C1"/>
 	        
 	    </LinearLayout>
 	    
