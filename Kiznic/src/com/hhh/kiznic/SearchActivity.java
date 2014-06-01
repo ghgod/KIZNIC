@@ -4,14 +4,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.hhh.kiznic.SearchcategoryDialog.onSubmitListener;
+import com.hhh.kiznic.SearchcategoryDialog.onSearchFlagListener;
 import com.hhh.kiznic.card.CardAdapter;
+import com.hhh.kiznic.card.MainRecommendCard;
+import com.hhh.kiznic.card.MainRecommendCard.AListener;
+import com.hhh.kiznic.connection.GetCategorySimpleInfo;
+import com.hhh.kiznic.util.LocationHelper;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,15 +27,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("ValidFragment")
-public class SearchActivity extends Fragment implements OnClickListener, onSubmitListener{
+public class SearchActivity extends Fragment implements OnClickListener, onSearchFlagListener{
 
 	private static View search_category1_relativelayout;
 	private static View search_category2_relativelayout;
 	private static View search_category3_relativelayout;
 	private static View search_category4_relativelayout;
+
+	private static TextView search_category1_text;
+	private static TextView search_category2_text;
+	private static TextView search_category3_text;
+	private static TextView search_category4_text;
 	
 	private static EditText search_search_edittext;
 	private static ImageView search_searchbutton_image;
@@ -39,10 +50,12 @@ public class SearchActivity extends Fragment implements OnClickListener, onSubmi
 	
 	private static SearchcategoryDialog listdialog;
 	
-	private static Context context;
+	private Context context;
 	
 	private static View view;
 
+	private static String play_type;
+	
 	//////////////////////////////////////////////////////
 	
 	public SearchActivity(Context context){
@@ -57,6 +70,7 @@ public class SearchActivity extends Fragment implements OnClickListener, onSubmi
 		
 		clicklistener();
 		
+		
     	return view;
 	}
 	
@@ -68,13 +82,28 @@ public class SearchActivity extends Fragment implements OnClickListener, onSubmi
 		super.onDestroy();
 	}
 	
+	public void getS(){
+		play_type = getArguments().getString("play_type");
+		LocationHelper location = new LocationHelper(context);
+		location.run();
+		Log.d("location", String.valueOf(location.getMyLocation()));
+		
+		new GetCategorySimpleInfo(context, location, "서울특별시 영등포구", Integer.parseInt(play_type), Integer.parseInt("1"), search_list_view).execute();	
+	}
+	
 	//////////////////////////////////////////////////////
-
+	
 	public void init(){
 		search_category1_relativelayout = (View)view.findViewById(R.id.search_category1_relativelayout);
 		search_category2_relativelayout = (View)view.findViewById(R.id.search_category2_relativelayout);
 		search_category3_relativelayout = (View)view.findViewById(R.id.search_category3_relativelayout);
 		search_category4_relativelayout = (View)view.findViewById(R.id.search_category4_relativelayout);
+		search_list_view = (ListView)(view.findViewById(R.id.search_list_view));
+
+		search_category1_text = (TextView)view.findViewById(R.id.search_category1_text);
+		search_category2_text = (TextView)view.findViewById(R.id.search_category2_text);
+		search_category3_text = (TextView)view.findViewById(R.id.search_category3_text);
+		search_category4_text = (TextView)view.findViewById(R.id.search_category4_text);
 	}
 	
 	public void clicklistener(){	
@@ -106,90 +135,50 @@ public class SearchActivity extends Fragment implements OnClickListener, onSubmi
 	public void onClick(View v){
 		switch(v.getId()){
 		case R.id.search_category1_relativelayout:
-			showListDialog("장르");
+			showListDialog(0, search_category1_text.getText().toString());
 			break;
 		case R.id.search_category2_relativelayout:
-			showListDialog("기간");
+			showListDialog(1, search_category2_text.getText().toString());
 			break;
 		case R.id.search_category3_relativelayout:
-			showListDialog("장소");
+			showListDialog(2, search_category3_text.getText().toString());
 			break;
 		case R.id.search_category4_relativelayout:
-			showListDialog("정렬");
+			showListDialog(3, search_category4_text.getText().toString());
 			break;
 		}
 	}
 	
-	private void showListDialog(String title){
+private void showListDialog(int dialog_num, String dialog_title){
 		
 		listdialog = new SearchcategoryDialog();
 		
-		if(!title.equals("장소")){
-			AdapterView.OnItemClickListener singleListListener = new AdapterView.OnItemClickListener() {
-		        @Override
-		        public void onItemClick(AdapterView<?> parent, View view, int position, long l_position) {
-		            String tv = (String)parent.getAdapter().getItem(position);
-		        
-		            Toast.makeText(context, "" + position, Toast.LENGTH_SHORT).show();
-		            
-		        }
-		    };
-		    
-		    // list item set
-		    
-		    String[] list_item = this.context.getResources().getStringArray(R.array.dialog_list_genre);
-		    List<String> listItem = Arrays.asList(list_item);
-			ArrayList<String> itemArrayList = new ArrayList<String> (listItem);
-			ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this.context, android.R.layout.simple_list_item_1, itemArrayList);
+	    listdialog.dialog_title = dialog_title;
+	    listdialog.dialog_num = dialog_num;
 		
-		    listdialog.dialog_title = title;
-		    listdialog.first_arrayAdapter = arrayAdapter;
-		    //listdialog.firstlistClickListener = singleListListener;
-		    
-		}
-		else{
-			AdapterView.OnItemClickListener firstListListener = new AdapterView.OnItemClickListener() {
-		        @Override
-		        public void onItemClick(AdapterView<?> parent, View view, int position, long l_position) {
-		            //String tv = (String)parent.getAdapter().getItem(position);
-		        }
-		    };
-		    AdapterView.OnItemClickListener secondListListener = new AdapterView.OnItemClickListener() {
-		        @Override
-		        public void onItemClick(AdapterView<?> parent, View view, int position, long l_position) {
-		            //String tv = (String)parent.getAdapter().getItem(position);
-		        }
-		    };
-		    
-		    String[] list_item = this.context.getResources().getStringArray(R.array.dialog_list_genre);
-			List<String> listItem = Arrays.asList(list_item);
-			ArrayList<String> itemArrayList = new ArrayList<String> (listItem);
-			ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this.context, android.R.layout.simple_list_item_1, itemArrayList);
-			
-			String[] list_item2 = this.context.getResources().getStringArray(R.array.dialog_list_genre);
-			List<String> listItem2 = Arrays.asList(list_item2);
-			ArrayList<String> itemArrayList2 = new ArrayList<String> (listItem2);
-			ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(this.context, android.R.layout.simple_list_item_1, itemArrayList2);
-			
-			listdialog.dialog_title = title;
-			listdialog.first_arrayAdapter = arrayAdapter;
-			listdialog.second_arrayAdapter = arrayAdapter2;
-		    listdialog.firstlistClickListener = firstListListener;
-		    listdialog.secondlistClickListener = secondListListener;
-		}
-		
-		listdialog.show(getFragmentManager(), "categorylist");
+	    listdialog.show(getChildFragmentManager(), "categorylist");
 	}
-	/*
-	private void listsetting(){
-		for(int i=0;i<1;i++){
-			searchcardAdapter.addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "Search Card", getActivity().getApplicationContext(), i));
-		}
-		search_list_view.setAdapter(searchcardAdapter);
-	}
-	*/
+
 	@Override
-	public void setListener(String arg){
-		
+	public void setSearchFlagListener(String arg, int num){
+	
+		switch(num){
+		case 0:
+			search_category1_text.setText(arg);
+			break;
+		case 1:
+			search_category2_text.setText(arg);
+			break;
+		case 2:
+			search_category2_text.setText(arg);
+			break;
+		case 3:
+			search_category4_text.setText(arg);
+			break;
+		}
+	
 	}
+	
+	
+	
 }

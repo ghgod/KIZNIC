@@ -2,15 +2,18 @@ package com.hhh.kiznic;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +26,15 @@ import android.widget.TextView;
 @SuppressLint("NewApi")
 public class MainFragmentActivity extends FragmentActivity implements ActionBar.TabListener{
 
+	// Debugging
+			private static final String TAG = "Main";
+			
+			// Intent request code
+			private static final int REQUEST_CONNECT_DEVICE = 1;
+			private static final int REQUEST_ENABLE_BT = 2;
+			
+			Context mContext;
+	
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
 	public static ViewPager mViewPager;
@@ -116,7 +128,7 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 	
 	@SuppressLint("DefaultLocale")
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
-		Context mContext;
+		
 
 		public SectionsPagerAdapter(Context context, FragmentManager fm) {
 			super(fm);
@@ -157,5 +169,38 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 			
 			return null;
 		}
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        //Fragment fragment = getFragmentManager().findFragmentById(2);
+        //fragment.onActivityResult(requestCode, resultCode, data);
+		
+        Log.d(TAG, "onActivityResult " + resultCode);
+        
+        switch (requestCode) {
+        
+        /** �߰��� �κ� ���� **/
+        case REQUEST_CONNECT_DEVICE:
+            // When DeviceListActivity returns with a device to connect
+            if (resultCode == Activity.RESULT_OK) {
+            	//btService.getDeviceInfo(data);
+            	new MyPageActivity(mContext).onActivityResult(requestCode, resultCode, data);
+            }
+            break;
+        /** �߰��� �κ� �� **/
+        case REQUEST_ENABLE_BT:
+            // When the request to enable Bluetooth returns
+            if (resultCode == Activity.RESULT_OK) {
+            	// Next Step
+            	//btService.scanDevice();
+            	new MyPageActivity(mContext).onActivityResult(requestCode, resultCode, data);
+            } else {
+
+                Log.d(TAG, "Bluetooth is not enabled");
+            }
+            break;
+        }
 	}
 }

@@ -5,12 +5,15 @@ public class PicnicSimpleInfo {
 	String play_no;
 	String play_title;
 	String play_type;
+	String play_ages;
 	String play_place;
 	String play_start_date;
 	String play_end_date;
 	String play_distance;
 	String play_address;
-	String play_thumb;
+	String play_thumbnail;
+	String play_latitude;
+	String play_longitude;
 	
 	public void setPlayNo(String play_no) {
 		this.play_no = play_no;
@@ -45,7 +48,7 @@ public class PicnicSimpleInfo {
 	}
 	
 	public void setPlayThumb(String play_thumb) {
-		this.play_thumb = play_thumb;
+		this.play_thumbnail = play_thumb;
 	}
 	
 	public String getPlayNo() {
@@ -81,7 +84,31 @@ public class PicnicSimpleInfo {
 	}
 	
 	public String getPlayThumb() {
-		return play_thumb;
+		return play_thumbnail;
+	}
+
+	public String getPlayAges() {
+		return play_ages;
+	}
+
+	public void setPlayAges(String play_ages) {
+		this.play_ages = play_ages;
+	}
+
+	public String getPlayLatitude() {
+		return play_latitude;
+	}
+
+	public void setPlayLatitude(String play_latitude) {
+		this.play_latitude = play_latitude;
+	}
+
+	public String getPlayLongitude() {
+		return play_longitude;
+	}
+
+	public void setPlayLongitude(String play_longitude) {
+		this.play_longitude = play_longitude;
 	}
 	
 }

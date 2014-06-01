@@ -27,11 +27,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, String> {
 
 	Context mContext;
+	
 	String mySiDo;
 	String[] addressArray;
 	ListView mainListView;
@@ -64,6 +66,8 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 		mySiDo = location.getMySiDo();
 		latitude = String.valueOf(location.getLat());
 		longitude = String.valueOf(location.getLng());
+
+		
 	}
 	
 	
@@ -130,14 +134,13 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 			sendConditionInfo.put(conditionInfo);
 		
 		
-		String result = util.getJSONHttp(mContext, "recommend_play_list", sendConditionInfo);
+		String result = util.getJSONHttp(mContext, "recommend_play_list", "recommend_info", sendConditionInfo);
 		
 		return result;
 	}
 	
 	protected void onPostExecute(String result) { 
 		
-	
 		Util util = new Util();
 		
 		ArrayList<PicnicSimpleInfo> simpleInfo = new ArrayList<PicnicSimpleInfo>();
@@ -178,10 +181,10 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 			}
 		}
 		
-		Log.d("simpleInfo1", String.valueOf(simpleInfo1.get(0).getPlayTitle()));
-		Log.d("simpleInfo2", String.valueOf(simpleInfo2.get(0).getPlayTitle()));
-		Log.d("simpleInfo3", String.valueOf(simpleInfo3.get(0).getPlayTitle()));
-		Log.d("simpleInfo4", String.valueOf(simpleInfo4.get(0).getPlayTitle()));
+		//Log.d("simpleInfo1", String.valueOf(simpleInfo1.get(0).getPlayTitle()));
+		//Log.d("simpleInfo2", String.valueOf(simpleInfo2.get(0).getPlayTitle()));
+		//Log.d("simpleInfo3", String.valueOf(simpleInfo3.get(0).getPlayTitle()));
+		//Log.d("simpleInfo4", String.valueOf(simpleInfo4.get(0).getPlayTitle()));
 		
 		int recommendCount = 0;
 		
@@ -244,11 +247,7 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 			genreCount++;
 			genreListCount++;
 		}
-				
-		//simpleInfo1.clear();
-		//simpleInfo2.clear();
-		//simpleInfo3.clear();
-		//simpleInfo4.clear();
+		
 		
 		mainListView.setAdapter(cardAdapter);
 		

@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 
 public class CardAdapter extends BaseAdapter{
 
-	private Context context = null;
+	private Context context;
 	private ArrayList<Card> cardList = new ArrayList<Card>();
 	
 	public CardAdapter(Context context){

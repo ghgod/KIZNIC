@@ -131,8 +131,8 @@ public class MainActivity extends Fragment {
 		weather_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_weatherimage_image);
 		weather_next_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextweatherimage_image);
 		
-		aq = new AQuery(mainListView.getAdapter().getView(0, null, mainListView));
-		aq.id(R.id.weather_weatherimage_image).image("http://bufferblog.wpengine.netdna-cdn.com/wp-content/uploads/2014/05/145.jpg");
+		//aq = new AQuery(mainListView.getAdapter().getView(0, null, mainListView));
+		//aq.id(R.id.weather_weatherimage_image).image("http://bufferblog.wpengine.netdna-cdn.com/wp-content/uploads/2014/05/145.jpg");
 	}
 	
 	private void clicklistener(){
@@ -148,7 +148,7 @@ public class MainActivity extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				new GetWeatherAsync(getActivity().getBaseContext(),1, dbHelper, weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, weather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image, weather_finedust, weather_today_pm10value).execute("");				
+				new GetWeatherAsync(getActivity().getBaseContext(),0, dbHelper, weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, weather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image, weather_finedust, weather_today_pm10value).execute("");				
 			}
 		});
 
@@ -215,28 +215,4 @@ public class MainActivity extends Fragment {
 		mainListView.setAdapter(cardAdapter);
 	}
 	
-	public void getDBWeatherInfo() {
-		
-		WeatherInfo dbTodayWeatherInfo = dbHelper.getTodayWeatherInfo();
-		WeatherInfo dbNextWeatherInfo = dbHelper.getNextWeatherInfo();
-		PollutionInfo dbTodayPollutionInfo = dbHelper.getPollutionInfo();
-		Util util = new Util();
-		
-		LocationHelper location = new LocationHelper(getActivity().getBaseContext());
-		location.run();
-		
-		weather_mylocation.setText(location.getMyLocation());
-		weather_today_timedesc.setText(dbTodayWeatherInfo.getDayState() + " " + dbTodayWeatherInfo.getTime() + ", " + dbTodayWeatherInfo.getWeatherDesc());
-		weather_today_temp.setText(dbTodayWeatherInfo.getTemperature()+"℃");
-		weather_today_rainprob.setText(" " + dbTodayWeatherInfo.getRainProb()+ " %");
-		weather_today_windspeed.setText(" " + dbTodayWeatherInfo.getWindSpeed() + " m/s");
-		weather_next_timedesc.setText(dbNextWeatherInfo.getDayState() + " " + dbNextWeatherInfo.getTime() + ", " + dbNextWeatherInfo.getWeatherDesc());
-		weather_next_temp.setText(dbNextWeatherInfo.getTemperature()+"℃");
-		weather_image.setImageBitmap(util.getWeatherImage(getActivity(), dbTodayWeatherInfo.getWeatherDesc()));
-		weather_next_image.setImageBitmap(util.getWeatherImage(getActivity(), dbNextWeatherInfo.getWeatherDesc()));
-		
-		weather_today_pm10value.setText("미세먼지 농도 " + dbTodayPollutionInfo.getPM10Value());
-		util.weather_finedust_set(weather_finedust,(int)((1.2 * Integer.parseInt(dbTodayPollutionInfo.getPM10Value()))), false, null);
-		
-	}
 }

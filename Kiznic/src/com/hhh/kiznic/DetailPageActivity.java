@@ -1,8 +1,14 @@
 package com.hhh.kiznic;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 import com.hhh.kiznic.card.CardAdapter;
 import com.hhh.kiznic.card.DetailListCard;
 import com.hhh.kiznic.card.DetailnevigationlistCard;
+import com.hhh.kiznic.connection.GetPicnicDetailInfo;
+import com.hhh.kiznic.databasemanager.KiznicSharedPreferences;
 import com.nhn.android.maps.NMapActivity;
 import com.nhn.android.maps.NMapController;
 import com.nhn.android.maps.NMapOverlayItem;
@@ -17,9 +23,16 @@ import com.nhn.android.mapviewer.overlay.NMapPOIdataOverlay;
 import com.nhn.android.mapviewer.overlay.NMapResourceProvider;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.util.MonthDisplayHelper;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -40,8 +53,9 @@ import android.widget.ListView;
 public class DetailPageActivity extends NMapActivity implements OnClickListener, OnTouchListener, OnMapStateChangeListener{
 
 	private static ListView detailInfoListView, detailNevigationInfoListView;
-	private CardAdapter deatilInfoCardAdapter, detailNevigationInfoAdapter;
 	
+	private TextView detail_main_title;
+	private ImageView detail_main_poster;
 	private static ImageView detail_phone_image;
 	private static ImageView detail_link_image;
 	private static ImageView detail_bookmark_image;
@@ -51,20 +65,30 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 	
 	private static TextView detail_infotext_text;
 	
-	private int detailcardCount = -1, detailnevigationcardCount = -1;
+	
+	
 	private boolean infotextview_flag;
 	
+	private LinearLayout detail_mainposter_layout;
 	private LinearLayout mapViewContainer;
 	private NMapController nmapController;
 	private NMapView nmapView;
 	private NMapViewerResourceProvider nmapViewerResourceProvider;
 	private NMapOverlayManager nmapOverlayManager;
+	private NMapPOIdata poiData;
+	private NMapPOIdataOverlay poiDataOverlay;
 	
+	private SharedPreferences pref;	
 	private static final String APIKey="be984cc3917c237a096c3a0a911743b7";
 	
 	private static ScrollView detail_scrollview;
 	
+	private static double latitude;
+	private static double longitude;
+	
+	
 	static Toast t;
+	private String play_no;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -72,15 +96,70 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 	    super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detailpage);
 	
-	    init();
+	   init();
+	   new GetPicnicDetailInfo(getBaseContext(), Integer.parseInt(play_no), 
+	    		detail_main_title, detail_main_poster, detail_infotext_text, detailInfoListView,detailNevigationInfoListView, detail_mainposter_layout).execute();
+	  
+	   
+	   pref = getSharedPreferences("place_geo",  0);
+       String dftValue = "1";
+              
+	   	   	   
+	   	   
+	  setNMap(Double.parseDouble(pref.getString("latitude",  dftValue)), Double.parseDouble(pref.getString("longitude",  dftValue)), pref.getString("placeName", dftValue));
 	    
-	    setNMap();
-	    
-	    clicklistener();
+	   clicklistener();
 	}
 
-	private void setNMap() {
+	
+	
+	@Override
+	public void onDestroy(){
+		RecycleUtils.recursiveRecycle(getWindow().getDecorView());
+		System.gc();
+		
+		super.onDestroy();
+	}
+	
+	private void init() {
+		
+		detail_mainposter_layout = (LinearLayout)findViewById(R.id.detail_mainposter_image_layout);
+		detail_main_title = (TextView)findViewById(R.id.detail_main_title);
+		detail_main_poster = (ImageView)findViewById(R.id.detail_mainposter_image);
+		
+		detailInfoListView = (ListView)findViewById(R.id.detail_list_view);
+		detailNevigationInfoListView = (ListView)findViewById(R.id.detail_list2_view);
+		detail_phone_image = (ImageView)findViewById(R.id.detail_phone_image);
+		detail_link_image = (ImageView)findViewById(R.id.detail_link_image);
+		detail_bookmark_image = (ImageView)findViewById(R.id.detail_bookmark_image);
+		detail_sharing_image = (ImageView)findViewById(R.id.detail_sharing_image);
+		
+		detail_moreinfo_button = (Button)findViewById(R.id.detail_moreinfo_button);
+		
+		detail_infotext_text = (TextView)findViewById(R.id.detail_infotext_text);
+		
+
+		
 		mapViewContainer = (LinearLayout)findViewById(R.id.mapViewContainer);
+
+		
+		infotextview_flag = false;
+		
+		detail_scrollview = (ScrollView)findViewById(R.id.detail_scrollview);
+		Intent intent = getIntent();
+		play_no = intent.getExtras().getString("play_no");
+		
+		nmapView = new NMapView(this);
+		
+				
+		listsetting();
+	}
+	
+	
+
+	
+	
+	public void setNMap(double latitude, double longitude, String placeName) {
 		nmapView = new NMapView(this);
 		nmapViewerResourceProvider = new NMapViewerResourceProvider(this);
 		nmapOverlayManager = new NMapOverlayManager(this, nmapView, nmapViewerResourceProvider);
@@ -89,7 +168,7 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 		
 		NMapPOIdata poiData = new NMapPOIdata(2, nmapViewerResourceProvider);
 		poiData.beginPOIdata(2);
-		poiData.addPOIitem(127.0630205, 37.5091300, "위치1", markerID, 0);
+		poiData.addPOIitem(longitude, latitude, placeName, markerID, 0);
 		poiData.endPOIdata();
 		
 		NMapPOIdataOverlay poiDataOverlay = nmapOverlayManager.createPOIdataOverlay(poiData, null);
@@ -100,40 +179,9 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 		nmapView.setApiKey(APIKey);
 		mapViewContainer.addView(nmapView);
 		nmapView.setClickable(true);
+		nmapView.setBuiltInAppControl(true);
 		//nmapView.setBuiltInZoomControls(true, null);
 		nmapView.setOnMapStateChangeListener(this);
-	}
-	
-	@Override
-	public void onDestroy(){
-		RecycleUtils.recursiveRecycle(getWindow().getDecorView());
-        deatilInfoCardAdapter = null;
-		detailNevigationInfoAdapter = null;
-		System.gc();
-		
-		super.onDestroy();
-	}
-	
-	private void init() {
-		detailInfoListView = (ListView)findViewById(R.id.detail_list_view);
-		detailNevigationInfoListView = (ListView)findViewById(R.id.detail_list2_view);
-		deatilInfoCardAdapter = new CardAdapter(getApplicationContext());
-		detailNevigationInfoAdapter = new CardAdapter(getApplicationContext());
-
-		detail_phone_image = (ImageView)findViewById(R.id.detail_phone_image);
-		detail_link_image = (ImageView)findViewById(R.id.detail_link_image);
-		detail_bookmark_image = (ImageView)findViewById(R.id.detail_bookmark_image);
-		detail_sharing_image = (ImageView)findViewById(R.id.detail_sharing_image);
-		
-		detail_moreinfo_button = (Button)findViewById(R.id.detail_moreinfo_button);
-		
-		detail_infotext_text = (TextView)findViewById(R.id.detail_infotext_text);
-		
-		infotextview_flag = false;
-		
-		detail_scrollview = (ScrollView)findViewById(R.id.detail_scrollview);
-		
-		listsetting();
 	}
 
 	private void clicklistener() {
@@ -154,6 +202,7 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 				return false;
 			}
 		});
+		
 	}
 	
 	@Override
@@ -162,29 +211,58 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 		switch(v.getId()){
 		
 		case R.id.detail_phone_image:
-			t = Toast.makeText(getBaseContext(), "전화", Toast.LENGTH_LONG);
-            t.show();
+			Uri number = Uri.parse("tel:" + pref.getString("contact", "tel:0000000"));
+			Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
+			startActivity(callIntent);
 			break;
 		case R.id.detail_link_image:
-			t = Toast.makeText(getBaseContext(), "링크", Toast.LENGTH_LONG);
-            t.show();
+			Intent intent = new Intent(Intent.ACTION_VIEW);
+			Uri u = Uri.parse("http://search.naver.com/search.naver?where=nexearch&query="+pref.getString("title", "")+ "&sm=top_hty");
+			intent.setData(u);
+			startActivity(intent);
 			break;
 		case R.id.detail_bookmark_image:
 			t = Toast.makeText(getBaseContext(), "북마크 등록", Toast.LENGTH_LONG);
 			t.show();
 			break;
 		case R.id.detail_sharing_image:
-			t = Toast.makeText(getBaseContext(), "연동", Toast.LENGTH_LONG);
-			t.show();
+		
+			LinearLayout capture = (LinearLayout)findViewById(R.id.detailpage_captureLayout);
+			capture.buildDrawingCache();
+			
+			Bitmap captureView = capture.getDrawingCache();
+			
+			FileOutputStream fos;
+			try {
+			
+				fos = new FileOutputStream(Environment.getExternalStorageDirectory().toString()+"/capture.jpeg");
+				captureView.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+				
+				Uri mSaveImageUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory().toString()+"/capture.jpeg")); //file의 경로를 uri로 변경합니다.
+				
+				Intent shareintent = new Intent(Intent.ACTION_SEND); //전송 메소드를 호출합니다. Intent.ACTION_SEND
+				shareintent.setType("image/jpg"); //jpg 이미지를 공유 하기 위해 Type을 정의합니다.
+				shareintent.putExtra(Intent.EXTRA_STREAM, mSaveImageUri); //사진의 Uri를 가지고 옵니다.
+				startActivity(Intent.createChooser(shareintent, "공유")); //Activity를 이용하여 호출 합니다.
+						
+			
+			} catch (FileNotFoundException e) {
+			
+				e.printStackTrace();
+			
+			}
+		
+			Toast.makeText(getApplicationContext(), "공유 성공", Toast.LENGTH_LONG).show();
+		
+					
+			
 			break;
 		case R.id.detail_moreinfo_button:
 			if(infotextview_flag){
-				detail_infotext_text.setText("배고픈 애벌레는 먹이를 찾으러 이곳 저곳을 돌아다니기 시작한다. 이러쿵 저러쿵 왔다가갔다 으흐흐흐 모라고 써야할까 배고픈 애벌레는 이곳저곳 돌아다니다 새밥이된다.동심파괴 젠장.. 몇자까지가 적당할까, 난 여기에 조금 더 써볼까해, 음... 아무래도 5줄 정도면...");
 				infotextview_flag = false;
 				detail_moreinfo_button.setText("더보기");
 			}
 			else{
-				detail_infotext_text.setText("배고픈 애벌레는 먹이를 찾으러 이곳 저곳을 돌아다니기 시작한다. 이러쿵 저러쿵 왔다가갔다 으흐흐흐 모라고 써야할까 배고픈 애벌레는 이곳저곳 돌아다니다 새밥이된다.동심파괴 젠장.. 몇자까지가 적당할까, 난 여기에 조금 더 써볼까해, 음... 아무래도 5줄 정도면 적당하겠지?\n배고픈 애벌레는 먹이를 찾으러 이곳 저곳을 돌아다니기 시작한다. 이러쿵 저러쿵 왔다가갔다 으흐흐흐 모라고 써야할까 배고픈 애벌레는 이곳저곳 돌아다니다 새밥이된다.동심파괴 젠장.. 몇자까지가 적당할까, 난 여기에 조금 더 써볼까해, 음... 아무래도 5줄 정도면 적당하겠지?");
 				infotextview_flag = true;
 				detail_moreinfo_button.setText("줄이기");
 			}
@@ -193,46 +271,24 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 	}
 	
 	private void listsetting(){
-		for(int i=0;i<6;i++)
-			deatilInfoCardAdapter.addItem(new DetailListCard(R.layout.detailpage_info_list_card,"Detail Info Card", getApplicationContext(), detailcardCount++));
-	
-		detailInfoListView.setAdapter(deatilInfoCardAdapter);
 		
+			
 		LinearLayout detailInfoListLayout = (LinearLayout)findViewById(R.id.detail_listview_layout);
 		LayoutParams detailInfoParams = (LayoutParams) detailInfoListLayout.getLayoutParams();
 		
-		int deatilInfoCardheight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70 * (detailcardCount + 1), getResources().getDisplayMetrics());
+		int deatilInfoCardheight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70 * (3 + 1), getResources().getDisplayMetrics());
 		
 		detailInfoParams.height = deatilInfoCardheight;
-		
-		for(int i=0;i<6;i++){
-			View infoview = (View)detailInfoListView.getAdapter().getView(i, null, detailInfoListView).findViewById(R.id.detailpage_infobackground_view);
-			if(i%2 == 0)
-				infoview.setBackgroundColor(Color.argb(255, 249, 249, 249));
-			else
-				infoview.setBackgroundColor(Color.argb(255, 255, 255, 255));
-		}
-		//
-		
-		for(int i=0;i<4;i++)
-			detailNevigationInfoAdapter.addItem(new DetailnevigationlistCard(R.layout.detailpage_nevigation_list_card, "Detail Nevigation Info Card", getApplicationContext(), detailnevigationcardCount++));
 	
-		detailNevigationInfoListView.setAdapter(detailNevigationInfoAdapter);
 		
 		LinearLayout detailNevigationListLayout = (LinearLayout)findViewById(R.id.detail_nevigation_layout);
 		LayoutParams detailNevigationParams = (LayoutParams) detailNevigationListLayout.getLayoutParams();
 		
-		int deatilNevigationCardheight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60 * (detailnevigationcardCount + 1), getResources().getDisplayMetrics());
+		int deatilNevigationCardheight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60 * (0 + 1), getResources().getDisplayMetrics());
 		
 		detailNevigationParams.height = deatilNevigationCardheight;
 		
-		for(int i=0;i<4;i++){
-			View nevigationview = (View)detailNevigationInfoListView.getAdapter().getView(i, null, detailNevigationInfoListView).findViewById(R.id.detailpage_nevigationbackground_view);
-			if(i%2 == 0)
-				nevigationview.setBackgroundColor(Color.argb(255, 249, 249, 249));
-			else
-				nevigationview.setBackgroundColor(Color.argb(255, 255, 255, 255));
-		}
+
 	}
 
 	

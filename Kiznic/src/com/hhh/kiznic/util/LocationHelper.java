@@ -134,6 +134,10 @@ public class LocationHelper {
     public String[] getAddress() {
         return LocationHelper.getAddress(mContext ,mLat , mLng);
     }
+    
+    public String[] getAddressUsingLatLng(double mLat, double mLng) {
+    	return LocationHelper.getAddress(mContext, mLat, mLng);
+    }
      
     /**
      * 지정한 위도와 경도값을 기준으로 주소를 리턴합니다.

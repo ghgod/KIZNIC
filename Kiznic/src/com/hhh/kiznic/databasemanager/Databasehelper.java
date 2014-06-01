@@ -175,7 +175,7 @@ public class Databasehelper extends SQLiteOpenHelper{
 		SQLiteDatabase db = this.getWritableDatabase();
 		
 		ContentValues values = new ContentValues();
-		values.put("_id", "1");
+		//values.put("_id", "1");
 	    values.put(KEY_TODAY_DAYSTATE, weatherTodayInfo.getDayState());
 		values.put(KEY_TODAY_TIME,  weatherTodayInfo.getTime());
 	    values.put(KEY_TODAY_DESC, weatherTodayInfo.getWeatherDesc());
@@ -210,7 +210,7 @@ public class Databasehelper extends SQLiteOpenHelper{
 		if (c != null ) 
 	    	c.moveToFirst();
 	    
-		Log.d("cursorSuccess", "cursorOK"); 
+		//Log.d("cursorSuccess", "cursorOK"); 
 	    weatherInfo.setDayState(c.getString(c.getColumnIndex(KEY_TODAY_DAYSTATE)));
 	    weatherInfo.setTime(c.getString(c.getColumnIndex(KEY_TODAY_TIME)));
 	    weatherInfo.setWeatherDesc(c.getString(c.getColumnIndex(KEY_TODAY_DESC)));
@@ -219,6 +219,14 @@ public class Databasehelper extends SQLiteOpenHelper{
 	    weatherInfo.setRainProb(c.getString(c.getColumnIndex(KEY_TODAY_RAINPROB)));
 	    weatherInfo.setWindSpeed(c.getString(c.getColumnIndex(KEY_TODAY_WINDSPEED)));
 	    weatherInfo.setHumidity(c.getString(c.getColumnIndex(KEY_TODAY_HUMIDITY)));
+	    
+	    Log.d("daystate", weatherInfo.getDayState());
+	    Log.d("time", weatherInfo.getTime());
+	    Log.d("temp", weatherInfo.getWeatherDesc());
+	    Log.d("feeltemp", weatherInfo.getFeelTemp());
+	    Log.d("rainprob", weatherInfo.getRainProb());
+	    Log.d("windspeed", weatherInfo.getWindSpeed());
+	    Log.d("humidity", weatherInfo.getHumidity());
 	    
 	    c.close();	    
 	    db.close();

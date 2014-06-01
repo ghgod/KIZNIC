@@ -18,9 +18,10 @@
             <TextView
                 android:id="@+id/detailpage_infotitle_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dip"
+                android:gravity="center_vertical"
+                android:padding="5dp"
                 android:text="정보 Title"
                 android:textColor="#000000"
                 android:textSize="14sp"/>
@@ -37,9 +38,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="10dip"
+                android:gravity="center"
+                android:textSize="15sp"
                 android:text="정보 내용"
                 android:textColor="#000000"
-                android:textSize="12sp"/>
+                />
             
         </LinearLayout>
         

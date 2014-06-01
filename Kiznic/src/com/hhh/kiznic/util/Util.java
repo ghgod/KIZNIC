@@ -38,6 +38,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import com.hhh.kiznic.R;
 import com.hhh.kiznic.dataclass.NextPollutionInfo;
+import com.hhh.kiznic.dataclass.PicnicDetailInfo;
 import com.hhh.kiznic.dataclass.PicnicSimpleInfo;
 import com.hhh.kiznic.dataclass.PollutionInfo;
 import com.hhh.kiznic.dataclass.WeatherInfo;
@@ -45,6 +46,7 @@ import com.hhh.kiznic.dataclass.WeatherInfo;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -174,14 +176,14 @@ public class Util {
 		return received;
 	}
 	
-	public String getJSONHttp(Context mContext, String addedURL, JSONArray sendConditionInfo) {
+	public String getJSONHttp(Context mContext, String addedURL, String JSONArrayName, JSONArray sendConditionInfo) {
 		
 		String received = null;
 		HttpClient http = new DefaultHttpClient();
 					
 		try {								
 			ArrayList<NameValuePair> nameValuePairs = 	new ArrayList<NameValuePair>();
-			nameValuePairs.add(new BasicNameValuePair("recommend_info", sendConditionInfo.toString()));
+			nameValuePairs.add(new BasicNameValuePair(JSONArrayName, sendConditionInfo.toString()));
 			
 			HttpParams params = http.getParams();
 			HttpConnectionParams.setConnectionTimeout(params, 10000);
@@ -210,6 +212,8 @@ public class Util {
 		}
 		return received;
 	}
+	
+	
 	
 	
 	
@@ -800,51 +804,97 @@ public static String transformRegionName(String region1) {
 		for(int i=0; i<picnicSimpleInfo.length()-1; i++) {
 			JSONObject playInfo = picnicSimpleInfo.getJSONObject(i);
 			
-			PicnicSimpleInfo simpleInfo = new PicnicSimpleInfo();
-			//Log.d("play_no", playInfo.getString("play_no"));
-			simpleInfo.setPlayNo(util.checkNull(playInfo.getString("play_no")));
-			simpleInfo.setPlayTitle(util.checkNull(playInfo.getString("play_title")));
-			simpleInfo.setPlayType(util.checkNull(playInfo.getString("play_type")));
-			//simpleInfo.setPlayAges(util.checkNull(playInfo.getString("play_ages")));
-			simpleInfo.setPlayPlace(util.checkNull(playInfo.getString("play_place")));
-			simpleInfo.setPlayThumb(util.checkNull(playInfo.getString("play_thumb")));
-			simpleInfo.setPlayStartDate(util.checkNull(playInfo.getString("play_start_date")));
-			simpleInfo.setPlayEndDate(util.checkNull(playInfo.getString("play_end_date")));
-			simpleInfo.setPlayDistance(util.checkNull(playInfo.getString("play_spot_distance")));
-			simpleInfo.setPlayAddress(util.checkNull(playInfo.getString("play_address")));
+				PicnicSimpleInfo simpleInfo = new PicnicSimpleInfo();
+				
+				simpleInfo.setPlayNo(util.checkNull(playInfo.getString("play_no")));
+				simpleInfo.setPlayTitle(util.checkNull(playInfo.getString("play_title")));
+				simpleInfo.setPlayType(util.checkNull(playInfo.getString("play_type")));
+				simpleInfo.setPlayAges(util.checkNull(playInfo.getString("play_ages")));
+				simpleInfo.setPlayPlace(util.checkNull(playInfo.getString("play_place")));
+				simpleInfo.setPlayThumb(util.checkNull(playInfo.getString("play_thumbnail")));
+				simpleInfo.setPlayStartDate(util.checkNull(playInfo.getString("play_start_date")));
+				simpleInfo.setPlayEndDate(util.checkNull(playInfo.getString("play_end_date")));
+				simpleInfo.setPlayDistance(util.checkNull(playInfo.getString("play_place_distance")));
+				simpleInfo.setPlayAddress(util.checkNull(playInfo.getString("play_address")));
+				simpleInfo.setPlayLatitude(util.checkNull(playInfo.getString("play_place_latitude")));
+				simpleInfo.setPlayLongitude(util.checkNull(playInfo.getString("play_place_longitude")));
+				
+				simpleInfoList.add(simpleInfo);
 			
-			simpleInfoList.add(simpleInfo);
+			
+			
 		}	
 		
 		return simpleInfoList;	
 		
 	}
 	
+	public PicnicDetailInfo parsePicnicDetailInfoJSON(String json) throws JSONException {
+		PicnicDetailInfo DetailInfo = new PicnicDetailInfo();
+		
+		JSONArray picnicDetailInfo = new JSONArray(json);
+		Util util = new Util();
+		
+		
+		JSONObject info = picnicDetailInfo.getJSONObject(0);
+			
+		DetailInfo.setPlay_no(util.checkNull(info.getString("play_no")));
+		DetailInfo.setPlay_title(util.checkNull(info.getString("play_title")));
+		DetailInfo.setPlay_type(util.checkNull(info.getString("play_type")));
+		DetailInfo.setPlay_description(util.checkNull(info.getString("play_description")));
+		DetailInfo.setPlay_price(util.checkNull(info.getString("play_price")));
+		DetailInfo.setPlay_photo(util.checkNull(info.getString("play_photo")));
+		DetailInfo.setPlay_contact(util.checkNull(info.getString("play_contact")));
+		DetailInfo.setPlay_link(util.checkNull(info.getString("play_link")));
+		DetailInfo.setPlay_ages(util.checkNull(info.getString("play_ages")));
+		DetailInfo.setPlay_traffic(util.checkNull(info.getString("play_traffic")));
+		DetailInfo.setPlay_start_date(util.checkNull(info.getString("play_start_date")));
+		DetailInfo.setPlay_end_date(util.checkNull(info.getString("play_end_date")));
+		DetailInfo.setPlay_place_latitude(util.checkNull(info.getString("play_place_latitude")));
+		DetailInfo.setPlay_place_longitude(util.checkNull(info.getString("play_place_longitude")));
+		DetailInfo.setPlay_place_distance(util.checkNull(info.getString("play_place_distance")));
+		DetailInfo.setPlay_place_address(util.checkNull(info.getString("play_address")));
+		DetailInfo.setPlay_place_pointx(util.checkNull(info.getString("play_place_pointx")));
+		DetailInfo.setPlay_place_pointy(util.checkNull(info.getString("play_place_pointy")));
+		
+		
+		
+		return DetailInfo;
+	}
 	
 	public Bitmap getWeatherImage(Context context, String weatherDesc) {
 		
-		Bitmap image = null;
+Bitmap image = null;
 		
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inSampleSize = 4;
+				
 		if(weatherDesc.equals("맑음")) {
-			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_sunny_image_sky);
-		}
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_sunny_image_sky, options);
+			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true ); 		}
 		else if(weatherDesc.equals("흐림")) {
-			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_cloudy_image_sky);
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_cloudy_image_sky, options);
+			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true ); 
 		}
 		else if(weatherDesc.equals("구름 많음")) {
-			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_verycloudy_image_sky);
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_verycloudy_image_sky, options);
+			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true ); 
 		}
 		else if(weatherDesc.equals("구름 조금")) {
-			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_slightlycover_image_sky);
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_slightlycover_image_sky, options);
+			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true ); 
 		}
 		else if(weatherDesc.equals("비")) {
-			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_rain_image_sky);
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_rain_image_sky, options);
+			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true ); 
 		}
 		else if(weatherDesc.equals("눈/비")) {
-			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_snowrain_image_sky);
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_snowrain_image_sky, options);
+			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true ); 
 		}
 		else if(weatherDesc.equals("눈")) {
-			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_snow_image_sky);
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_snow_image_sky, options);
+			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true );
 		}
 		
 		return image;
@@ -855,26 +905,35 @@ public static String transformRegionName(String region1) {
 		
 		Bitmap image = null;
 		
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inSampleSize = 4;
+				
 		if(weatherDesc.equals("맑음")) {
-			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_sunny_image_sky);
-		}
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_sunny_image_sky, options);
+			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true ); 		}
 		else if(weatherDesc.equals("흐림")) {
-			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_cloudy_image_sky);
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_cloudy_image_sky, options);
+			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true ); 
 		}
 		else if(weatherDesc.equals("구름 많음")) {
-			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_verycloudy_image_sky);
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_verycloudy_image_sky, options);
+			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true ); 
 		}
 		else if(weatherDesc.equals("구름 조금")) {
-			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_slightlycover_image_sky);
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_slightlycover_image_sky, options);
+			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true ); 
 		}
 		else if(weatherDesc.equals("비")) {
-			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_rain_image_sky);
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_rain_image_sky, options);
+			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true ); 
 		}
 		else if(weatherDesc.equals("눈/비")) {
-			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_snowrain_image_sky);
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_snowrain_image_sky, options);
+			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true ); 
 		}
 		else if(weatherDesc.equals("눈")) {
-			image = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_snow_image_sky);
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_snow_image_sky, options);
+			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true );
 		}
 		
 		return image;
@@ -978,6 +1037,8 @@ public static String transformRegionName(String region1) {
 			return str;
 		}
 	}
+	
+	
 	
 	
 }

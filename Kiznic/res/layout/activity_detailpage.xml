@@ -20,13 +20,14 @@
 	     	    android:orientation="vertical">
 	     	   
 			    <LinearLayout
+			        android:id="@+id/detailpage_captureLayout"
 			        android:layout_width="match_parent"
 			        android:layout_height="wrap_content"
-			        android:orientation="vertical"
-			        android:layout_marginTop="10dip"
 			        android:layout_marginLeft="10dip"
 			        android:layout_marginRight="10dip"
-			        android:background="#FFFFFF">
+			        android:layout_marginTop="10dip"
+			        android:background="#FFFFFF"
+			        android:orientation="vertical" >
 			        
 			        <LinearLayout
 			            android:layout_width="match_parent"
@@ -34,87 +35,31 @@
 			            android:gravity="center">
 			            
 			            <TextView
+			                android:id="@+id/detail_main_title"
 			                android:layout_width="wrap_content"
 			                android:layout_height="wrap_content"
 			                android:layout_gravity="center"
+			                android:singleLine="true"
+	                    android:ellipsize="end"
 			                android:text="[성남 아트센터] 배고픈 애벌레"
 			                android:textColor="#000000"
-			                android:textSize="23sp"/>
+			                android:textSize="23sp" />
 			            
 			        </LinearLayout>
 			        
 			        <LinearLayout
+			            android:id="@+id/detail_mainposter_image_layout"
 			            android:layout_width="match_parent"
-			            android:layout_height="wrap_content">
+			            android:layout_height="wrap_content" >
 			            
 			            <ImageView
 			                android:id="@+id/detail_mainposter_image"
 			                android:layout_width="match_parent"
+			                android:scaleType="fitXY"
 			                android:layout_height="300dip"/>
 			            
 			        </LinearLayout>
 			        
-			    </LinearLayout>
-			    
-			    <LinearLayout
-			        android:layout_width="match_parent"
-			        android:layout_height="40dip"
-			        android:orientation="horizontal"
-			        android:layout_marginLeft="10dip"
-			        android:layout_marginRight="10dip"
-			        android:background="#FFFFFF">
-			        
-			        <LinearLayout
-			            android:layout_width="0dip"
-			            android:layout_height="match_parent"
-			            android:layout_weight="1">
-			            
-			            <ImageView
-			                android:id="@+id/detail_phone_image"
-			                android:layout_width="match_parent"
-			                android:layout_height="match_parent"
-			                android:padding="5dip"/>
-			            
-			        </LinearLayout>
-			         
-			        <LinearLayout
-			            android:layout_width="0dip"
-			            android:layout_height="match_parent"
-			            android:layout_weight="1">
-			             
-			            <ImageView
-			                android:id="@+id/detail_link_image"
-			                android:layout_width="match_parent"
-			                android:layout_height="match_parent"
-			                android:padding="5dip"/>
-			            
-			        </LinearLayout>
-			        
-			        <LinearLayout
-			            android:layout_width="0dip"
-			            android:layout_height="match_parent"
-			            android:layout_weight="1">
-			             
-			            <ImageView
-			                android:id="@+id/detail_bookmark_image"
-			                android:layout_width="match_parent"
-			                android:layout_height="match_parent"
-			                android:padding="5dip"/>
-			            
-			        </LinearLayout>
-			        
-			        <LinearLayout
-			            android:layout_width="0dip"
-			            android:layout_height="match_parent"
-			            android:layout_weight="1">
-			             
-			            <ImageView
-			                android:id="@+id/detail_sharing_image" 
-			                android:layout_width="match_parent"
-			                android:layout_height="match_parent"
-			                android:padding="5dip"/>
-			            
-			        </LinearLayout> 
 			    </LinearLayout>
 			     
 			    
@@ -197,6 +142,71 @@
 						android:scrollbars="none"/>
 			        
 			    </LinearLayout>
+
+			    <LinearLayout
+			        android:layout_width="match_parent"
+			        android:layout_height="80dip"
+			        android:layout_marginTop="10dp"
+			        android:layout_marginLeft="10dip"
+			        android:layout_marginRight="10dip"
+			        android:background="#FFFFFF"
+			        android:orientation="horizontal" >
+
+			        <LinearLayout
+			            android:layout_width="0dip"
+			            android:layout_height="match_parent"
+			            android:layout_marginRight="3dp"
+			            android:layout_weight="1" >
+
+			            <ImageView
+			                android:id="@+id/detail_phone_image"
+			                android:layout_width="match_parent"
+			                android:layout_height="match_parent"
+			                android:background="@drawable/detail_phone_up"
+			                android:padding="5dip" />
+			        </LinearLayout>
+
+			        <LinearLayout
+			            android:layout_width="0dip"
+			            android:layout_height="match_parent"
+			            android:layout_marginRight="3dp"
+			            android:layout_weight="1" >
+
+			            <ImageView
+			                android:id="@+id/detail_link_image"
+			                android:layout_width="match_parent"
+			                android:layout_height="match_parent"
+			                android:background="@drawable/detail_link_up"
+			                android:padding="5dip" />
+			        </LinearLayout>
+
+			        <LinearLayout
+			            android:layout_width="0dip"
+			            android:layout_height="match_parent"
+			            android:layout_marginRight="3dp"
+			            android:layout_weight="1" >
+
+			            <ImageView
+			                android:id="@+id/detail_bookmark_image"
+			                android:layout_width="match_parent"
+			                android:layout_height="match_parent"
+			                android:background="@drawable/detail_bookmark_up"
+			                android:padding="5dip" />
+			        </LinearLayout>
+
+			        <LinearLayout
+			            android:layout_width="0dip"
+			            android:layout_height="match_parent"
+			            android:layout_weight="1" >
+
+			            <ImageView
+			                android:id="@+id/detail_sharing_image"
+			                android:layout_width="match_parent"
+			                android:layout_height="match_parent"
+			                android:background="@drawable/detail_share_up"
+			                android:padding="5dip" />
+			        </LinearLayout>
+			    </LinearLayout>
 			    
 			    <LinearLayout
 			        android:layout_width="match_parent"
@@ -213,6 +223,8 @@
 			            android:layout_height="0dip"
 			            android:layout_weight="15"
 			            android:orientation="vertical">
+
+			           
 			            
 			        </LinearLayout>
 			        

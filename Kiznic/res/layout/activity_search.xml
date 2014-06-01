@@ -64,27 +64,29 @@
 		    android:layout_marginBottom="5dip"
 		    android:orientation="horizontal">
 	
-			<RelativeLayout
+		    <RelativeLayout
 			    android:id="@+id/search_category1_relativelayout"
 		        android:layout_width="0dip"
 		        android:layout_height="match_parent"
 		        android:layout_weight="1"
 		        android:layout_marginRight="1dip"
+		        android:layout_marginLeft="1dip"
 		        android:orientation="vertical"
 		        android:background="@drawable/search_category_background"
 		        android:focusable="true">
 	
 			    <TextView
+			        android:id="@+id/search_category1_text"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_centerInParent="true"
-			        android:text="장르"
+			        android:text="지역"
 			        android:textColor="#000000"
-			        android:textSize="20sp"/>
-	
+			        android:textSize="18sp"/>
+			
 			</RelativeLayout>
-	
-			<RelativeLayout
+		    
+		    <RelativeLayout
 			    android:id="@+id/search_category2_relativelayout"
 		        android:layout_width="0dip"
 		        android:layout_height="match_parent"
@@ -96,34 +98,35 @@
 		        android:focusable="true">
 	
 			    <TextView
+			        android:id="@+id/search_category2_text"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_centerInParent="true"
 			        android:text="기간"
 			        android:textColor="#000000"
-			        android:textSize="20sp"/>
+			        android:textSize="18sp"/>
 			
 			</RelativeLayout>
-	
+		    
 			<RelativeLayout
 			    android:id="@+id/search_category3_relativelayout"
 		        android:layout_width="0dip"
 		        android:layout_height="match_parent"
 		        android:layout_weight="1"
 		        android:layout_marginRight="1dip"
-		        android:layout_marginLeft="1dip"
 		        android:orientation="vertical"
 		        android:background="@drawable/search_category_background"
 		        android:focusable="true">
 	
 			    <TextView
+			        android:id="@+id/search_category3_text"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_centerInParent="true"
-			        android:text="지역"
+			        android:text="장르"
 			        android:textColor="#000000"
-			        android:textSize="20sp"/>
-			
+			        android:textSize="18sp"/>
+	
 			</RelativeLayout>
 	
 			<RelativeLayout
@@ -137,12 +140,13 @@
 		        android:focusable="true">
 		
 			    <TextView
+			        android:id="@+id/search_category4_text"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_centerInParent="true"
 			        android:text="가격"
 			        android:textColor="#000000"
-			        android:textSize="20sp"/>
+			        android:textSize="18sp"/>
 			
 			</RelativeLayout>
 	
@@ -154,8 +158,8 @@
 			android:layout_height="match_parent"
 			android:headerDividersEnabled="true"
 			android:footerDividersEnabled="true"
-			android:listSelector="@android:color/transparent"
-			android:cacheColorHint="@android:color/transparent"
+			android:listSelector="#00000000"
+			android:cacheColorHint="@android:color/black"
 			android:divider="#76C4C1"
 			android:dividerHeight="1dip"
 			android:scrollbars="none"/>

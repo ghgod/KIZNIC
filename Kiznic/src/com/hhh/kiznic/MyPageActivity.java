@@ -1,13 +1,9 @@
 package com.hhh.kiznic;
 
 
-import com.androidquery.AQuery;
-import com.hhh.kiznic.MyPageNicknameDialog.onNicknameListener;
-import com.hhh.kiznic.SearchcategoryDialog.onSubmitListener;
-
-import android.R.string;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,13 +14,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Shader.TileMode;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,9 +28,22 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.hhh.kiznic.bluetooth.*;
+
 @SuppressLint("ValidFragment")
 public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onNicknameListener, NumberPicker.OnValueChangeListener{
 
+	// Debugging
+	private static final String TAG = "Main";
+				
+	// Intent request code
+	private static final int REQUEST_CONNECT_DEVICE = 1;
+	private static final int REQUEST_ENABLE_BT = 2;	
+	
+	private static BluetoothService btService = null;
+	
+	
 	private static Context context;
 	
 	private static View view;
@@ -75,6 +84,7 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 	// smartwatch
 	
 	private static LinearLayout mypage_smartwatch_layout;
+	private static Button mypage_smartwatch_onoff_button;
 	
 	// alarmset
 	
@@ -98,6 +108,7 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 	public View onCreateView(LayoutInflater inflater, 
 			ViewGroup container, Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.activity_mypage, null);
+		
 		
 		init();
 		
@@ -218,6 +229,35 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 			}
 		});
 		
+		mypage_smartwatch_onoff_button.setOnClickListener(new Button.OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+				
+				if(adapter == null) {
+					Toast.makeText(getActivity().getBaseContext(), "블루투스를 지원하지 않는 기기입니다", Toast.LENGTH_LONG).show();
+				} else {
+					if(adapter.getState() == BluetoothAdapter.STATE_TURNING_ON || adapter.getState() == BluetoothAdapter.STATE_ON)     
+						{
+						Toast.makeText(getActivity().getApplicationContext(), "Bluetooth Off", Toast.LENGTH_LONG).show();
+						adapter.disable();
+						}
+					else
+						{
+						//Toast.makeText(getActivity().getBaseContext(), "블루투스를 On합니다", Toast.LENGTH_LONG).show();	
+							if(btService.getDeviceState()) {
+								// ��������� ���� ������ ����� ��
+								btService.enableBluetooth();
+							}
+						}
+				}		
+			
+			}
+			
+		});
+		
 		/*
 		mypage_nickname_view.setOnClickListener(new View.OnClickListener() {
 			
@@ -309,6 +349,7 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 		mypage_smartwatch_layout = (LinearLayout)view.findViewById(R.id.mypage_smartwatch_layout);
 		
 		mypage_smartwatch_layout.setVisibility(LinearLayout.INVISIBLE);
+		mypage_smartwatch_onoff_button =(Button)view.findViewById(R.id.mypage_smartwatch_onoff_button);
 		
 		mypage_am_alarm_button = (ImageView)view.findViewById(R.id.mypage_am_alarm_button);
 		mypage_pm_alarm_button = (ImageView)view.findViewById(R.id.mypage_pm_alarm_button);
@@ -320,6 +361,10 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 		mypage_smartwatch_button = (ImageView)view.findViewById(R.id.mypage_smartwatch_button);
 		
 		mypage_smartpush_button.setImageResource(R.drawable.mypage_push_image_focus);
+		
+		if(btService == null) {
+			btService = new BluetoothService(getActivity(), mHandler);
+		}
 		
 		// alarm set
 		
@@ -369,4 +414,45 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 		mypage_minutesetting_np.setMinValue(1);
 		mypage_minutesetting_np.setWrapSelectorWheel(true);
 	}
+	
+	private final Handler mHandler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+		}
+		
+	};
+	
+	
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        //Fragment fragment = getFragmentManager().findFragmentById(2);
+        //fragment.onActivityResult(requestCode, resultCode, data);
+		
+        Log.d(TAG, "onActivityResult " + resultCode);
+        
+        switch (requestCode) {
+        
+        /** �߰��� �κ� ���� **/
+        case REQUEST_CONNECT_DEVICE:
+            // When DeviceListActivity returns with a device to connect
+            if (resultCode == Activity.RESULT_OK) {
+            	btService.getDeviceInfo(data);
+            }
+            break;
+        /** �߰��� �κ� �� **/
+        case REQUEST_ENABLE_BT:
+            // When the request to enable Bluetooth returns
+            if (resultCode == Activity.RESULT_OK) {
+            	// Next Step
+            	btService.scanDevice();
+            } else {
+
+                Log.d(TAG, "Bluetooth is not enabled");
+            }
+            break;
+        }
+	}
+	
 }

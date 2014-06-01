@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.hhh.kiznic.R;
 import com.hhh.kiznic.databasemanager.Databasehelper;
+import com.hhh.kiznic.databasemanager.KiznicSharedPreferences;
 import com.hhh.kiznic.dataclass.NextPollutionInfo;
 import com.hhh.kiznic.dataclass.PollutionInfo;
 import com.hhh.kiznic.dataclass.WeatherInfo;
@@ -47,6 +48,8 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 	
 	String[] addressArray;
 	LocationHelper location;
+	
+	KiznicSharedPreferences pref;
 	
 	int flag;
 	
@@ -84,6 +87,8 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 		location.run();
 		addressArray = location.getAddress();
 		mySiDo = location.getMySiDo();
+		
+		pref = new KiznicSharedPreferences(mContext);
 	}
 		
 	@Override
@@ -124,25 +129,55 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 			e.printStackTrace();
 		}
 	
-		Log.d("getFeelTemp", weatherInfo.get(0).getFeelTemp());
-		
-		
+			
 		if(flag == 0) {
-			Log.d("createWeather", "Table 생성");
-			String booleanCreateWeather = dbHelper.createWeather(weatherInfo.get(0), weatherInfo.get(1), pollutionInfo.get(0));
-			Log.d("booleanCreateWeather", booleanCreateWeather);
-		} else {
-			//Log.d("createWeather", "Table 업데이트");
-			dbHelper.updateWeather(weatherInfo.get(0), weatherInfo.get(1), pollutionInfo.get(0));
+			//Log.d("createWeather", "Table 생성");
+			//dbHelper.createWeather(weatherInfo.get(0), weatherInfo.get(1), pollutionInfo.get(0));
+			//Log.d("booleanCreateWeather", booleanCreateWeather);
+			pref.put("today_daystate", weatherInfo.get(0).getDayState());
+			pref.put("today_time", weatherInfo.get(0).getTime());
+			pref.put("today_weatherdesc", weatherInfo.get(0).getWeatherDesc());
+			pref.put("today_temp", weatherInfo.get(0).getTemperature());
+			pref.put("today_feeltemp", weatherInfo.get(0).getFeelTemp());
+			pref.put("today_rainprob", weatherInfo.get(0).getRainProb());
+			pref.put("today_windspeed", weatherInfo.get(0).getWindSpeed());
+			pref.put("today_humidity", weatherInfo.get(0).getHumidity());
+			pref.put("next_daystate", weatherInfo.get(1).getDayState());
+			pref.put("next_time", weatherInfo.get(1).getTime());
+			pref.put("next_temp", weatherInfo.get(1).getTemperature());
+			pref.put("next_weatherdesc", weatherInfo.get(1).getWeatherDesc());
+			pref.put("today_pm10value", pollutionInfo.get(0).getPM10Value());
+					
+		} 
+		//if(flag == 1) {
+		//	Log.d("createWeather", "Table 업데이트");
+			//dbHelper.updateWeather(weatherInfo.get(0), weatherInfo.get(1), pollutionInfo.get(0));
 			//Log.d("booleanUpdateweather", booleanUpdateWeather);
-		}
+	//	}
 		
 		
-		WeatherInfo dbTodayWeatherInfo = dbHelper.getTodayWeatherInfo();
-		WeatherInfo dbNextWeatherInfo = dbHelper.getNextWeatherInfo();
-		PollutionInfo dbTodayPollutionInfo = dbHelper.getPollutionInfo();
-		
-		
+		//WeatherInfo dbTodayWeatherInfo = dbHelper.getTodayWeatherInfo();
+	//	WeatherInfo dbNextWeatherInfo = dbHelper.getNextWeatherInfo();
+		//PollutionInfo dbTodayPollutionInfo = dbHelper.getPollutionInfo();
+		weather_mylocation.setText(location.getMyLocation());
+		weather_today_timedesc.setText(pref.getValue("today_daystate") + " " + pref.getValue("today_time") + ", " + pref.getValue("today_weatherdesc"));
+		weather_today_temp.setText(pref.getValue("today_temp")+"℃");
+		weather_today_rainprob.setText(" " + pref.getValue("today_rainprob")+ " %");
+		weather_today_windspeed.setText(" " + pref.getValue("today_windspeed") + " m/s");
+		weather_today_feeltemp.setText("체감 온도 " + pref.getValue("today_feeltemp")+"℃");
+		weather_next_timedesc.setText(pref.getValue("next_daystate") + " " + pref.getValue("next_time") + ", " + pref.getValue("next_weatherdesc"));
+		weather_next_temp.setText(pref.getValue("next_temp")+"℃");
+		weather_image.setImageBitmap(util.getWeatherImage(mContext, pref.getValue("today_weatherdesc")));
+		weather_next_image.setImageBitmap(util.getWeatherImage(mContext, pref.getValue("next_weatherdesc")));
+		//Log.d("pm10value 왜", pref.getValue("today_pm10value"));
+		weather_today_pm10value.setText("미세먼지 농도 " + pref.getValue("today_pm10value"));
+		if(pref.getValue("today_pm10value").equals("-")) {
+			util.weather_finedust_set(weather_finedust,(int)((1.2 * 10)), false, null);
+		} else {
+			util.weather_finedust_set(weather_finedust,(int)((1.2 * Integer.parseInt(pref.getValue("today_pm10value")))), false, null);
+
+		}		
+		/*
 		weather_mylocation.setText(location.getMyLocation());
 		weather_today_timedesc.setText(dbTodayWeatherInfo.getDayState() + " " + dbTodayWeatherInfo.getTime() + ", " + dbTodayWeatherInfo.getWeatherDesc());
 		weather_today_temp.setText(dbTodayWeatherInfo.getTemperature()+"℃");
@@ -156,7 +191,7 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 		
 		weather_today_pm10value.setText("미세먼지 농도 " + dbTodayPollutionInfo.getPM10Value());
 		util.weather_finedust_set(weather_finedust,(int)((1.2 * Integer.parseInt(dbTodayPollutionInfo.getPM10Value()))), false, null);
-		
+		*/
 	
 		
 		/*

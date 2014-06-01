@@ -69,14 +69,17 @@
     </LinearLayout>
     
     <!-- 카드 리스트  -->
+
     <ListView
-		android:id="@+id/main_list_view"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:headerDividersEnabled="true"
-		android:footerDividersEnabled="true"
-		android:listSelector="@android:color/transparent"
-		android:cacheColorHint="@android:color/transparent"
-		android:divider="@null"
-		android:scrollbars="none" />
+        android:id="@+id/main_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@null"
+        android:footerDividersEnabled="true"
+        android:headerDividersEnabled="true"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none" >
+    </ListView>
+
 </LinearLayout>

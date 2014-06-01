@@ -40,7 +40,7 @@
 				android:id="@+id/search_dialog_list_list"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:background="#F1F2F2"
+				android:background="#000000"
 				android:headerDividersEnabled="true"
 				android:footerDividersEnabled="true"
 				android:listSelector="@android:color/transparent"
