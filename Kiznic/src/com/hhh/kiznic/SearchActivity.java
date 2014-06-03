@@ -70,10 +70,16 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 		
 		clicklistener();
 		
+		set_image();
 		
     	return view;
 	}
 	
+	private void set_image() {
+		search_searchbutton_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.search_button, 200, 200));
+	
+	}
+
 	@Override
 	public void onDestroy(){
 		RecycleUtils.recursiveRecycle(((Activity) context).getWindow().getDecorView());
@@ -104,6 +110,8 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 		search_category2_text = (TextView)view.findViewById(R.id.search_category2_text);
 		search_category3_text = (TextView)view.findViewById(R.id.search_category3_text);
 		search_category4_text = (TextView)view.findViewById(R.id.search_category4_text);
+		
+		search_searchbutton_image = (ImageView)view.findViewById(R.id.search_searchbutton_image);
 	}
 	
 	public void clicklistener(){	

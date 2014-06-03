@@ -58,6 +58,10 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 	private static LinearLayout mypage_profile_layout;
 	
 	private static ImageView mypage_profileamend_button;
+
+	private static ImageView mypage_smallkidimage1_image;
+	private static ImageView mypage_smallkidimage2_image;
+	private static ImageView mypage_smallkidimage3_image;
 	
 	// profile setting
 	
@@ -119,7 +123,22 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 		
 		setNumberpicker();
 		
+		set_image();
+		
     	return view;
+	}
+
+	private void set_image() {
+		mypage_idinput_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_login, 200, 200));
+		mypage_profileamend_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profileamend_image, 200, 200));
+		mypage_profileset_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profileset_image, 200, 200));
+		mypage_smartpush_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_alarm_button_background, 200, 200));
+		mypage_smartwatch_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smartwatch_button_background, 200, 200));
+		mypage_am_alarm_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_alarm_button_background, 200, 200));
+		mypage_pm_alarm_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_alarm_button_background, 200, 200));
+	
+		mypage_smallkidimage2_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profile, 200, 200));
+		mypage_smallkidimage3_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profile, 200, 200));
 	}
 
 	@Override
@@ -303,7 +322,7 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kid);
 		Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
 
-		ImageView profile_image = (ImageView)view.findViewById(R.id.mypage_smallkidimage_image);
+		ImageView profile_image = (ImageView)view.findViewById(R.id.mypage_smallkidimage1_image);
 		
 		BitmapShader shader = new BitmapShader (bitmap,  TileMode.CLAMP, TileMode.CLAMP);
 		
@@ -339,6 +358,10 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 
 		mypage_profileamend_button = (ImageView)view.findViewById(R.id.mypage_profileamend_button);
 		mypage_profileset_button = (ImageView)view.findViewById(R.id.mypage_profileset_button);
+
+		mypage_smallkidimage1_image = (ImageView)view.findViewById(R.id.mypage_smallkidimage1_image);
+		mypage_smallkidimage2_image = (ImageView)view.findViewById(R.id.mypage_smallkidimage2_image);
+		mypage_smallkidimage3_image = (ImageView)view.findViewById(R.id.mypage_smallkidimage3_image);
 		
 		// mypage smartpush, mypage smartwatch
 		

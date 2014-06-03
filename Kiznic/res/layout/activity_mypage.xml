@@ -42,8 +42,7 @@
 	                android:id="@+id/mypage_idinput_image"
 	                android:layout_width="match_parent"
 	                android:layout_height="match_parent"
-	                android:layout_centerInParent="true"
-	                android:src="@drawable/mypage_login"/>
+	                android:layout_centerInParent="true"/>
             
         	</RelativeLayout>
             
@@ -103,8 +102,7 @@
 		                        android:layout_height="30dip"
 		                        android:layout_alignParentBottom="true"
 		                        android:layout_alignParentRight="true"
-		                        android:layout_marginBottom="2dip"
-		                        android:src="@drawable/mypage_profileamend_image"/>
+		                        android:layout_marginBottom="2dip"/>
 		                    
 		                </RelativeLayout>
 	                
@@ -169,8 +167,7 @@
 	                        android:layout_height="30dip"
 	                        android:layout_alignParentBottom="true"
 	                        android:layout_alignParentRight="true"
-	                        android:layout_marginBottom="2dip"
-	                        android:src="@drawable/mypage_profileset_image"/>
+	                        android:layout_marginBottom="2dip"/>
 	                    
 	                </RelativeLayout>
 	                
@@ -267,7 +264,7 @@
                 android:layout_weight="1">
                 
                 <ImageView
-                    android:id="@+id/mypage_smallkidimage_image"
+                    android:id="@+id/mypage_smallkidimage1_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dip"/>
@@ -280,6 +277,7 @@
                 android:layout_weight="1">
                 
                 <ImageView
+                    android:id="@+id/mypage_smallkidimage2_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dip"/>
@@ -292,6 +290,7 @@
                 android:layout_weight="1">
                 
                 <ImageView
+                    android:id="@+id/mypage_smallkidimage3_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dip"/>
@@ -462,8 +461,7 @@
 		                        android:layout_width="match_parent"
 		                        android:layout_height="match_parent"
 		                        android:padding="3dip"
-		                        android:clickable="true"
-		                        android:src="@drawable/mypage_alarm_button_background"/>
+		                        android:clickable="true"/>
 	                    
 	             	   </LinearLayout>
 	                
@@ -552,8 +550,7 @@
 		                        android:layout_width="match_parent"
 		                        android:layout_height="match_parent"
 		                        android:padding="3dip"
-		                        android:clickable="true"
-		                        android:src="@drawable/mypage_alarm_button_background"/>
+		                        android:clickable="true"/>
 		                    
 		                </LinearLayout>
 		                
