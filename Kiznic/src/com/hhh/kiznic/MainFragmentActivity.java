@@ -85,6 +85,8 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 		}
 		
 		actionBar.getTabAt(0).setCustomView(R.layout.kiznic_title_home_tab);
+		//actionBar.getTabAt(0).getCustomView().findViewbyId(R.id....);
+		
 		actionBar.getTabAt(1).setCustomView(R.layout.kiznic_title_search_tab);
 		actionBar.getTabAt(2).setCustomView(R.layout.kiznic_title_mypage_tab);
 		actionBar.getTabAt(3).setCustomView(R.layout.kiznic_title_mypage_tab);

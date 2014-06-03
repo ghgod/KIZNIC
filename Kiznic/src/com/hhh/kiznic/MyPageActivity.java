@@ -13,6 +13,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Shader.TileMode;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,18 +24,52 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.hhh.kiznic.bluetooth.*;
 
-@SuppressLint("ValidFragment")
+@SuppressLint({ "ValidFragment", "NewApi" })
 public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onNicknameListener, NumberPicker.OnValueChangeListener{
 
+	class profileInfo{
+		private String name;
+		private String sex;
+		private String birth;
+		
+		public profileInfo(String name, String sex, String birth){
+			this.name = name;
+			this.sex = sex;
+			this.birth = birth;
+		}
+
+		public String getname(){return name;}
+		public String getsex(){return sex;}
+		public String getbirth(){return birth;}
+		
+		public void setname(String name){
+			this.name = name;
+		}
+		
+		public void setsex(String sex){
+			this.sex = sex;
+		}
+		
+		public void setbirth(String birth){
+			this.birth = birth;
+		}
+	}
+
+	private static TextView profile_name;
+	private static TextView profile_sex;
+	private static TextView profile_birth;
+	
 	// Debugging
 	private static final String TAG = "Main";
 				
@@ -58,12 +94,21 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 	private static LinearLayout mypage_profile_layout;
 	
 	private static ImageView mypage_profileamend_button;
+
+	private static ImageView mypage_smallkidimage1_image;
+	private static ImageView mypage_smallkidimage2_image;
+	private static ImageView mypage_smallkidimage3_image;
 	
 	// profile setting
 	
 	private static LinearLayout mypage_profilesetting_layout;
 	
 	private static ImageView mypage_profileset_button; 
+	
+	private static EditText mypage_profilename_edittext;
+	private static EditText mypage_profilebirth_edittext;
+	
+	private static RadioGroup profile_kidsex_radiogroup;
 	
 	// setting 
 	
@@ -85,6 +130,7 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 	
 	private static LinearLayout mypage_smartwatch_layout;
 	private static Button mypage_smartwatch_onoff_button;
+	private static ImageView smartwatch_wearning_image;
 	
 	// alarmset
 	
@@ -98,7 +144,14 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 	private static TextView mypage_amalarm_text;
 	private static TextView mypage_pmalarm_text;
 	
-	//private TextView mypage_nickname_text;
+	private static boolean mypage_alarm_flag;
+
+	private static TextView am_alarm_hour_text;
+	private static TextView am_alarm_minute_text;
+	private static TextView pm_alarm_hour_text;
+	private static TextView pm_alarm_minute_text;
+	// 
+	profileInfo profile_info;
 	
 	public MyPageActivity(Context context) {
 		context = context;
@@ -119,7 +172,24 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 		
 		setNumberpicker();
 		
+		set_image();
+		
     	return view;
+	}
+
+	private void set_image() {
+		mypage_idinput_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_login, 200, 200));
+		mypage_profileamend_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profileamend_image, 200, 200));
+		mypage_profileset_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profileset_image, 200, 200));
+		mypage_smartpush_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_push_image_focus, 200, 200));
+		mypage_smartwatch_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smartwatch_image_up, 200, 200));
+		mypage_am_alarm_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_pushalarm_image_up, 200, 200));
+		mypage_pm_alarm_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_pushalarm_image_up, 200, 200));
+	
+		mypage_smallkidimage2_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profile, 200, 200));
+		mypage_smallkidimage3_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profile, 200, 200));
+	
+		smartwatch_wearning_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_waerning_image, 200, 200));
 	}
 
 	@Override
@@ -155,6 +225,22 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 			public void onClick(View v) {
 				mypage_profilesetting_layout.setVisibility(LinearLayout.INVISIBLE);
 				mypage_profile_layout.setVisibility(LinearLayout.VISIBLE);
+				
+				profile_info.name = mypage_profilename_edittext.getText().toString();
+				profile_info.birth = mypage_profilebirth_edittext.getText().toString();
+				
+				profile_input();
+			}
+		});
+		
+		profile_kidsex_radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				if(checkedId == 0)
+					profile_info.sex = "남아";
+				else
+					profile_info.sex = "여아";
 			}
 		});
 		
@@ -191,6 +277,10 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 			public void onClick(View v) {
 				mypage_smartalarm_layout.setVisibility(LinearLayout.VISIBLE);
 				mypage_smartwatch_layout.setVisibility(LinearLayout.INVISIBLE);
+				
+
+				mypage_smartpush_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_push_image_focus, 200, 200));
+				mypage_smartwatch_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smartwatch_image_up, 200, 200));
 			}
 		});
 		
@@ -199,6 +289,10 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 			public void onClick(View v) {
 				mypage_smartalarm_layout.setVisibility(LinearLayout.INVISIBLE);
 				mypage_smartwatch_layout.setVisibility(LinearLayout.VISIBLE);
+				
+
+				mypage_smartpush_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_push_image_up, 200, 200));
+				mypage_smartwatch_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smartwatch_image_focus, 200, 200));
 			}
 		});
 		
@@ -209,6 +303,8 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 				
 				mypage_amalarm_text.setTextColor(Color.parseColor("#FFFF00"));
 				mypage_pmalarm_text.setTextColor(Color.parseColor("#FFFFFF"));
+				
+				mypage_alarm_flag = false;
 			}
 		});
 		
@@ -219,6 +315,8 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 
 				mypage_amalarm_text.setTextColor(Color.parseColor("#FFFFFF"));
 				mypage_pmalarm_text.setTextColor(Color.parseColor("#FFFF00"));
+				
+				mypage_alarm_flag = true;
 			}
 		});
 		
@@ -226,6 +324,14 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 			@Override
 			public void onClick(View v){
 				mypage_alarmset_layout.setVisibility(LinearLayout.INVISIBLE);
+				if(!mypage_alarm_flag){
+					am_alarm_hour_text.setText(String.valueOf(mypage_hoursetting_np.getValue()));
+					am_alarm_minute_text.setText(String.valueOf(mypage_minutesetting_np.getValue()));
+				}
+				else{
+					pm_alarm_hour_text.setText(String.valueOf(mypage_hoursetting_np.getValue()));
+					pm_alarm_minute_text.setText(String.valueOf(mypage_minutesetting_np.getValue()));
+				}
 			}
 		});
 		
@@ -303,7 +409,7 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kid);
 		Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
 
-		ImageView profile_image = (ImageView)view.findViewById(R.id.mypage_smallkidimage_image);
+		ImageView profile_image = (ImageView)view.findViewById(R.id.mypage_smallkidimage1_image);
 		
 		BitmapShader shader = new BitmapShader (bitmap,  TileMode.CLAMP, TileMode.CLAMP);
 		
@@ -326,7 +432,21 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 		profile_image.setImageBitmap(circleBitmap);
 	}
 	
+	private void profile_input(){
+		profile_name.setText(profile_info.name);
+		profile_sex.setText(profile_info.sex);
+		profile_birth.setText(profile_info.birth);
+	}
+	
 	public void init() {
+		
+		profile_info = new profileInfo("철수", "남자", "05.10.11");
+
+		profile_name = (TextView)view.findViewById(R.id.profile_name);
+		profile_sex = (TextView)view.findViewById(R.id.profile_sex);
+		profile_birth = (TextView)view.findViewById(R.id.profile_birth);
+		
+		profile_input();
 		
 		mypage_idinput_image = (ImageView)view.findViewById(R.id.mypage_idinput_image);
 		
@@ -339,6 +459,15 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 
 		mypage_profileamend_button = (ImageView)view.findViewById(R.id.mypage_profileamend_button);
 		mypage_profileset_button = (ImageView)view.findViewById(R.id.mypage_profileset_button);
+
+		mypage_smallkidimage1_image = (ImageView)view.findViewById(R.id.mypage_smallkidimage1_image);
+		mypage_smallkidimage2_image = (ImageView)view.findViewById(R.id.mypage_smallkidimage2_image);
+		mypage_smallkidimage3_image = (ImageView)view.findViewById(R.id.mypage_smallkidimage3_image);
+		
+		mypage_profilename_edittext = (EditText)view.findViewById(R.id.mypage_profilename_edittext);
+		mypage_profilebirth_edittext = (EditText)view.findViewById(R.id.mypage_profilebirth_edittext);
+		
+		profile_kidsex_radiogroup = (RadioGroup)view.findViewById(R.id.profile_kidsex_radiogroup);
 		
 		// mypage smartpush, mypage smartwatch
 		
@@ -379,11 +508,16 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 
 		mypage_amalarm_text = (TextView)view.findViewById(R.id.mypage_amalarm_text);
 		mypage_pmalarm_text = (TextView)view.findViewById(R.id.mypage_pmalarm_text);
+
+		am_alarm_hour_text = (TextView)view.findViewById(R.id.am_alarm_hour_text);
+		am_alarm_minute_text = (TextView)view.findViewById(R.id.am_alarm_minute_text);
+		pm_alarm_hour_text = (TextView)view.findViewById(R.id.pm_alarm_hour_text);
+		pm_alarm_minute_text = (TextView)view.findViewById(R.id.pm_alarm_minute_text);
 		
 		//mypage_nickname_view = (View)view.findViewById(R.id.mypage_nickname_view);
 		//mypage_nickname_text = (TextView)view.findViewById(R.id.mypage_nickname_text);
 
-		
+		smartwatch_wearning_image = (ImageView)view.findViewById(R.id.smartwatch_wearning_image);
 	}
 	
 	@Override
@@ -398,6 +532,7 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 	}
 
 	public void setNumberpicker(){
+		
 		View hour_upbutton = mypage_hoursetting_np.getChildAt(0);
 		View hour_text = mypage_hoursetting_np.getChildAt(1);
 		View hour_downbutton = mypage_hoursetting_np.getChildAt(2);
@@ -413,6 +548,15 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 		mypage_minutesetting_np.setMaxValue(60);
 		mypage_minutesetting_np.setMinValue(1);
 		mypage_minutesetting_np.setWrapSelectorWheel(true);
+		
+		//Drawable alarmup_image = new BitmapDrawable(getActivity().getResources(), ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_alarmset_up_image, 200, 200));
+		//Drawable alarmdown_image = new BitmapDrawable(getActivity().getResources(), ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_alarmset_down_image, 200, 200));
+		
+		//hour_upbutton.setBackground(alarmup_image);
+		//hour_downbutton.setBackground(alarmdown_image);
+		
+		//minute_upbutton.setBackground(alarmup_image);
+		//minute_downView.setBackground(alarmdown_image);
 	}
 	
 	private final Handler mHandler = new Handler() {
@@ -423,7 +567,6 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 		}
 		
 	};
-	
 	
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //super.onActivityResult(requestCode, resultCode, data);
