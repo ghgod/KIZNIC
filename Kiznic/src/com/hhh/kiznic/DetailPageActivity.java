@@ -109,10 +109,21 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 	  setNMap(Double.parseDouble(pref.getString("latitude",  dftValue)), Double.parseDouble(pref.getString("longitude",  dftValue)), pref.getString("placeName", dftValue));
 	    
 	   clicklistener();
+	   
+	   set_image();
 	}
 
 	
 	
+	private void set_image() {
+		detail_phone_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getResources(), R.drawable.detail_phone_up, 200, 200));
+		detail_link_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getResources(), R.drawable.detail_link_up, 200, 200));
+		detail_bookmark_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getResources(), R.drawable.detail_bookmark_up, 200, 200));
+		detail_sharing_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getResources(), R.drawable.detail_share_up, 200, 200));
+	}
+
+
+
 	@Override
 	public void onDestroy(){
 		RecycleUtils.recursiveRecycle(getWindow().getDecorView());

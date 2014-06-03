@@ -87,12 +87,12 @@
 			                android:orientation="horizontal">
 			                
 		                    <TextView
+		                        android:id="@+id/profile_name"
 		                        android:layout_width="wrap_content"
 		                        android:layout_height="wrap_content"
 		                        android:layout_gravity="bottom"
 		                        android:layout_alignParentBottom="true"
 		                        android:layout_marginBottom="2dip"
-		                        android:text="누구지"
 		                        android:textColor="#ACACAC"
 		                        android:textSize="18sp"/>
 		                    
@@ -112,6 +112,7 @@
 			                android:background="@drawable/carditem_background">
 		                    
 		                    <TextView
+		                        android:id="@+id/profile_sex"
 		                        android:layout_width="wrap_content"
 		                        android:layout_height="wrap_content"
 		                        android:layout_gravity="center_vertical"
@@ -125,6 +126,7 @@
 			                android:layout_height="35dip">
 		                    
 		                    <TextView
+		                        android:id="@+id/profile_birth"
 		                        android:layout_width="wrap_content"
 		                        android:layout_height="wrap_content"
 		                        android:text="11.09.21(만 36개월)"
@@ -411,6 +413,7 @@
 		                        android:gravity="center">
 	                        
 		                        <TextView
+		                            android:id="@+id/am_alarm_hour_text"
 		                            android:layout_width="wrap_content"
 		                            android:layout_height="wrap_content"
 		                            android:text="9"
@@ -439,6 +442,7 @@
 		                        android:gravity="center">
 		                        
 		                        <TextView
+		                            android:id="@+id/am_alarm_minute_text"
 		                            android:layout_width="wrap_content"
 		                            android:layout_height="wrap_content"
 		                            android:text="20"
@@ -500,6 +504,7 @@
 		                        android:gravity="center">
 		                        
 		                        <TextView
+		                            android:id="@+id/pm_alarm_hour_text"
 		                            android:layout_width="wrap_content"
 		                            android:layout_height="wrap_content"
 		                            android:text="9"
@@ -528,6 +533,7 @@
 		                        android:gravity="center">
 		                        
 		                        <TextView
+		                            android:id="@+id/pm_alarm_minute_text"
 		                            android:layout_width="wrap_content"
 		                            android:layout_height="wrap_content"
 		                            android:text="20"
@@ -614,7 +620,8 @@
 	                        <NumberPicker
 	                            android:id="@+id/mypage_hoursetting_np"
 						        android:layout_width="wrap_content" 
-						        android:layout_height="wrap_content"/>
+						        android:layout_height="wrap_content"
+						        android:divider="@null"/>
 	                        
 	                    </LinearLayout>
 	                    
@@ -716,18 +723,17 @@
 					            android:textSize="14sp"/>
 			                
 			                <ImageView 
-			                    android:id="@+id/smartwatch_image1"
+			                    android:id="@+id/smartwatch_wearning_image"
 					            android:layout_width="15dip"
 			                    android:layout_height="15dip"
 			                    android:layout_marginLeft="5dip"
-			                    android:layout_toRightOf="@id/smartwatch_text1"
-			                    android:src="@drawable/weather_cloudy_image_sky"/>
+			                    android:layout_toRightOf="@id/smartwatch_text1"/>
 			                
 			                <TextView
 					            android:layout_width="wrap_content"
 					            android:layout_height="wrap_content"
 								android:layout_marginLeft="5dip"
-								android:layout_toRightOf="@id/smartwatch_image1"
+								android:layout_toRightOf="@id/smartwatch_wearning_image"
 					            android:text="'가 생성됩니다."
 					            android:textColor="#000000"
 					            android:textSize="14sp"/>
