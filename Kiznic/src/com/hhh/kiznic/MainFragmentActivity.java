@@ -27,13 +27,13 @@ import android.widget.TextView;
 public class MainFragmentActivity extends FragmentActivity implements ActionBar.TabListener{
 
 	// Debugging
-			private static final String TAG = "Main";
+	private static final String TAG = "Main";
 			
-			// Intent request code
-			private static final int REQUEST_CONNECT_DEVICE = 1;
-			private static final int REQUEST_ENABLE_BT = 2;
+	// Intent request code
+	private static final int REQUEST_CONNECT_DEVICE = 1;
+	private static final int REQUEST_ENABLE_BT = 2;
 			
-			Context mContext;
+	Context mContext;
 	
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -87,6 +87,7 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 		actionBar.getTabAt(0).setCustomView(R.layout.kiznic_title_home_tab);
 		actionBar.getTabAt(1).setCustomView(R.layout.kiznic_title_search_tab);
 		actionBar.getTabAt(2).setCustomView(R.layout.kiznic_title_mypage_tab);
+		actionBar.getTabAt(3).setCustomView(R.layout.kiznic_title_mypage_tab);
 	}
 
 	@Override
@@ -143,7 +144,10 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 			case 1:
 				return new SearchActivity(mContext);
 			case 2:
+				return new OneStopActivity(mContext);
+			case 3:
 				return new MyPageActivity(mContext);
+				
 			}
 			return null;
 		}
@@ -151,7 +155,7 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
-			return 3;
+			return 4;
 		}
 		
 		@SuppressLint("DefaultLocale")
@@ -165,6 +169,8 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 				return "b";
 			case 2:
 				return "c";
+			case 3:
+				return "d";
 			}
 			
 			return null;
@@ -172,10 +178,13 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 	}
 	
 	@Override
+	public void onDestroy() {
+		super.onDestroy();
+	}
+	
+	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
-        //Fragment fragment = getFragmentManager().findFragmentById(2);
-        //fragment.onActivityResult(requestCode, resultCode, data);
+   
 		
         Log.d(TAG, "onActivityResult " + resultCode);
         

@@ -30,7 +30,7 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 	TextView weather_today_temp;
 	TextView weather_today_rainprob;
 	TextView weather_today_windspeed;
-	TextView weather_today_feeltemp;
+	TextView weather_today_humidity;
 	TextView weather_next_timedesc;
 	TextView weather_next_temp;
 	ImageView weather_image;
@@ -55,7 +55,7 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 	
 	public GetWeatherAsync(Context mContext, int flag, Databasehelper dbHelper, TextView weather_mylocation, TextView weather_today_timedesc,  
 			TextView weather_today_temp, TextView weather_today_rainprob, TextView weather_today_windspeed,
-			TextView weather_today_feeltemp, TextView weather_next_timedesc, TextView weather_next_temp,
+			TextView weather_today_humidity, TextView weather_next_timedesc, TextView weather_next_temp,
 			ImageView weather_image,ImageView weather_next_image, ImageView weather_finedust, TextView weather_today_pm10value
 			) 
 	{
@@ -67,7 +67,7 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 		this.weather_today_temp = weather_today_temp;
 		this.weather_today_rainprob = weather_today_rainprob;
 		this.weather_today_windspeed = weather_today_windspeed;
-		this.weather_today_feeltemp = weather_today_feeltemp;
+		this.weather_today_humidity = weather_today_humidity;
 		this.weather_next_timedesc = weather_next_timedesc;
 		this.weather_next_temp = weather_next_temp;
 		this.weather_image = weather_image;
@@ -105,12 +105,11 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 		}
 		String weatherXML = util.getXMLHttp(url);
 		String pollutionXML = util.getXMLHttp("http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?sidoName="+mySiDo+"&pageNo=1&numOfRows=10&ServiceKey="+mContext.getResources().getString(R.string.openApiKey));
-		
-		Log.d("util.yesterdayDate()", util.yesterdayDate());
-		
+			
 		result[0] = weatherXML;
 		result[1] = pollutionXML;
-		//Log.d("Weather", xmlResult);
+		
+		Log.d("Weather", result[0]);
 		return result;
 	}
 	
@@ -128,7 +127,8 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+		
+		Log.d("today_humidity", weatherInfo.get(0).getHumidity());
 			
 		if(flag == 0) {
 			//Log.d("createWeather", "Table 생성");
@@ -164,7 +164,8 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 		weather_today_temp.setText(pref.getValue("today_temp")+"℃");
 		weather_today_rainprob.setText(" " + pref.getValue("today_rainprob")+ " %");
 		weather_today_windspeed.setText(" " + pref.getValue("today_windspeed") + " m/s");
-		weather_today_feeltemp.setText("체감 온도 " + pref.getValue("today_feeltemp")+"℃");
+		weather_today_humidity.setText(pref.getValue("today_humidity")+"%");
+		
 		weather_next_timedesc.setText(pref.getValue("next_daystate") + " " + pref.getValue("next_time") + ", " + pref.getValue("next_weatherdesc"));
 		weather_next_temp.setText(pref.getValue("next_temp")+"℃");
 		weather_image.setImageBitmap(util.getWeatherImage(mContext, pref.getValue("today_weatherdesc")));

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="접수 제목" />
+
+    <EditText
+        android:id="@+id/sendemail_subject_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="놀이기구가 불편해요~"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="접수 내용" />
+
+    <EditText
+        android:id="@+id/sendemail_contents_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint ="불편한 사항이나 개선 요구사항을 입력해주세요~"
+        android:ems="10"
+        android:inputType="textMultiLine" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/sendemail_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="보내기"
+        />
+
+</LinearLayout>

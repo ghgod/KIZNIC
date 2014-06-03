@@ -237,16 +237,16 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 				BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
 				
 				if(adapter == null) {
-					Toast.makeText(getActivity().getBaseContext(), "블루투스를 지원하지 않는 기기입니다", Toast.LENGTH_LONG).show();
+					Toast.makeText(getActivity().getApplicationContext(), "블루투스를 지원하지 않는 기기입니다", Toast.LENGTH_LONG).show();
 				} else {
 					if(adapter.getState() == BluetoothAdapter.STATE_TURNING_ON || adapter.getState() == BluetoothAdapter.STATE_ON)     
 						{
-						Toast.makeText(getActivity().getApplicationContext(), "Bluetooth Off", Toast.LENGTH_LONG).show();
+						Toast.makeText(getActivity().getApplicationContext(), "블루투스를 Off니다", Toast.LENGTH_LONG).show();
 						adapter.disable();
 						}
 					else
 						{
-						//Toast.makeText(getActivity().getBaseContext(), "블루투스를 On합니다", Toast.LENGTH_LONG).show();	
+						Toast.makeText(getActivity().getApplicationContext(), "블루투스를 On합니다", Toast.LENGTH_LONG).show();	
 							if(btService.getDeviceState()) {
 								// ��������� ���� ������ ����� ��
 								btService.enableBluetooth();

@@ -3,6 +3,7 @@ package com.hhh.kiznic;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -52,6 +54,7 @@ public class MainActivity extends Fragment {
 	private static TextView weather_next_temp;
 	private static TextView weather_today_pm10value;
 	private static TextView weather_today_feeltemp;
+	private TextView weather_today_humidity;
 	
 	private static ImageView weather_refresh_button;
 	private static ImageView weather_image;
@@ -68,6 +71,7 @@ public class MainActivity extends Fragment {
 	AQuery aq;
 	
 	//////////////////////////////////////////////
+	//////////////
 	
 	public MainActivity(Context context){
 		this.context = context;
@@ -81,7 +85,11 @@ public class MainActivity extends Fragment {
 		//KiznicTitle a = new KiznicTitle(this);
 		dbHelper = new Databasehelper(getActivity().getBaseContext());
 		
+		
+		
 		init();
+		
+	
 		
 		clicklistener();
 		
@@ -109,10 +117,8 @@ public class MainActivity extends Fragment {
 		mainListView = (ListView)view.findViewById(R.id.main_list_view);
 		cardAdapter = new CardAdapter(getActivity().getApplicationContext());
 		
-	//	for(int i=0;i<4;i++){
-	//		recommendCardAdapter[i] = new CardAdapter(getActivity().getApplicationContext());
-	//	}
 		
+	
 		listsetting();
 		
 		weather_mylocation = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_location_text);
@@ -121,6 +127,7 @@ public class MainActivity extends Fragment {
 		weather_today_rainprob = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_rainfallpercent_text);
 		weather_today_windspeed = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_windspeedpercent_text);
 		weather_today_feeltemp = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_windcilltemperature_text);
+		weather_today_humidity = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_humidity_text);
 		weather_today_pm10value = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_finedusttext_text);
 		weather_next_timedesc = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextdaysimpleinfo_text);
 		weather_next_temp = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nexttemperature_text);
@@ -148,7 +155,7 @@ public class MainActivity extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				new GetWeatherAsync(getActivity().getBaseContext(),0, dbHelper, weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, weather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image, weather_finedust, weather_today_pm10value).execute("");				
+				new GetWeatherAsync(getActivity().getBaseContext(),0, dbHelper, weather_mylocation, weather_today_timedesc, weather_today_humidity, weather_today_rainprob, weather_today_windspeed, weather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image, weather_finedust, weather_today_pm10value).execute("");				
 			}
 		});
 

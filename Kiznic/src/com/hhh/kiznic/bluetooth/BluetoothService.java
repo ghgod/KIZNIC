@@ -65,7 +65,7 @@ public class BluetoothService {
 	public BluetoothService(Activity ac, Handler h) {
 		mActivity = ac;
 		mHandler = h;
-		mContext = ac.getBaseContext();
+		mContext = ac.getApplicationContext();
 		// BluetoothAdapter ���
 		btAdapter = BluetoothAdapter.getDefaultAdapter();
 		mHandler = new SendMassgeHandler();

@@ -35,6 +35,8 @@
             android:theme="@android:style/Theme.NoTitleBar"></activity>
         <activity android:name="SearchcategoryDialog"
             android:screenOrientation="portrait"></activity>
+         <activity android:name="SendEmailActivity"
+            android:screenOrientation="portrait"></activity>
         <activity android:name="com.hhh.kiznic.bluetooth.DeviceListActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.DeviceDefault.Dialog"

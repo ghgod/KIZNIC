@@ -504,7 +504,6 @@ public static String transformRegionName(String region1) {
 		String rainProb = "";
 		String windSpeed = "";
 		String temp = "";
-		String feelTemp = "";
 		String humidity = "";
 					
 		try {

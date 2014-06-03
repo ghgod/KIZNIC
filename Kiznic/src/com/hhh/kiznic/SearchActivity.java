@@ -76,7 +76,7 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 	
 	@Override
 	public void onDestroy(){
-		RecycleUtils.recursiveRecycle(((Activity) context).getWindow().getDecorView());
+		RecycleUtils.recursiveRecycle(getActivity().getWindow().getDecorView());
 		System.gc();
 		
 		super.onDestroy();
@@ -170,7 +170,7 @@ private void showListDialog(int dialog_num, String dialog_title){
 			search_category2_text.setText(arg);
 			break;
 		case 2:
-			search_category2_text.setText(arg);
+			search_category3_text.setText(arg);
 			break;
 		case 3:
 			search_category4_text.setText(arg);

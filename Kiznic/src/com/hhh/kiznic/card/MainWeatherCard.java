@@ -21,6 +21,7 @@ public class MainWeatherCard extends Card implements View.OnClickListener{
 	TextView weather_finedusttext_text;
 	TextView weather_rainfallpercent_text;
 	TextView weather_windspeedpercent_text;
+	TextView weather_humidity_text;
 	TextView weather_nextdaysimpleinfo_text;
 	TextView weather_nexttemperature_text;
 	ImageView weather_getlocation_imagebutton;
@@ -37,7 +38,7 @@ public class MainWeatherCard extends Card implements View.OnClickListener{
 		
 		init();
 		
-		new GetWeatherAsync(context, 0, dbHelper,  weather_location_text, weather_simpleinfo_text, weather_temperature_text, weather_rainfallpercent_text, weather_windspeedpercent_text, weather_windcilltemperature_text, weather_nextdaysimpleinfo_text, weather_nexttemperature_text,  weather_weatherimage_image, weather_nextweatherimage_image, weather_finedustimage_image, weather_finedusttext_text ).execute("");
+		new GetWeatherAsync(context, 0, dbHelper,  weather_location_text, weather_simpleinfo_text, weather_temperature_text, weather_rainfallpercent_text, weather_windspeedpercent_text, weather_humidity_text, weather_nextdaysimpleinfo_text, weather_nexttemperature_text,  weather_weatherimage_image, weather_nextweatherimage_image, weather_finedustimage_image, weather_finedusttext_text ).execute("");
 
 		
 		setListener();
@@ -51,6 +52,7 @@ public class MainWeatherCard extends Card implements View.OnClickListener{
 		weather_finedusttext_text = (TextView)cardView.findViewById(R.id.weather_finedusttext_text);
 		weather_rainfallpercent_text = (TextView)cardView.findViewById(R.id.weather_rainfallpercent_text);
 		weather_windspeedpercent_text = (TextView)cardView.findViewById(R.id.weather_windspeedpercent_text);
+		weather_humidity_text = (TextView)cardView.findViewById(R.id.weather_humidity_text);
 		weather_nextdaysimpleinfo_text = (TextView)cardView.findViewById(R.id.weather_nextdaysimpleinfo_text);
 		weather_nexttemperature_text = (TextView)cardView.findViewById(R.id.weather_nexttemperature_text);
 		weather_getlocation_imagebutton = (ImageView)cardView.findViewById(R.id.weather_getlocation_imagebutton);
