@@ -33,7 +33,12 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 	private static final int REQUEST_CONNECT_DEVICE = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
 	private static final int REQUEST_IMAGE_ALBUM = 3;
-			
+
+	private static MainActivity main;
+	private static SearchActivity search;
+	private static OneStopActivity onestop;
+	private static MyPageActivity mypage;
+	
 	Context mContext;
 	
 	SectionsPagerAdapter mSectionsPagerAdapter;
@@ -48,6 +53,11 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 		//getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.kiznic_title_bar);
 		
 		//startActivity(new Intent(this, SplashActivity.class));
+		
+		main = new MainActivity(mContext);
+		search = new SearchActivity(mContext);
+		onestop = new OneStopActivity(mContext);
+		mypage = new MyPageActivity(mContext);
 		
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -94,7 +104,7 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 		actionBar.getTabAt(2).setCustomView(R.layout.kiznic_title_safe_tab);
 		actionBar.getTabAt(3).setCustomView(R.layout.kiznic_title_mypage_tab);
 	}
-
+	
 	@Override
 	public void onTabSelected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
@@ -145,13 +155,13 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 		public Fragment getItem(int position) {
 			switch(position) {
 			case 0:
-				return new MainActivity(mContext);
+				return main;
 			case 1:
-				return new SearchActivity(mContext);
+				return search;
 			case 2:
-				return new OneStopActivity(mContext);
+				return onestop;
 			case 3:
-				return new MyPageActivity(mContext);
+				return mypage;
 				
 			}
 			return null;
@@ -201,7 +211,7 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
             // When DeviceListActivity returns with a device to connect
             if (resultCode == Activity.RESULT_OK) {
             	//btService.getDeviceInfo(data);
-            	new MyPageActivity(mContext).onActivityResult(requestCode, resultCode, data);
+            	new MyPageActivity(mContext).onActivityResult(requestCode, resultCode, data, null);
             }
             break;
         /** �߰��� �κ� �� **/
@@ -210,7 +220,7 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
             if (resultCode == Activity.RESULT_OK) {
             	// Next Step
             	//btService.scanDevice();
-            	new MyPageActivity(mContext).onActivityResult(requestCode, resultCode, data);
+            	new MyPageActivity(mContext).onActivityResult(requestCode, resultCode, data, null);
             } else {
 
                 Log.d(TAG, "Bluetooth is not enabled");
@@ -218,7 +228,8 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
             break;
         case REQUEST_IMAGE_ALBUM:
         	if (resultCode == Activity.RESULT_OK) {
-        		new MyPageActivity(mContext).onActivityResult(requestCode, resultCode, data);
+        		localDataAdmin ld = new localDataAdmin(getBaseContext());
+        		new MyPageActivity(mContext).onActivityResult(requestCode, resultCode, data, ld.getprofile());
         	}
         }
 	}
