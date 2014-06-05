@@ -3,8 +3,6 @@ package com.hhh.kiznic.card;
 import com.hhh.kiznic.MainFragmentActivity;
 import com.hhh.kiznic.R;
 import com.hhh.kiznic.SearchActivity;
-import com.hhh.kiznic.MyPageNicknameDialog.onNicknameListener;
-
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;

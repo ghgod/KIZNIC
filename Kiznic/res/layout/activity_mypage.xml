@@ -55,20 +55,41 @@
 	            android:layout_weight="10"
 	            android:orientation="horizontal">
 	
-	            <LinearLayout
-	                android:layout_width="0dip"
+        	    <FrameLayout
+        	        android:layout_width="0dip"
 	                android:layout_height="match_parent"
-	                android:layout_weight="13" >
-		            
-	                <ImageView 
-		                android:id="@+id/mypage_kidimage_image"
+	                android:layout_weight="13">
+        	        
+        	        <LinearLayout
+        	            android:id="@+id/mypage_kidimage_view"
 		                android:layout_width="match_parent"
-		                android:layout_height="match_parent"
-		                android:layout_gravity="center"
-		                android:padding="5dip"/>
+		                android:layout_height="match_parent">
+		            
+		                <ImageView 
+			                android:id="@+id/mypage_kidimage_image"
+			                android:layout_width="match_parent"
+			                android:layout_height="match_parent"
+			                android:layout_gravity="center"
+			                android:padding="5dip"/>
 	                
-	            </LinearLayout>
-            
+	            	</LinearLayout>
+	            
+        	        <LinearLayout
+        	            android:id="@+id/mypage_kidimageset_view"
+		                android:layout_width="match_parent"
+		                android:layout_height="match_parent">
+		            
+		                <ImageView 
+			                android:id="@+id/mypage_kidimageset_image"
+			                android:layout_width="match_parent"
+			                android:layout_height="match_parent"
+			                android:layout_gravity="center"
+			                android:padding="5dip"/>
+	                
+	            	</LinearLayout>
+        	        
+        	    </FrameLayout>
+        	    
 	            <FrameLayout
 	                android:layout_width="0dip"
 	                android:layout_height="match_parent"

@@ -32,6 +32,7 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 	// Intent request code
 	private static final int REQUEST_CONNECT_DEVICE = 1;
 	private static final int REQUEST_ENABLE_BT = 2;
+	private static final int REQUEST_IMAGE_ALBUM = 3;
 			
 	Context mContext;
 	
@@ -187,8 +188,7 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
    
-		
-        Log.d(TAG, "onActivityResult " + resultCode);
+        Log.d(TAG, "onActivityResult " + requestCode);
         
         switch (requestCode) {
         
@@ -212,6 +212,10 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
                 Log.d(TAG, "Bluetooth is not enabled");
             }
             break;
+        case REQUEST_IMAGE_ALBUM:
+        	if (resultCode == Activity.RESULT_OK) {
+        		new MyPageActivity(mContext).onActivityResult(requestCode, resultCode, data);
+        	}
         }
 	}
 }
