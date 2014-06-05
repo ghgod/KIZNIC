@@ -44,34 +44,6 @@ import com.hhh.kiznic.bluetooth.*;
 @SuppressLint({ "ValidFragment", "NewApi" })
 public class MyPageActivity extends Fragment implements NumberPicker.OnValueChangeListener{
 
-	class profileInfo{
-		private String name;
-		private String sex;
-		private String birth;
-		
-		public profileInfo(String name, String sex, String birth){
-			this.name = name;
-			this.sex = sex;
-			this.birth = birth;
-		}
-
-		public String getname(){return name;}
-		public String getsex(){return sex;}
-		public String getbirth(){return birth;}
-		
-		public void setname(String name){
-			this.name = name;
-		}
-		
-		public void setsex(String sex){
-			this.sex = sex;
-		}
-		
-		public void setbirth(String birth){
-			this.birth = birth;
-		}
-	}
-
 	private static TextView profile_name;
 	private static TextView profile_sex;
 	private static TextView profile_birth;
@@ -169,12 +141,10 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 	
 	private static Uri imageCaptureUri;
 	
-	
-	//
-	profileInfo[] profile_info;
-
 	private static int profile_flag = 0;
 	private static boolean profile_amend_flag = false;
+	
+	public static localDataAdmin localdata;
 	
 	public MyPageActivity(Context context) {
 		context = context;
@@ -193,11 +163,50 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 		
 		set_image();
 		
+		set_data();
+		
     	return view;
 	}
 
+	private void set_data() {
+		// profile
+		
+		profile_input();
+		
+		//alarm
+		
+		am_alarm_hour_text.setText(String.valueOf(localdata.getalarm().getam_hour_value()));
+		
+		if(localdata.getalarm().getam_minute_value() < 10)
+			am_alarm_minute_text.setText("0" + String.valueOf(localdata.getalarm().getam_minute_value()));
+		else
+			am_alarm_minute_text.setText(String.valueOf(localdata.getalarm().getam_minute_value()));
+			
+		pm_alarm_hour_text.setText(String.valueOf(localdata.getalarm().getpm_hour_value()));
+		
+		if(localdata.getalarm().getpm_minute_value() < 10)
+			pm_alarm_minute_text.setText("0" + String.valueOf(localdata.getalarm().getpm_minute_value()));
+		else
+			pm_alarm_minute_text.setText(String.valueOf(localdata.getalarm().getpm_minute_value()));
+
+		am_alarm_flag = localdata.getalarm().getam_alarm_onoff();
+		
+		if(!am_alarm_flag)
+			mypage_am_alarm_button.setImageResource(R.drawable.mypage_pushalarm_image_up);
+		else
+			mypage_am_alarm_button.setImageResource(R.drawable.mypage_pushalarm_image_focus);
+		
+		pm_alarm_flag = localdata.getalarm().getpm_alarm_onoff();
+		
+		if(!pm_alarm_flag)
+			mypage_pm_alarm_button.setImageResource(R.drawable.mypage_pushalarm_image_up);
+		else
+			mypage_pm_alarm_button.setImageResource(R.drawable.mypage_pushalarm_image_focus);
+		
+	}
+
 	private void set_image() {
-		mypage_idinput_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_login, 200, 200));
+		//mypage_idinput_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_login, 200, 200));
 		mypage_profileamend_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profileamend_image, 200, 200));
 		mypage_profileset_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profileset_image, 200, 200));
 		mypage_smartpush_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_push_image_focus, 200, 200));
@@ -223,9 +232,8 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 		super.onDestroy();
 	}
 	
-	
 	public void clicklistener() {
-		mypage_idinput_image.setOnClickListener(new ImageView.OnClickListener() {
+		/*mypage_idinput_image.setOnClickListener(new ImageView.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -235,7 +243,7 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 				logindialog.show(getFragmentManager(), "login");
 			}
 		});
-		
+		*/
 		mypage_profileamend_button.setOnClickListener(new ImageView.OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -243,6 +251,9 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 				mypage_profile_layout.setVisibility(LinearLayout.INVISIBLE);
 				
 				mypage_kidimageset_view.setVisibility(LinearLayout.VISIBLE);
+				
+				mypage_profilename_edittext.setText(profile_name.getText());
+				mypage_profilebirth_edittext.setText(profile_birth.getText());
 				
 				profile_amend_flag = true;
 			}
@@ -254,10 +265,8 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 				mypage_profilesetting_layout.setVisibility(LinearLayout.INVISIBLE);
 				mypage_profile_layout.setVisibility(LinearLayout.VISIBLE);
 
-				profile_info[profile_flag].name = mypage_profilename_edittext.getText().toString();
-				profile_info[profile_flag].birth = mypage_profilebirth_edittext.getText().toString();
-				
-				profile_input();
+				localdata.getprofile(localdata.getprofileflag()).setname(mypage_profilename_edittext.getText().toString());
+				localdata.getprofile(localdata.getprofileflag()).setbirth(mypage_profilebirth_edittext.getText().toString());
 				
 				mypage_kidimageset_view.setVisibility(LinearLayout.INVISIBLE);
 				
@@ -265,6 +274,8 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 				mypage_profilebirth_edittext.setText("");
 				
 				profile_amend_flag = false;
+
+				profile_input();
 			}
 		});
 		
@@ -272,10 +283,10 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 			
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				if(checkedId == 0)
-					profile_info[profile_flag].sex = "남아";
+				if(checkedId == R.id.profile_male_radiobutton)
+					localdata.getprofile(localdata.getprofileflag()).setsex("남아");
 				else
-					profile_info[profile_flag].sex = "여아";
+					localdata.getprofile(localdata.getprofileflag()).setsex("여아");
 			}
 		});
 		
@@ -290,6 +301,9 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 					mypage_am_alarm_button.setImageResource(R.drawable.mypage_pushalarm_image_up);
 					am_alarm_flag = false;
 				}
+				
+				localdata.getalarm().setam_alarm_onoff(am_alarm_flag);
+				localdata.setLocalData();
 			}
 		});
 		
@@ -304,6 +318,9 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 					mypage_pm_alarm_button.setImageResource(R.drawable.mypage_pushalarm_image_up);
 					pm_alarm_flag = false;
 				}
+				
+				localdata.getalarm().setpm_alarm_onoff(pm_alarm_flag);
+				localdata.setLocalData();
 			}
 		});
 		
@@ -366,12 +383,28 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 				mypage_alarmset_layout.setVisibility(LinearLayout.INVISIBLE);
 				if(!mypage_alarm_flag){
 					am_alarm_hour_text.setText(String.valueOf(mypage_hoursetting_np.getValue()));
-					am_alarm_minute_text.setText(String.valueOf(mypage_minutesetting_np.getValue()));
+					
+					if(mypage_minutesetting_np.getValue() < 10)
+						am_alarm_minute_text.setText(String.valueOf("0" + mypage_minutesetting_np.getValue()));
+					else
+						am_alarm_minute_text.setText(String.valueOf(mypage_minutesetting_np.getValue()));
+	
+					localdata.getalarm().setam_hour_value(mypage_hoursetting_np.getValue());
+					localdata.getalarm().setam_minute_value(mypage_minutesetting_np.getValue());
 				}
 				else{
 					pm_alarm_hour_text.setText(String.valueOf(mypage_hoursetting_np.getValue()));
-					pm_alarm_minute_text.setText(String.valueOf(mypage_minutesetting_np.getValue()));
+					
+					if(mypage_minutesetting_np.getValue() < 10)
+						pm_alarm_minute_text.setText(String.valueOf("0" + mypage_minutesetting_np.getValue()));
+					else
+						pm_alarm_minute_text.setText(String.valueOf(mypage_minutesetting_np.getValue()));
+					
+					localdata.getalarm().setpm_hour_value(mypage_hoursetting_np.getValue());
+					localdata.getalarm().setpm_minute_value(mypage_minutesetting_np.getValue());
 				}
+				
+				localdata.setLocalData();
 			}
 		});
 		
@@ -408,7 +441,7 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 			@Override
 			public void onClick(View v) {
 				if(!profile_amend_flag){
-					profile_flag = 0;
+					localdata.setprofileflag(0);
 					profile_input();
 				}
 			}
@@ -418,7 +451,7 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 			@Override
 			public void onClick(View v) {
 				if(!profile_amend_flag){
-					profile_flag = 1;
+					localdata.setprofileflag(1);
 					profile_input();
 				}
 			}
@@ -428,7 +461,7 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 			@Override
 			public void onClick(View v) {
 				if(!profile_amend_flag){
-					profile_flag = 2;
+					localdata.setprofileflag(2);
 					profile_input();
 				}
 			}
@@ -443,6 +476,10 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 intent.setType("image/*");              // 모든 이미지
                 intent.putExtra("crop", "true");        // Crop기능 활성화
+                intent.putExtra("outputX", 200);
+                intent.putExtra("outputY", 200);
+                intent.putExtra("aspectX", 1);
+                intent.putExtra("aspectY", 1);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());     // 임시파일 생성
                 intent.putExtra("outputFormat",         // 포맷방식
                         Bitmap.CompressFormat.JPEG.toString());
@@ -479,8 +516,8 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 		profile_image.setImageBitmap(circleBitmap);
 	}
 	
-	private void profile_small_circleimage(int drawable_id, int imageview_id){
-		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), drawable_id);
+	private void profile_small_circleimage(Bitmap b, int imageview_id, boolean flag){
+		Bitmap bitmap = b;
 		Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
 
 		ImageView profile_image = (ImageView)view.findViewById(imageview_id);
@@ -491,7 +528,11 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 		
 		Paint paint_stroke = new Paint();
 		
-		paint_stroke.setARGB(255, 252, 233, 6);
+		if(flag)
+			paint_stroke.setARGB(255, 252, 233, 6);
+		else
+			paint_stroke.setARGB(178, 118, 196, 193);
+		
 		paint_stroke.setAntiAlias(true);
 
 		c.drawCircle(bitmap.getWidth()/2, bitmap.getHeight()/2, bitmap.getHeight()/2, paint_stroke);
@@ -507,25 +548,264 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 	}
 	
 	private void profile_input(){
-		profile_name.setText(profile_info[profile_flag].name);
-		profile_sex.setText(profile_info[profile_flag].sex);
-		profile_birth.setText(profile_info[profile_flag].birth);
+		
+		Log.d("localtext", localdata.getprofile(localdata.getprofileflag()).getname());
+		
+		profile_name.setText(localdata.getprofile(localdata.getprofileflag()).getname().toString());
+		profile_sex.setText(localdata.getprofile(localdata.getprofileflag()).getsex());
+		profile_birth.setText(localdata.getprofile(localdata.getprofileflag()).getbirth());
+		
+		if(localdata.getprofile(localdata.getprofileflag()).getimageurl() != null){
+			Bitmap selectedImage = BitmapFactory.decodeFile(localdata.getprofile(localdata.getprofileflag()).getimageurl());
+			if(selectedImage != null){
+				profile_circleimage(selectedImage);
+				
+				switch(localdata.getprofileflag()){
+				case 0:
+					profile_small_circleimage(selectedImage, R.id.mypage_smallkidimage1_image, true);
+					
+					if(localdata.getprofile(1).getimageurl() != null){
+						Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(1).getimageurl());
+						if(b_t != null){
+							profile_small_circleimage(b_t, R.id.mypage_smallkidimage2_image, false);
+						}
+						else{
+							mypage_smallkidimage2_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+						}
+					}
+					
+					if(localdata.getprofile(2).getimageurl() != null){
+						Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(2).getimageurl());
+						if(b_t != null){
+							profile_small_circleimage(b_t, R.id.mypage_smallkidimage3_image, false);
+						}
+						else{
+							mypage_smallkidimage3_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+						}
+					}
+					
+					break;
+				case 1:
+					profile_small_circleimage(selectedImage, R.id.mypage_smallkidimage2_image, true);
+					
+					if(localdata.getprofile(0).getimageurl() != null){
+						Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(0).getimageurl());
+						if(b_t != null){
+							profile_small_circleimage(b_t, R.id.mypage_smallkidimage1_image, false);
+						}
+						else{
+							mypage_smallkidimage1_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+						}
+					}
+					
+					if(localdata.getprofile(2).getimageurl() != null){
+						Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(2).getimageurl());
+						if(b_t != null){
+							profile_small_circleimage(b_t, R.id.mypage_smallkidimage3_image, false);
+						}
+						else{
+							mypage_smallkidimage3_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+						}
+					}
+					
+					break;
+				case 2:
+					profile_small_circleimage(selectedImage, R.id.mypage_smallkidimage3_image, true);
+					
+					if(localdata.getprofile(0).getimageurl() != null){
+						Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(0).getimageurl());
+						if(b_t != null){
+							profile_small_circleimage(b_t, R.id.mypage_smallkidimage1_image, false);
+						}
+						else{
+							mypage_smallkidimage1_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+						}
+					}
+					
+					if(localdata.getprofile(1).getimageurl() != null){
+						Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(1).getimageurl());
+						if(b_t != null){
+							profile_small_circleimage(b_t, R.id.mypage_smallkidimage2_image, false);
+						}
+						else{
+							mypage_smallkidimage2_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+						}
+					}
+					
+					break;
+				}
+			}
+			else{
+				mypage_kidimage_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profile, 200, 200));
+				
+				switch(localdata.getprofileflag()){
+				case 0:
+					mypage_smallkidimage1_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+					
+					if(localdata.getprofile(1).getimageurl() != null){
+						Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(1).getimageurl());
+						if(b_t != null){
+							profile_small_circleimage(b_t, R.id.mypage_smallkidimage2_image, false);
+						}
+						else{
+							mypage_smallkidimage2_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+						}
+					}
+					
+					if(localdata.getprofile(2).getimageurl() != null){
+						Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(2).getimageurl());
+						if(b_t != null){
+							profile_small_circleimage(b_t, R.id.mypage_smallkidimage3_image, false);
+						}
+						else{
+							mypage_smallkidimage3_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+						}
+					}
+					
+					break;
+				case 1:
+					mypage_smallkidimage2_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+					
+					if(localdata.getprofile(0).getimageurl() != null){
+						Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(0).getimageurl());
+						if(b_t != null){
+							profile_small_circleimage(b_t, R.id.mypage_smallkidimage1_image, false);
+						}
+						else{
+							mypage_smallkidimage1_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+						}
+					}
+					
+					if(localdata.getprofile(2).getimageurl() != null){
+						Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(2).getimageurl());
+						if(b_t != null){
+							profile_small_circleimage(b_t, R.id.mypage_smallkidimage3_image, false);
+						}
+						else{
+							mypage_smallkidimage3_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+						}
+					}
+					
+					break;
+				case 2:
+					mypage_smallkidimage3_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+					
+					if(localdata.getprofile(0).getimageurl() != null){
+						Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(0).getimageurl());
+						if(b_t != null){
+							profile_small_circleimage(b_t, R.id.mypage_smallkidimage1_image, false);
+						}
+						else{
+							mypage_smallkidimage1_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+						}
+					}
+					
+					if(localdata.getprofile(1).getimageurl() != null){
+						Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(1).getimageurl());
+						if(b_t != null){
+							profile_small_circleimage(b_t, R.id.mypage_smallkidimage2_image, false);
+						}
+						else{
+							mypage_smallkidimage2_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+						}
+					}
+					
+					break;
+				}
+			}
+				
+		}
+		else{
+			mypage_kidimage_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profile, 200, 200));
+		
+			switch(localdata.getprofileflag()){
+			case 0:
+				mypage_smallkidimage1_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+				
+				if(localdata.getprofile(1).getimageurl() != null){
+					Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(1).getimageurl());
+					if(b_t != null){
+						profile_small_circleimage(b_t, R.id.mypage_smallkidimage2_image, false);
+					}
+					else{
+						mypage_smallkidimage2_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+					}
+				}
+				
+				if(localdata.getprofile(2).getimageurl() != null){
+					Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(2).getimageurl());
+					if(b_t != null){
+						profile_small_circleimage(b_t, R.id.mypage_smallkidimage3_image, false);
+					}
+					else{
+						mypage_smallkidimage3_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+					}
+				}
+				
+				break;
+			case 1:
+				mypage_smallkidimage2_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+				
+				if(localdata.getprofile(0).getimageurl() != null){
+					Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(0).getimageurl());
+					if(b_t != null){
+						profile_small_circleimage(b_t, R.id.mypage_smallkidimage1_image, false);
+					}
+					else{
+						mypage_smallkidimage1_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+					}
+				}
+				
+				if(localdata.getprofile(2).getimageurl() != null){
+					Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(2).getimageurl());
+					if(b_t != null){
+						profile_small_circleimage(b_t, R.id.mypage_smallkidimage3_image, false);
+					}
+					else{
+						mypage_smallkidimage3_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+					}
+				}
+				
+				break;
+			case 2:
+				mypage_smallkidimage3_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+				
+				if(localdata.getprofile(0).getimageurl() != null){
+					Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(0).getimageurl());
+					if(b_t != null){
+						profile_small_circleimage(b_t, R.id.mypage_smallkidimage1_image, false);
+					}
+					else{
+						mypage_smallkidimage1_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+					}
+				}
+				
+				if(localdata.getprofile(1).getimageurl() != null){
+					Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(1).getimageurl());
+					if(b_t != null){
+						profile_small_circleimage(b_t, R.id.mypage_smallkidimage2_image, false);
+					}
+					else{
+						mypage_smallkidimage2_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+					}
+				}
+				
+				break;
+			}
+		}
+		
+		localdata.setLocalData();
 	}
 	
 	public void init() {
 		
-		profile_info = new profileInfo[3];
-
-		for(int i=0;i<3;i++)
-			profile_info[i] = new profileInfo("이름을 입력하세요", " - ", "생일을 입력하세요");
+		localdata = new localDataAdmin(getActivity().getBaseContext());
 		
 		profile_name = (TextView)view.findViewById(R.id.profile_name);
 		profile_sex = (TextView)view.findViewById(R.id.profile_sex);
 		profile_birth = (TextView)view.findViewById(R.id.profile_birth);
 		
-		profile_input();
-		
-		mypage_idinput_image = (ImageView)view.findViewById(R.id.mypage_idinput_image);
+		//mypage_idinput_image = (ImageView)view.findViewById(R.id.mypage_idinput_image);
 		
 		// mypage profile
 		
@@ -599,8 +879,8 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 		pm_alarm_hour_text = (TextView)view.findViewById(R.id.pm_alarm_hour_text);
 		pm_alarm_minute_text = (TextView)view.findViewById(R.id.pm_alarm_minute_text);
 		
-
 		smartwatch_wearning_image = (ImageView)view.findViewById(R.id.smartwatch_wearning_image);
+		
 	}
 	
 	@Override
@@ -615,7 +895,7 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 		mypage_hoursetting_np.setWrapSelectorWheel(true);
 		
 		mypage_minutesetting_np.setMaxValue(60);
-		mypage_minutesetting_np.setMinValue(1);
+		mypage_minutesetting_np.setMinValue(0);
 		mypage_minutesetting_np.setWrapSelectorWheel(true);
 	}
 	
@@ -628,8 +908,7 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 		
 	};
 	
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	public void onActivityResult(int requestCode, int resultCode, Intent data, localDataAdmin.profileInfo p[]) {
         //super.onActivityResult(requestCode, resultCode, data);
         //Fragment fragment = getFragmentManager().findFragmentById(2);
         //fragment.onActivityResult(requestCode, resultCode, data);
@@ -658,13 +937,17 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
         case REQUEST_IMAGE_ALBUM:
         	if (resultCode == Activity.RESULT_OK) {
         		String filePath = Environment.getExternalStorageDirectory()
-                        + "/temp.jpg";
+                        + "/kiznic_profile"+localdata.getprofileflag()+".jpg";
 
                 System.out.println("path" + filePath); // logCat으로 경로확인.
 
-                Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
+                localdata.getprofile(localdata.getprofileflag()).setiamge_url(filePath);
                 
-                profile_circleimage(selectedImage);
+                Bitmap selectedImage = BitmapFactory.decodeFile(localdata.getprofile(localdata.getprofileflag()).getimageurl());
+    			if(selectedImage != null)
+    				profile_circleimage(selectedImage);
+    			
+    			localdata.setLocalData();
             }
         	      
         	break;
@@ -678,7 +961,7 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 	private File getTempFile() {
         if (isSDCARDMOUNTED()) {
             File f = new File(Environment.getExternalStorageDirectory(), // 외장메모리 경로
-                    "temp.jpg");
+                    "kiznic_profile"+localdata.getprofileflag()+".jpg");
             try {
                 f.createNewFile();      // 외장메모리에 temp.jpg 파일 생성
             } catch (IOException e) {
