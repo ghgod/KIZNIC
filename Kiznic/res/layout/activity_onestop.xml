@@ -19,4 +19,6 @@
         android:layout_gravity = "center"
         android:text="소방서" />
 
+    
+
 </LinearLayout>

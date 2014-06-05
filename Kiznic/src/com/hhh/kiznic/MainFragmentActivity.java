@@ -46,6 +46,8 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 		setContentView(R.layout.activity_fragment);
 		//getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.kiznic_title_bar);
 		
+		//startActivity(new Intent(this, SplashActivity.class));
+		
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setDisplayShowHomeEnabled(false);
@@ -88,7 +90,7 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 		//actionBar.getTabAt(0).getCustomView().findViewbyId(R.id....);
 		
 		actionBar.getTabAt(1).setCustomView(R.layout.kiznic_title_search_tab);
-		actionBar.getTabAt(2).setCustomView(R.layout.kiznic_title_mypage_tab);
+		actionBar.getTabAt(2).setCustomView(R.layout.kiznic_title_safe_tab);
 		actionBar.getTabAt(3).setCustomView(R.layout.kiznic_title_mypage_tab);
 	}
 
@@ -181,7 +183,9 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 	
 	@Override
 	public void onDestroy() {
+		System.gc();
 		super.onDestroy();
+		//RecycleUtils.recursiveRecycle(getApplicationContext().get);
 	}
 	
 	@Override

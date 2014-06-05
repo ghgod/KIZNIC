@@ -2,43 +2,145 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F1F2F2"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="접수 제목" />
-
-    <EditText
-        android:id="@+id/sendemail_subject_edittext"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="놀이기구가 불편해요~"
-        android:ems="10" />
+        android:padding="5dp" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="접수 내용" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/sendemail_contents_edittext"
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#24B0CD"
+                android:textSize="25sp"
+                android:text="안전 자동 신고" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#76C4C1" />
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint ="불편한 사항이나 개선 요구사항을 입력해주세요~"
-        android:ems="10"
-        android:inputType="textMultiLine" >
+        android:padding="5dp" >
 
-        <requestFocus />
-    </EditText>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="#5075C4C1" >
 
-    <Button
-        android:id="@+id/sendemail_button"
-        android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="수신"
+                android:textSize="15sp"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/sendemail_sender_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:gravity="center" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+   <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="보내기"
-        />
+        android:padding="5dp"  >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:background="@layout/bg_safe_border"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp" >
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="제목"
+                    android:textSize="15sp"
+                    android:textColor="#000000" />
+
+                <EditText
+                    android:id="@+id/sendemail_subject_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:background="@null"
+                    android:ems="10" >
+
+ 
+                </EditText>
+
+            </LinearLayout>
+			
+            <ImageView
+		        android:layout_width="match_parent"
+		        android:layout_height="1dp"
+		        android:layout_marginBottom="5dp"
+		        android:background="#76C4C1" />
+            
+            
+            
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="내용"
+                android:textSize="15sp"
+                android:textColor="#000000" />
+
+            <EditText
+                android:id="@+id/sendemail_contents_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:ems="10"
+                android:gravity="center"
+                android:background="@null"
+                android:inputType="textMultiLine" />
+
+            <Button
+                android:id="@+id/sendemail_button"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#5076C4C1"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:text="보내기" />
+        </LinearLayout>
+
+    </FrameLayout>
 
 </LinearLayout>

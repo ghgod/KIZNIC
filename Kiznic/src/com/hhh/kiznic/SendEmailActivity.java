@@ -11,10 +11,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class SendEmailActivity extends Activity{
 	
+	private TextView sendemail_sender_textview;
 	private EditText sendemail_subject_edittext;
 	private EditText sendemail_contents_edittext;
 	private Button sendemail_button;
@@ -34,13 +36,16 @@ public class SendEmailActivity extends Activity{
 	}
 	
 	public void init() {
+		sendemail_sender_textview = (TextView)findViewById(R.id.sendemail_sender_text);
 		sendemail_subject_edittext = (EditText)findViewById(R.id.sendemail_subject_edittext);
 		sendemail_contents_edittext = (EditText)findViewById(R.id.sendemail_contents_edittext);
 		sendemail_button = (Button)findViewById(R.id.sendemail_button);
-		
+			
 		sender = new GMailSender(getResources().getString(R.string.kizniconestop_mail),getResources().getString(R.string.kizniconestop_pw));
 	    Intent intent = getIntent(); 
 	    receiver = intent.getExtras().getString("email_address");
+	    
+	    sendemail_sender_textview.setText(receiver);
 	}
 	
 	private void clicklistener() {

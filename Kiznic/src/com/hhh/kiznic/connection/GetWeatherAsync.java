@@ -128,7 +128,6 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 			e.printStackTrace();
 		}
 		
-		Log.d("today_humidity", weatherInfo.get(0).getHumidity());
 			
 		if(flag == 0) {
 			//Log.d("createWeather", "Table 생성");

@@ -194,11 +194,12 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 
 	@Override
 	public void onDestroy(){
-		RecycleUtils.recursiveRecycle(((Activity) context).getWindow().getDecorView());
+		RecycleUtils.recursiveRecycle(getActivity().getWindow().getDecorView());
 		System.gc();
 		
 		super.onDestroy();
 	}
+	
 	
 	public void clicklistener() {
 		mypage_idinput_image.setOnClickListener(new ImageView.OnClickListener() {

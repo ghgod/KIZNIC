@@ -55,4 +55,13 @@ public class OneStopActivity extends Fragment implements OnClickListener{
 			break;
 		}
 	}
+	
+	@Override
+	public void onDestroy(){
+		RecycleUtils.recursiveRecycle(getActivity().getWindow().getDecorView());
+		System.gc();
+		
+		super.onDestroy();
+	}
+	
 }

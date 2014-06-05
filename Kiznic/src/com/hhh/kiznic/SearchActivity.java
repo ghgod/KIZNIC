@@ -21,6 +21,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -56,6 +58,8 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 
 	private static String play_type;
 	
+	boolean lastitemVisibleFlag = false;   
+	
 	//////////////////////////////////////////////////////
 	
 	public SearchActivity(Context context){
@@ -75,6 +79,8 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
     	return view;
 	}
 	
+	
+	
 	private void set_image() {
 		search_searchbutton_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.search_button, 200, 200));
 	
@@ -87,6 +93,7 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 		
 		super.onDestroy();
 	}
+	
 	
 	public void getS(){
 		play_type = getArguments().getString("play_type");
@@ -112,27 +119,34 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 		search_category4_text = (TextView)view.findViewById(R.id.search_category4_text);
 		
 		search_searchbutton_image = (ImageView)view.findViewById(R.id.search_searchbutton_image);
+		
+		     //화면에 리스트의 마지막 아이템이 보여지는지 체크
+		
+		search_list_view.setOnScrollListener(new AbsListView.OnScrollListener() {
+		    @Override
+		    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+		        //현재 화면에 보이는 첫번째 리스트 아이템의 번호(firstVisibleItem) + 현재 화면에 보이는 리스트 아이템의 갯수(visibleItemCount)가 리스트 전체의 갯수(totalItemCount) -1 보다 크거나 같을때
+		    	lastitemVisibleFlag = (totalItemCount > 0) && (firstVisibleItem + visibleItemCount >= totalItemCount);     
+		    }   
+		    @Override
+		    public void onScrollStateChanged(AbsListView view, int scrollState) {
+		         //OnScrollListener.SCROLL_STATE_IDLE은 스크롤이 이동하다가 멈추었을때 발생되는 스크롤 상태입니다. 
+		         //즉 스크롤이 바닦에 닿아 멈춘 상태에 처리를 하겠다는 뜻
+		         if(scrollState == OnScrollListener.SCROLL_STATE_IDLE && lastitemVisibleFlag) {
+		            //TODO 화면이 바닦에 닿을때 처리
+		        	 Toast.makeText(getActivity().getApplicationContext(), "리스트뷰의 끝", Toast.LENGTH_SHORT).show();
+		         } 
+		    }
+		 
+		});
+		
+		
+		
+		
 	}
 	
 	public void clicklistener(){	
-		/*
-		title_home_button.setOnClickListener(new Button.OnClickListener(){
-			public void onClick(View v){
-				title_home_button.setSelected(true);
-				Intent homeActivity = new Intent(SearchActivity.this, MainActivity.class);
-				homeActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-				startActivity(homeActivity);
-			}
-		});
-		title_mypage_button.setOnClickListener(new Button.OnClickListener(){
-			public void onClick(View v){
-				title_mypage_button.setSelected(true);
-				Intent mypageActivity = new Intent(SearchActivity.this, MyPageActivity.class);
-				mypageActivity.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-				startActivity(mypageActivity);
-			}
-		});
-		*/
+		
 		search_category1_relativelayout.setOnClickListener(this);
 		search_category2_relativelayout.setOnClickListener(this);
 		search_category3_relativelayout.setOnClickListener(this);
@@ -157,7 +171,7 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 		}
 	}
 	
-private void showListDialog(int dialog_num, String dialog_title){
+	private void showListDialog(int dialog_num, String dialog_title){
 		
 		listdialog = new SearchcategoryDialog();
 		
@@ -186,6 +200,8 @@ private void showListDialog(int dialog_num, String dialog_title){
 		}
 	
 	}
+	
+	
 	
 	
 	

@@ -32,6 +32,9 @@ import com.hhh.kiznic.card.MainWeatherCard;
 import com.hhh.kiznic.connection.GetRecommendPicnicSimpleInfo;
 import com.hhh.kiznic.connection.GetWeatherAsync;
 import com.hhh.kiznic.databasemanager.Databasehelper;
+import com.hhh.kiznic.databasemanager.KiznicSharedPreferences;
+import com.hhh.kiznic.util.LocationHelper;
+import com.hhh.kiznic.util.Util;
 
 @SuppressLint({ "ValidFragment", "NewApi" })
 public class MainActivity extends Fragment {
@@ -95,7 +98,6 @@ public class MainActivity extends Fragment {
 		clicklistener();
 		
 		profile_circleimage();
-		//new GetWeatherAsync(getActivity().getBaseContext(), 0, dbHelper,  weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, weather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image, weather_finedust, weather_today_pm10value ).execute("");
 
 		set_image();
 		
@@ -103,11 +105,18 @@ public class MainActivity extends Fragment {
 	}
 	@Override
 	public void onDestroy(){
-		RecycleUtils.recursiveRecycle(((Activity) context).getWindow().getDecorView());
+		RecycleUtils.recursiveRecycle(getActivity().getWindow().getDecorView());
 		System.gc();
 		
 		super.onDestroy();
 	}
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		getWeatherFast();
+	}
+
 	
 	//////////////////////////////////////////////
 	
@@ -188,32 +197,7 @@ public class MainActivity extends Fragment {
 				range_progress = progress;
 			}
 		});
-		
-		/*
-		inside.setOnClickListener(new Button.OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				CardAdapter cardAdapter = new CardAdapter(getActivity().getBaseContext());
-				CardAdapter[] recommendCardAdapter = new CardAdapter[4];
-				
-				for(int i=0;i<4;i++){
-					recommendCardAdapter[i] = new CardAdapter(getActivity().getBaseContext());
-				}
-				
-				new GetWeatherAsync(getActivity().getBaseContext(), weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_rainprob, weather_today_windspeed, wewather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image).execute("");
-				new GetPollutionAsync(getActivity().getBaseContext(), weather_today_pm10value, weather_finedust).execute("");
-				//new GetNextPollutionAsync(getActivity().getBaseContext(),weather_next_pm10Info, weather_next_dustmeter).execute("");
-			}
-			
-				cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
-				getDBWeatherInfo();
-				//cardAdapter.notifyDataSetChanged();
-				new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "15", cardAdapter, mainListView, recommendCardAdapter).execute("");
-			}
-		});
-		*/
 	}
 	
 	private void profile_circleimage(){
@@ -249,6 +233,32 @@ public class MainActivity extends Fragment {
 		new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "15", cardAdapter, mainListView ).execute("");
 
 		mainListView.setAdapter(cardAdapter);
+	}
+	
+	public void getWeatherFast() {
+		
+		KiznicSharedPreferences pref = new KiznicSharedPreferences(getActivity().getApplicationContext());
+		LocationHelper location = new LocationHelper(getActivity().getApplicationContext());
+		location.run();
+		Util util = new Util();
+		weather_mylocation.setText(location.getMyLocation());
+		weather_today_timedesc.setText(pref.getValue("today_daystate") + " " + pref.getValue("today_time") + ", " + pref.getValue("today_weatherdesc"));
+		weather_today_temp.setText(pref.getValue("today_temp")+"℃");
+		weather_today_rainprob.setText(" " + pref.getValue("today_rainprob")+ " %");
+		weather_today_windspeed.setText(" " + pref.getValue("today_windspeed") + " m/s");
+		weather_today_humidity.setText(pref.getValue("today_humidity")+"%");
+		
+		weather_next_timedesc.setText(pref.getValue("next_daystate") + " " + pref.getValue("next_time") + ", " + pref.getValue("next_weatherdesc"));
+		weather_next_temp.setText(pref.getValue("next_temp")+"℃");
+		weather_image.setImageBitmap(util.getWeatherImage(getActivity().getApplicationContext(), pref.getValue("today_weatherdesc")));
+		weather_next_image.setImageBitmap(util.getWeatherImage(getActivity().getApplicationContext(), pref.getValue("next_weatherdesc")));
+		weather_today_pm10value.setText("미세먼지 농도 " + pref.getValue("today_pm10value"));
+		if(pref.getValue("today_pm10value").equals("-")) {
+			util.weather_finedust_set(weather_finedust,(int)((1.2 * 10)), false, null);
+		} else {
+			util.weather_finedust_set(weather_finedust,(int)((1.2 * Integer.parseInt(pref.getValue("today_pm10value")))), false, null);
+
+		}		
 	}
 	
 }
