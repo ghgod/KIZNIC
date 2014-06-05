@@ -202,15 +202,15 @@
 	                    <RadioGroup
 					        android:id="@+id/profile_kidsex_radiogroup"
 					        android:layout_width="wrap_content"
-					        android:layout_height="wrap_content"
+					        android:layout_height="20dip"
 					        android:layout_gravity="center_vertical"
 					        android:inputType="text"
 					        android:orientation="horizontal" >
 					 
 					        <RadioButton
 					            android:id="@+id/profile_male_radiobutton"
-					            android:layout_width="20dip"
-					            android:layout_height="20dip"
+					            android:layout_width="match_parent"
+					            android:layout_height="match_parent"
 					            android:checked="true"
 					            android:button="@android:drawable/btn_radio"/>
 					            
@@ -224,8 +224,8 @@
 					        
 					        <RadioButton
 					            android:id="@+id/profile_female_radiobutton"
-					            android:layout_width="20dip"
-					            android:layout_height="20dip"
+					            android:layout_width="match_parent"
+					            android:layout_height="match_parent"
 					            android:layout_marginLeft="3dip"
 					            android:button="@android:drawable/btn_radio" />
 					 

@@ -47,6 +47,8 @@ public class MainActivity extends Fragment {
 	
 	private static ImageView weather_finedust;
 	
+	private static TextView profile_kidname_text;
+	
 	private static TextView weather_mylocation;
 	private static TextView weather_today_timedesc;
 	private static TextView weather_today_temp;
@@ -91,15 +93,13 @@ public class MainActivity extends Fragment {
 		//KiznicTitle a = new KiznicTitle(this);
 		dbHelper = new Databasehelper(getActivity().getBaseContext());
 		
-		
-		
 		init();
 		
 		clicklistener();
 		
-		//profile_circleimage();
-
 		set_image();
+		
+		set_data();
 		
 		if(localdata.getprofile(localdata.getprofileflag()).getimageurl() != null){
 			Bitmap selectedImage = BitmapFactory.decodeFile(localdata.getprofile(localdata.getprofileflag()).getimageurl());
@@ -110,6 +110,13 @@ public class MainActivity extends Fragment {
 		
 		return view;
 	}
+	private void set_data() {
+		if(localdata.getprofile(localdata.getprofileflag()).getname().length() <= 5 && localdata.getprofile(localdata.getprofileflag()).getname().equals(""))
+			profile_kidname_text.setText("오늘은 어디까지 갈까요?");
+		else
+			profile_kidname_text.setText(localdata.getprofile(localdata.getprofileflag()).getname() + "님 오늘은 어디까지 갈까요?");
+	}
+
 	@Override
 	public void onDestroy(){
 		RecycleUtils.recursiveRecycle(getActivity().getWindow().getDecorView());
@@ -141,6 +148,8 @@ public class MainActivity extends Fragment {
 		//
 		
 		profile_kidimage_image = (ImageView)view.findViewById(R.id.profile_kidimage_image);
+		
+		profile_kidname_text = (TextView)view.findViewById(R.id.profile_kidname_text);
 		
 		mainListView = (ListView)view.findViewById(R.id.main_list_view);
 		cardAdapter = new CardAdapter(getActivity().getApplicationContext());

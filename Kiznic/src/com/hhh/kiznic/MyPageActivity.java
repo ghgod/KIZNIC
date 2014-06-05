@@ -283,7 +283,7 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 			
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				if(checkedId == 0)
+				if(checkedId == R.id.profile_male_radiobutton)
 					localdata.getprofile(localdata.getprofileflag()).setsex("남아");
 				else
 					localdata.getprofile(localdata.getprofileflag()).setsex("여아");
