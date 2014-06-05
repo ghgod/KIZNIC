@@ -1,6 +1,9 @@
 package com.hhh.kiznic;
 
 
+import java.io.File;
+import java.io.IOException;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -15,9 +18,12 @@ import android.graphics.Paint;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,7 +42,7 @@ import android.widget.Toast;
 import com.hhh.kiznic.bluetooth.*;
 
 @SuppressLint({ "ValidFragment", "NewApi" })
-public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onNicknameListener, NumberPicker.OnValueChangeListener{
+public class MyPageActivity extends Fragment implements NumberPicker.OnValueChangeListener{
 
 	class profileInfo{
 		private String name;
@@ -76,6 +82,8 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 	// Intent request code
 	private static final int REQUEST_CONNECT_DEVICE = 1;
 	private static final int REQUEST_ENABLE_BT = 2;	
+	private static final int REQUEST_IMAGE_ALBUM = 3;
+	private static final int REQUEST_IMAGE_CROP = 4;
 	
 	private static BluetoothService btService = null;
 	
@@ -90,6 +98,9 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 	private static ImageView mypage_idinput_image;
 	
 	// profile
+
+	private static LinearLayout mypage_kidimage_view;
+	private static LinearLayout mypage_kidimageset_view;
 	
 	private static LinearLayout mypage_profile_layout;
 	
@@ -98,6 +109,9 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 	private static ImageView mypage_smallkidimage1_image;
 	private static ImageView mypage_smallkidimage2_image;
 	private static ImageView mypage_smallkidimage3_image;
+
+	private static ImageView mypage_kidimage_image;
+	private static ImageView mypage_kidimageset_image;
 	
 	// profile setting
 	
@@ -150,8 +164,17 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 	private static TextView am_alarm_minute_text;
 	private static TextView pm_alarm_hour_text;
 	private static TextView pm_alarm_minute_text;
-	// 
-	profileInfo profile_info;
+	
+	// Image set
+	
+	private static Uri imageCaptureUri;
+	
+	
+	//
+	profileInfo[] profile_info;
+
+	private static int profile_flag = 0;
+	private static boolean profile_amend_flag = false;
 	
 	public MyPageActivity(Context context) {
 		context = context;
@@ -162,13 +185,9 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 			ViewGroup container, Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.activity_mypage, null);
 		
-		
 		init();
 		
 		clicklistener();
-		
-		profile_circleimage();
-		profile_small_circleimage();
 		
 		setNumberpicker();
 		
@@ -186,10 +205,14 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 		mypage_am_alarm_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_pushalarm_image_up, 200, 200));
 		mypage_pm_alarm_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_pushalarm_image_up, 200, 200));
 	
-		mypage_smallkidimage2_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profile, 200, 200));
-		mypage_smallkidimage3_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profile, 200, 200));
+		mypage_smallkidimage1_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+		mypage_smallkidimage2_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+		mypage_smallkidimage3_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
 	
 		smartwatch_wearning_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_waerning_image, 200, 200));
+	
+		mypage_kidimage_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profile, 200, 200));
+		mypage_kidimageset_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profileimage_set_image, 200, 200));
 	}
 
 	@Override
@@ -218,6 +241,10 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 			public void onClick(View v) {
 				mypage_profilesetting_layout.setVisibility(LinearLayout.VISIBLE);
 				mypage_profile_layout.setVisibility(LinearLayout.INVISIBLE);
+				
+				mypage_kidimageset_view.setVisibility(LinearLayout.VISIBLE);
+				
+				profile_amend_flag = true;
 			}
 		});
 		
@@ -226,11 +253,18 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 			public void onClick(View v) {
 				mypage_profilesetting_layout.setVisibility(LinearLayout.INVISIBLE);
 				mypage_profile_layout.setVisibility(LinearLayout.VISIBLE);
-				
-				profile_info.name = mypage_profilename_edittext.getText().toString();
-				profile_info.birth = mypage_profilebirth_edittext.getText().toString();
+
+				profile_info[profile_flag].name = mypage_profilename_edittext.getText().toString();
+				profile_info[profile_flag].birth = mypage_profilebirth_edittext.getText().toString();
 				
 				profile_input();
+				
+				mypage_kidimageset_view.setVisibility(LinearLayout.INVISIBLE);
+				
+				mypage_profilename_edittext.setText("");
+				mypage_profilebirth_edittext.setText("");
+				
+				profile_amend_flag = false;
 			}
 		});
 		
@@ -239,9 +273,9 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				if(checkedId == 0)
-					profile_info.sex = "남아";
+					profile_info[profile_flag].sex = "남아";
 				else
-					profile_info.sex = "여아";
+					profile_info[profile_flag].sex = "여아";
 			}
 		});
 		
@@ -279,7 +313,6 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 				mypage_smartalarm_layout.setVisibility(LinearLayout.VISIBLE);
 				mypage_smartwatch_layout.setVisibility(LinearLayout.INVISIBLE);
 				
-
 				mypage_smartpush_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_push_image_focus, 200, 200));
 				mypage_smartwatch_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smartwatch_image_up, 200, 200));
 			}
@@ -305,6 +338,9 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 				mypage_amalarm_text.setTextColor(Color.parseColor("#FFFF00"));
 				mypage_pmalarm_text.setTextColor(Color.parseColor("#FFFFFF"));
 				
+				mypage_hoursetting_np.setValue(Integer.valueOf(am_alarm_hour_text.getText().toString()));
+				mypage_minutesetting_np.setValue(Integer.valueOf(am_alarm_minute_text.getText().toString()));
+				
 				mypage_alarm_flag = false;
 			}
 		});
@@ -316,6 +352,9 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 
 				mypage_amalarm_text.setTextColor(Color.parseColor("#FFFFFF"));
 				mypage_pmalarm_text.setTextColor(Color.parseColor("#FFFF00"));
+				
+				mypage_hoursetting_np.setValue(Integer.valueOf(pm_alarm_hour_text.getText().toString()));
+				mypage_minutesetting_np.setValue(Integer.valueOf(pm_alarm_minute_text.getText().toString()));
 				
 				mypage_alarm_flag = true;
 			}
@@ -364,23 +403,57 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 			}
 			
 		});
-		
-		/*
-		mypage_nickname_view.setOnClickListener(new View.OnClickListener() {
-			
+
+		mypage_smallkidimage1_image.setOnClickListener(new ImageView.OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				
-				MyPageNicknameDialog logindialog = new MyPageNicknameDialog(context);
-				
-				logindialog.show(getChildFragmentManager(), "nickname");
+				if(!profile_amend_flag){
+					profile_flag = 0;
+					profile_input();
+				}
 			}
 		});
-		*/
+		
+		mypage_smallkidimage2_image.setOnClickListener(new ImageView.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				if(!profile_amend_flag){
+					profile_flag = 1;
+					profile_input();
+				}
+			}
+		});
+		
+		mypage_smallkidimage3_image.setOnClickListener(new ImageView.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				if(!profile_amend_flag){
+					profile_flag = 2;
+					profile_input();
+				}
+			}
+		});
+		
+		mypage_kidimageset_image.setOnClickListener(new ImageView.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				// 사진폴더이동
+				Intent intent = new Intent(
+                        Intent.ACTION_GET_CONTENT,      // 또는 ACTION_PICK
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");              // 모든 이미지
+                intent.putExtra("crop", "true");        // Crop기능 활성화
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());     // 임시파일 생성
+                intent.putExtra("outputFormat",         // 포맷방식
+                        Bitmap.CompressFormat.JPEG.toString());
+                
+                getActivity().startActivityForResult(intent, REQUEST_IMAGE_ALBUM);
+			}
+		});
 	}
 
-	private void profile_circleimage(){
-		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kid);
+	private void profile_circleimage(Bitmap b){
+		Bitmap bitmap = b;
 		Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
 
 		ImageView profile_image = (ImageView)view.findViewById(R.id.mypage_kidimage_image);
@@ -406,11 +479,11 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 		profile_image.setImageBitmap(circleBitmap);
 	}
 	
-	private void profile_small_circleimage(){
-		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kid);
+	private void profile_small_circleimage(int drawable_id, int imageview_id){
+		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), drawable_id);
 		Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
 
-		ImageView profile_image = (ImageView)view.findViewById(R.id.mypage_smallkidimage1_image);
+		ImageView profile_image = (ImageView)view.findViewById(imageview_id);
 		
 		BitmapShader shader = new BitmapShader (bitmap,  TileMode.CLAMP, TileMode.CLAMP);
 		
@@ -434,15 +507,18 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 	}
 	
 	private void profile_input(){
-		profile_name.setText(profile_info.name);
-		profile_sex.setText(profile_info.sex);
-		profile_birth.setText(profile_info.birth);
+		profile_name.setText(profile_info[profile_flag].name);
+		profile_sex.setText(profile_info[profile_flag].sex);
+		profile_birth.setText(profile_info[profile_flag].birth);
 	}
 	
 	public void init() {
 		
-		profile_info = new profileInfo("철수", "남자", "05.10.11");
+		profile_info = new profileInfo[3];
 
+		for(int i=0;i<3;i++)
+			profile_info[i] = new profileInfo("이름을 입력하세요", " - ", "생일을 입력하세요");
+		
 		profile_name = (TextView)view.findViewById(R.id.profile_name);
 		profile_sex = (TextView)view.findViewById(R.id.profile_sex);
 		profile_birth = (TextView)view.findViewById(R.id.profile_birth);
@@ -469,6 +545,14 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 		mypage_profilebirth_edittext = (EditText)view.findViewById(R.id.mypage_profilebirth_edittext);
 		
 		profile_kidsex_radiogroup = (RadioGroup)view.findViewById(R.id.profile_kidsex_radiogroup);
+
+		mypage_kidimage_view = (LinearLayout)view.findViewById(R.id.mypage_kidimage_view);
+		mypage_kidimageset_view = (LinearLayout)view.findViewById(R.id.mypage_kidimageset_view);
+		
+		mypage_kidimageset_view.setVisibility(LinearLayout.INVISIBLE);
+
+		mypage_kidimage_image = (ImageView)view.findViewById(R.id.mypage_kidimage_image);
+		mypage_kidimageset_image = (ImageView)view.findViewById(R.id.mypage_kidimageset_image);
 		
 		// mypage smartpush, mypage smartwatch
 		
@@ -515,17 +599,10 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 		pm_alarm_hour_text = (TextView)view.findViewById(R.id.pm_alarm_hour_text);
 		pm_alarm_minute_text = (TextView)view.findViewById(R.id.pm_alarm_minute_text);
 		
-		//mypage_nickname_view = (View)view.findViewById(R.id.mypage_nickname_view);
-		//mypage_nickname_text = (TextView)view.findViewById(R.id.mypage_nickname_text);
 
 		smartwatch_wearning_image = (ImageView)view.findViewById(R.id.smartwatch_wearning_image);
 	}
 	
-	@Override
-	public void setNicknameListener(String arg){
-		//mypage_nickname_text.setText(arg);
-	}
-
 	@Override
 	public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
 		// TODO Auto-generated method stub
@@ -533,15 +610,6 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 	}
 
 	public void setNumberpicker(){
-		
-		View hour_upbutton = mypage_hoursetting_np.getChildAt(0);
-		View hour_text = mypage_hoursetting_np.getChildAt(1);
-		View hour_downbutton = mypage_hoursetting_np.getChildAt(2);
-		
-		View minute_upbutton = mypage_minutesetting_np.getChildAt(0);
-		View minute_text = mypage_minutesetting_np.getChildAt(1);
-		View minute_downView = mypage_minutesetting_np.getChildAt(2);
-		
 		mypage_hoursetting_np.setMaxValue(12);
 		mypage_hoursetting_np.setMinValue(1);
 		mypage_hoursetting_np.setWrapSelectorWheel(true);
@@ -549,15 +617,6 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 		mypage_minutesetting_np.setMaxValue(60);
 		mypage_minutesetting_np.setMinValue(1);
 		mypage_minutesetting_np.setWrapSelectorWheel(true);
-		
-		//Drawable alarmup_image = new BitmapDrawable(getActivity().getResources(), ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_alarmset_up_image, 200, 200));
-		//Drawable alarmdown_image = new BitmapDrawable(getActivity().getResources(), ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_alarmset_down_image, 200, 200));
-		
-		//hour_upbutton.setBackground(alarmup_image);
-		//hour_downbutton.setBackground(alarmdown_image);
-		
-		//minute_upbutton.setBackground(alarmup_image);
-		//minute_downView.setBackground(alarmdown_image);
 	}
 	
 	private final Handler mHandler = new Handler() {
@@ -569,23 +628,22 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
 		
 	};
 	
+	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //super.onActivityResult(requestCode, resultCode, data);
         //Fragment fragment = getFragmentManager().findFragmentById(2);
         //fragment.onActivityResult(requestCode, resultCode, data);
 		
-        Log.d(TAG, "onActivityResult " + resultCode);
+        Log.d(TAG, "onActivityResult " + requestCode);
         
         switch (requestCode) {
         
-        /** �߰��� �κ� ���� **/
         case REQUEST_CONNECT_DEVICE:
             // When DeviceListActivity returns with a device to connect
             if (resultCode == Activity.RESULT_OK) {
             	btService.getDeviceInfo(data);
             }
             break;
-        /** �߰��� �κ� �� **/
         case REQUEST_ENABLE_BT:
             // When the request to enable Bluetooth returns
             if (resultCode == Activity.RESULT_OK) {
@@ -596,7 +654,47 @@ public class MyPageActivity extends Fragment implements MyPageNicknameDialog.onN
                 Log.d(TAG, "Bluetooth is not enabled");
             }
             break;
+            
+        case REQUEST_IMAGE_ALBUM:
+        	if (resultCode == Activity.RESULT_OK) {
+        		String filePath = Environment.getExternalStorageDirectory()
+                        + "/temp.jpg";
+
+                System.out.println("path" + filePath); // logCat으로 경로확인.
+
+                Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
+                
+                profile_circleimage(selectedImage);
+            }
+        	      
+        	break;
         }
 	}
+	
+	private Uri getTempUri() {
+        return Uri.fromFile(getTempFile());
+    }
+	
+	private File getTempFile() {
+        if (isSDCARDMOUNTED()) {
+            File f = new File(Environment.getExternalStorageDirectory(), // 외장메모리 경로
+                    "temp.jpg");
+            try {
+                f.createNewFile();      // 외장메모리에 temp.jpg 파일 생성
+            } catch (IOException e) {
+            }
+ 
+            return f;
+        } else
+            return null;
+    }
+	
+	private boolean isSDCARDMOUNTED() {
+        String status = Environment.getExternalStorageState();
+        if (status.equals(Environment.MEDIA_MOUNTED))
+            return true;
+ 
+        return false;
+    }
 	
 }
