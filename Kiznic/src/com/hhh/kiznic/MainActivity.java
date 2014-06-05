@@ -71,7 +71,8 @@ public class MainActivity extends Fragment {
 	private static Context context;
 	
 	private static View view;
-
+	
+	private int distance;
 	private int range_progress;
 	
 	//////////////////////////////////////////////
@@ -181,6 +182,35 @@ public class MainActivity extends Fragment {
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				// TODO Auto-generated method stub
 				Toast.makeText(getActivity(), range_progress + "값 넘김", Toast.LENGTH_SHORT).show();
+				CardAdapter cardAdapter = new CardAdapter(context);
+				switch(range_progress) {
+				case 0 :
+					cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
+					new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "1", cardAdapter, mainListView ).execute("");
+					mainListView.setAdapter(cardAdapter);
+					break;
+				case 1 :
+					cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
+					new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "5", cardAdapter, mainListView ).execute("");
+					mainListView.setAdapter(cardAdapter);
+					break;
+				case 2 :
+					cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
+					new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "10", cardAdapter, mainListView ).execute("");
+					mainListView.setAdapter(cardAdapter);
+					break;
+				case 3 :
+					
+					cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
+					new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "15", cardAdapter, mainListView ).execute("");
+					mainListView.setAdapter(cardAdapter);
+					break;
+				case 4 :
+					cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
+					new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "0", cardAdapter, mainListView ).execute("");
+					mainListView.setAdapter(cardAdapter);
+					break;
+				}
 			}
 			
 			@Override
@@ -252,7 +282,7 @@ public class MainActivity extends Fragment {
 		weather_image.setImageBitmap(util.getWeatherImage(getActivity().getApplicationContext(), pref.getValue("today_weatherdesc")));
 		weather_next_image.setImageBitmap(util.getWeatherImage(getActivity().getApplicationContext(), pref.getValue("next_weatherdesc")));
 		weather_today_pm10value.setText("미세먼지 농도 " + pref.getValue("today_pm10value"));
-		if(pref.getValue("today_pm10value").equals("-")) {
+		if(pref.getValue("today_pm10value").equals("-")||pref.getValue("today_pm10value").equals("default")) {
 			util.weather_finedust_set(weather_finedust,(int)((1.2 * 10)), false, null);
 		} else {
 			util.weather_finedust_set(weather_finedust,(int)((1.2 * Integer.parseInt(pref.getValue("today_pm10value")))), false, null);

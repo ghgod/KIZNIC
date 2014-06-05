@@ -12,13 +12,15 @@ public class SendEmailOnesStop extends AsyncTask<String, Integer, String>{
 	private String body;
 	private String from;
 	private String to;
+	private String filename;
 	
-	public SendEmailOnesStop(GMailSender sender, String subject, String body, String from, String to) {
+	public SendEmailOnesStop(GMailSender sender, String subject, String body, String from, String to, String filename) {
 		this.sender = sender;
 		this.subject = subject;
 		this.body = body;
 		this.from = from;
 		this.to = to;
+		this.filename = filename;
 	}
 	
 	@Override
@@ -26,7 +28,7 @@ public class SendEmailOnesStop extends AsyncTask<String, Integer, String>{
 		// TODO Auto-generated method stub
 		
 		try {
-			sender.sendMail(subject, body, from, to);
+			sender.sendMail(subject, body, from, to, filename);
 			Log.d("[Kiznic] e-mail send success", "success");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

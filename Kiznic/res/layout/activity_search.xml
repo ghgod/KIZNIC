@@ -33,6 +33,7 @@
 			        android:paddingLeft="10dip"
 					android:singleLine="true"
 					android:background="@null"
+					android:textColor="#000000"
 			        android:hint="입력"/>
 	            
 	        </LinearLayout>
@@ -143,7 +144,7 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_centerInParent="true"
-			        android:text="가격"
+			        android:text="정렬"
 			        android:textColor="#000000"
 			        android:textSize="18sp"/>
 			

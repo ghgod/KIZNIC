@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.hhh.kiznic.DetailPageActivity;
+import com.hhh.kiznic.ImageDecoder;
 import com.hhh.kiznic.MainActivity;
 import com.hhh.kiznic.MyPageActivity;
 import com.hhh.kiznic.R;
@@ -138,7 +139,7 @@ public class MainRecommendCarditemCard extends Card implements View.OnClickListe
 		recommend_distance_text.setText(playDistance);
 		new GetPlaceWeatherAsync(context, Double.parseDouble(playLatitude), Double.parseDouble(playLongitude), recommend_weatherimage_image, recommend_weathertemperature_text).execute();
 		if(playThumbnail) {
-			recommend_posterimage_image.setImageResource(R.drawable.contents_null);
+			recommend_posterimage_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(context.getResources(), R.drawable.contents_null, 200, 200));
 		} else {
 			aq.id(R.id.recommend_posterimage_image).image(simpleInfo.getPlayThumb());
 

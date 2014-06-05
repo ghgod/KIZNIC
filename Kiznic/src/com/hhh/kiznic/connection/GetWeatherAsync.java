@@ -109,7 +109,6 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 		result[0] = weatherXML;
 		result[1] = pollutionXML;
 		
-		Log.d("Weather", result[0]);
 		return result;
 	}
 	
@@ -171,7 +170,7 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 		weather_next_image.setImageBitmap(util.getWeatherImage(mContext, pref.getValue("next_weatherdesc")));
 		//Log.d("pm10value 왜", pref.getValue("today_pm10value"));
 		weather_today_pm10value.setText("미세먼지 농도 " + pref.getValue("today_pm10value"));
-		if(pref.getValue("today_pm10value").equals("-")) {
+		if(pref.getValue("today_pm10value").equals("-")||pref.getValue("today_pm10value").equals("default")) {
 			util.weather_finedust_set(weather_finedust,(int)((1.2 * 10)), false, null);
 		} else {
 			util.weather_finedust_set(weather_finedust,(int)((1.2 * Integer.parseInt(pref.getValue("today_pm10value")))), false, null);

@@ -18,11 +18,10 @@
     <string-array name = "dialog_list_genre">
         
         <item> 전체 </item>
-        <item> 공연 / 전시 </item>
+        <item> 공연 </item>
+        <item> 전시/체험 </item>
         <item> 놀이 </item>
-        <item> 체험 </item>
         <item> 축제 </item>
-        <item> 기타 </item>
         
     </string-array>
     

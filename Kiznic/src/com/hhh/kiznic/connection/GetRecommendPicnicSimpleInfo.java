@@ -213,36 +213,36 @@ public class GetRecommendPicnicSimpleInfo extends AsyncTask<String, Integer, Str
 		int genreListCount = 0;
 			
 		if(isExistSimpleInfo1) {
-			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "공연/전시", mContext, genreCount));
+			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "공연", mContext, genreCount));
 			for(int i=0; i<simpleInfo1.size(); i++) {
-				recommendCardAdapter[genreListCount].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "공연/전시", mContext, genreCount, simpleInfo1.get(i)));
+				recommendCardAdapter[genreListCount].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "공연", mContext, genreCount, simpleInfo1.get(i)));
 			}
 			genreCount++;
 			genreListCount++;
 		}
 		
 		if(isExistSimpleInfo2) {
-			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "놀이", mContext, genreCount));
+			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "전시/체험", mContext, genreCount));
 			for(int i=0; i<simpleInfo2.size(); i++) {
-				recommendCardAdapter[genreListCount].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "놀이", mContext, genreCount, simpleInfo2.get(i)));
+				recommendCardAdapter[genreListCount].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "전시/체험", mContext, genreCount, simpleInfo2.get(i)));
 			}
 			genreCount++;
 			genreListCount++;
 		}
 		
 		if(isExistSimpleInfo3) {
-			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "체험", mContext, genreCount));
+			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "놀이", mContext, genreCount));
 			for(int i=0; i<simpleInfo3.size(); i++) {
-				recommendCardAdapter[genreListCount].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "체험", mContext, genreCount, simpleInfo3.get(i)));
+				recommendCardAdapter[genreListCount].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "놀이", mContext, genreCount, simpleInfo3.get(i)));
 			}
 			genreCount++;
 			genreListCount++;
 		}
 		
 		if(isExistSimpleInfo4){
-			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "기타", mContext, genreCount));
+			cardAdapter.addItem(new MainRecommendCard(R.layout.list_item_card, "축제", mContext, genreCount));
 			for(int i=0; i<simpleInfo4.size(); i++) {
-				recommendCardAdapter[genreListCount].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "기타", mContext, genreCount, simpleInfo4.get(i)));
+				recommendCardAdapter[genreListCount].addItem(new MainRecommendCarditemCard(R.layout.list_item_card_item_card, "축제", mContext, genreCount, simpleInfo4.get(i)));
 			}
 			genreCount++;
 			genreListCount++;

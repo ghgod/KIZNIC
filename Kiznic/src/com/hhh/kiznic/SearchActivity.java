@@ -14,6 +14,7 @@ import com.hhh.kiznic.util.LocationHelper;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -50,13 +51,29 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 	private static ListView search_list_view;
 	private static CardAdapter searchcardAdapter;
 	
+	private static CardAdapter searchListAdapter;
+	
 	private static SearchcategoryDialog listdialog;
 	
 	private Context context;
 	
 	private static View view;
 
-	private static String play_type;
+	
+	
+	private String play_address;
+	private String date_condition = "1";
+	private String play_type = "0";
+	private String pagination_no = "0";
+	private String search_keyword = "";
+	
+	private LocationHelper location;
+
+	
+	
+	boolean firstCalledSearch = false;
+	
+	
 	
 	boolean lastitemVisibleFlag = false;   
 	
@@ -97,11 +114,16 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 	
 	public void getS(){
 		play_type = getArguments().getString("play_type");
-		LocationHelper location = new LocationHelper(context);
+		location = new LocationHelper(context);
 		location.run();
-		Log.d("location", String.valueOf(location.getMyLocation()));
 		
-		new GetCategorySimpleInfo(context, location, "서울특별시 영등포구", Integer.parseInt(play_type), Integer.parseInt("1"), search_list_view).execute();	
+		search_keyword = "";
+		play_address = null;
+		date_condition = "1";
+   	 	searchListAdapter = new CardAdapter(context);
+
+		new GetCategorySimpleInfo(context, searchListAdapter, location, play_address, Integer.parseInt(play_type), Integer.parseInt(date_condition), search_list_view, 0, search_keyword).execute();	
+		firstCalledSearch = true;
 	}
 	
 	//////////////////////////////////////////////////////
@@ -110,7 +132,7 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 		search_category1_relativelayout = (View)view.findViewById(R.id.search_category1_relativelayout);
 		search_category2_relativelayout = (View)view.findViewById(R.id.search_category2_relativelayout);
 		search_category3_relativelayout = (View)view.findViewById(R.id.search_category3_relativelayout);
-		search_category4_relativelayout = (View)view.findViewById(R.id.search_category4_relativelayout);
+		//search_category4_relativelayout = (View)view.findViewById(R.id.search_category4_relativelayout);
 		search_list_view = (ListView)(view.findViewById(R.id.search_list_view));
 
 		search_category1_text = (TextView)view.findViewById(R.id.search_category1_text);
@@ -118,6 +140,7 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 		search_category3_text = (TextView)view.findViewById(R.id.search_category3_text);
 		search_category4_text = (TextView)view.findViewById(R.id.search_category4_text);
 		
+		search_search_edittext = (EditText)view.findViewById(R.id.search_search_edittext);
 		search_searchbutton_image = (ImageView)view.findViewById(R.id.search_searchbutton_image);
 		
 		     //화면에 리스트의 마지막 아이템이 보여지는지 체크
@@ -134,8 +157,24 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 		         //즉 스크롤이 바닦에 닿아 멈춘 상태에 처리를 하겠다는 뜻
 		         if(scrollState == OnScrollListener.SCROLL_STATE_IDLE && lastitemVisibleFlag) {
 		            //TODO 화면이 바닦에 닿을때 처리
-		        	 Toast.makeText(getActivity().getApplicationContext(), "리스트뷰의 끝", Toast.LENGTH_SHORT).show();
-		         } 
+		        	 SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("page_no",  0);
+		        	 pagination_no = pref.getString("pagination_no", "");
+		        	 play_type = pref.getString("play_type", "");
+		        	 date_condition = pref.getString("date_condition", "");
+		        	 search_keyword = pref.getString("search_keyword", "");
+		        	 
+		        	 
+		        	 LocationHelper location = new LocationHelper(getActivity().getApplicationContext());
+		        	 location.run();
+		        	// Toast.makeText(getActivity().getApplicationContext(),"페이지 넘버 : " + pagination_no, Toast.LENGTH_SHORT).show();
+		        	// CardAdapter searchListAdapter = new CardAdapter(getActivity().getApplicationContext());
+		        	 if(!pref.getString("simpleInfo.size", "").equals("0")){
+			        	 new GetCategorySimpleInfo(context, searchListAdapter, location, play_address, Integer.parseInt(play_type), Integer.parseInt(date_condition), search_list_view, Integer.parseInt(pagination_no), search_keyword).execute();	
+		        	 } else {
+		        		 Toast.makeText(context, "더 이상 컨텐츠가 없습니다~", Toast.LENGTH_SHORT).show();
+		        	 }
+		         }
+		         
 		    }
 		 
 		});
@@ -150,7 +189,8 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 		search_category1_relativelayout.setOnClickListener(this);
 		search_category2_relativelayout.setOnClickListener(this);
 		search_category3_relativelayout.setOnClickListener(this);
-		search_category4_relativelayout.setOnClickListener(this);
+		//search_category4_relativelayout.setOnClickListener(this);
+		search_searchbutton_image.setOnClickListener(this);
 	}
 	
 	@Override
@@ -165,8 +205,22 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 		case R.id.search_category3_relativelayout:
 			showListDialog(2, search_category3_text.getText().toString());
 			break;
-		case R.id.search_category4_relativelayout:
-			showListDialog(3, search_category4_text.getText().toString());
+	//	case R.id.search_category4_relativelayout:
+	//		showListDialog(3, search_category4_text.getText().toString());
+	//		break;
+		case R.id.search_searchbutton_image:
+			search_keyword = search_search_edittext.getText().toString();
+			LocationHelper location = new LocationHelper(getActivity().getApplicationContext());
+        	location.run();
+       	 	CardAdapter searchListAdapter = new CardAdapter(getActivity().getApplicationContext());
+			
+			if(search_keyword.equals("")){
+				Toast.makeText(context,"검색어를 입력하세요~", Toast.LENGTH_SHORT).show();
+			} else {
+				new GetCategorySimpleInfo(context, searchListAdapter, location, play_address, Integer.parseInt(play_type), Integer.parseInt(date_condition), search_list_view, Integer.parseInt(pagination_no), search_keyword).execute();	
+			}
+			      	
+
 			break;
 		}
 	}
@@ -183,20 +237,116 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 
 	@Override
 	public void setSearchFlagListener(String arg, int num){
-	
+		
+		searchListAdapter = new CardAdapter(getActivity().getApplicationContext());
+		String play_type = null;
+		String date_condition = null;
+		String search_keyword;
+		String pagination_no;
+		
+		LocationHelper location = new LocationHelper(context);
+		location.run();
 		switch(num){
 		case 0:
-			search_category1_text.setText(arg);
+			String[] parseArg = arg.split(" ");
+			search_category1_text.setText(parseArg[1]);
+			
+			
+			if(firstCalledSearch) {
+				SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("page_no",  0);
+	        	 pagination_no = pref.getString("pagination_no", "");
+	        	 play_type = pref.getString("play_type", "");
+	        	 date_condition = pref.getString("date_condition", "");
+	        	 search_keyword = pref.getString("search_keyword", "");
+			} else {
+				play_type = this.play_type;
+				pagination_no = this.pagination_no;
+				date_condition = this.date_condition;
+				search_keyword = search_search_edittext.getText().toString();
+			}
+			
+			
+			play_address = arg;
+			
+       	 	new GetCategorySimpleInfo(context, searchListAdapter, location, play_address, Integer.parseInt(play_type), Integer.parseInt(date_condition), search_list_view, Integer.parseInt(pagination_no), search_keyword).execute();	
+
 			break;
 		case 1:
 			search_category2_text.setText(arg);
+			
+			
+			if(arg.equals("전체")) {
+				date_condition = "1";
+			}
+			if(arg.equals("진행 예정")){
+				date_condition = "2";
+			}
+			if(arg.equals("1주 이내")) {
+				date_condition = "3";
+			}
+			if(arg.equals("2주 이내")) {
+				date_condition = "4";
+			}
+			if(arg.equals("2주 이상")) {
+				date_condition = "5";
+			}
+			if(arg.equals("상설")) {
+				date_condition = "6";
+			}
+			
+			if(firstCalledSearch) {
+				SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("page_no",  0);
+	        	 pagination_no = pref.getString("pagination_no", "");
+	        	 play_type = pref.getString("play_type", "");
+	        	 date_condition = pref.getString("date_condition", "");
+	        	 search_keyword = pref.getString("search_keyword", "");
+			} else {
+				play_type = this.play_type;
+				pagination_no = this.pagination_no;
+				search_keyword = search_search_edittext.getText().toString();
+			}
+
+			new GetCategorySimpleInfo(context, searchListAdapter, location, play_address, Integer.parseInt(play_type), Integer.parseInt(date_condition), search_list_view, Integer.parseInt(pagination_no), search_keyword).execute();	
+
 			break;
 		case 2:
 			search_category3_text.setText(arg);
+			
+			
+			if(arg.equals("전체")) {
+				play_type = "0";
+			}
+			if(arg.equals("공연")) {
+				play_type = "1";
+			}
+			if(arg.equals("전시/체험")) {
+				play_type = "2";
+			}
+			if(arg.equals("놀이")) {
+				play_type = "3";
+			}
+			if(arg.equals("축제")) {
+				play_type = "4";
+			}
+			
+			if(firstCalledSearch) {
+				SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("page_no",  0);
+	        	 pagination_no = pref.getString("pagination_no", "");
+	        	 play_type = pref.getString("play_type", "");
+	        	 date_condition = pref.getString("date_condition", "");
+	        	 search_keyword = pref.getString("search_keyword", "");
+			} else {
+				pagination_no = this.pagination_no;
+				date_condition = this.date_condition;
+				search_keyword = search_search_edittext.getText().toString();
+			}
+			
+       	 	new GetCategorySimpleInfo(context, searchListAdapter, location, play_address, Integer.parseInt(play_type), Integer.parseInt(date_condition), search_list_view, Integer.parseInt(pagination_no), search_keyword).execute();	
+
 			break;
-		case 3:
-			search_category4_text.setText(arg);
-			break;
+		//case 3:
+		//	search_category4_text.setText(arg);
+		//	break;
 		}
 	
 	}

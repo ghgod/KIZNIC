@@ -111,34 +111,89 @@
 		        android:layout_height="1dp"
 		        android:layout_marginBottom="5dp"
 		        android:background="#76C4C1" />
-            
-            
-            
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="내용"
-                android:textSize="15sp"
-                android:textColor="#000000" />
+                android:layout_marginBottom="5dp" >
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="첨부"
+                    android:textSize="15sp"
+                    android:textColor="#000000"  />
+
+                <TextView
+                    android:id="@+id/sendemail_attach_photo_filename"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                     />
+
+                <Button
+                    android:id="@+id/sendemail_attach_photo"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="#5076C4C1"
+                    android:text="사진 첨부" />
+
+            </LinearLayout>
+            <ImageView
+		        android:id="@+id/imageView1"
+		        android:layout_width="match_parent"
+		        android:layout_height="1dp"
+		        android:layout_marginLeft="5dp"
+		        android:layout_marginRight="5dp"
+		        android:layout_marginBottom="5dp"
+		        android:background="#76C4C1" />
 
             <EditText
                 android:id="@+id/sendemail_contents_edittext"
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
+                android:layout_height="300dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:ems="10"
-                android:gravity="center"
+                android:hint = "불편한 사항이나 개선 사항을 입력하세요~"
+                android:gravity="center_horizontal"
                 android:background="@null"
                 android:inputType="textMultiLine" />
 
-            <Button
-                android:id="@+id/sendemail_button"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="#5076C4C1"
-                android:textColor="#000000"
-                android:textSize="15sp"
-                android:text="보내기" />
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/sendemail_cancel_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:layout_marginRight="2dp"
+                    android:background="#5076C4C1"
+                    android:textColor="#000000"
+                 	android:textSize="15sp"
+                    android:text="취소" />
+
+                <Button
+                    android:id="@+id/sendemail_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="#5076C4C1"
+                    android:text="보내기"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </FrameLayout>

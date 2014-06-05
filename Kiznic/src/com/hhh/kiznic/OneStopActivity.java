@@ -51,6 +51,7 @@ public class OneStopActivity extends Fragment implements OnClickListener{
 		case R.id.onestop_ciss :
 			Intent intent = new Intent(getActivity().getBaseContext(), SendEmailActivity.class);
 			intent.putExtra("email_address", "aiaipming@gmail.com");
+			//한국 소비자원 : safe@kca.go.kr
 			startActivity(intent);
 			break;
 		}

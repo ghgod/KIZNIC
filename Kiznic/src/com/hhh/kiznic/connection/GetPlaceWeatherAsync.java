@@ -68,7 +68,7 @@ public class GetPlaceWeatherAsync extends AsyncTask<String, Integer, String>{
 			e.printStackTrace();
 		}
 		
-		Log.d("weatherInfo를 안줘?", weatherInfo.get(0).getWeatherDesc());
+		//Log.d("weatherInfo를 안줘?", weatherInfo.get(0).getWeatherDesc());
 		recommend_weatherimage_image.setImageBitmap(util.getPlaceWeatherImage(context, weatherInfo.get(0).getWeatherDesc()));
 		recommend_weathertemperature_text.setText(weatherInfo.get(0).getTemperature()+"℃");
 	
