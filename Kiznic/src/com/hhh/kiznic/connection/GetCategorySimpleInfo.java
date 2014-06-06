@@ -18,12 +18,16 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 public class GetCategorySimpleInfo extends AsyncTask<String, Integer, String>{
 	
 	Context context;
 	LocationHelper location;
+	ProgressBar progressbar;
 	ListView search_listview;
 	String selectedRegion;
 	int selectedGenre;
@@ -34,7 +38,7 @@ public class GetCategorySimpleInfo extends AsyncTask<String, Integer, String>{
 	String search_keyword;
 	CardAdapter searchListAdapter;
 	
-	public GetCategorySimpleInfo(Context context, CardAdapter searchListAdapter, LocationHelper location, String selectedRegion, int selectedGenre, int selectedPeriod, ListView searchListView, int pagination_no, String search_keyword ) {
+	public GetCategorySimpleInfo(Context context, CardAdapter searchListAdapter, LocationHelper location, String selectedRegion, int selectedGenre, int selectedPeriod, ListView searchListView, ProgressBar progressbar,int pagination_no, String search_keyword ) {
 		this.context = context;
 		this.searchListAdapter = searchListAdapter;
 		this.location = location;
@@ -42,6 +46,7 @@ public class GetCategorySimpleInfo extends AsyncTask<String, Integer, String>{
 		this.selectedGenre = selectedGenre;
 		this.selectedPeriod = selectedPeriod;
 		this.search_listview = searchListView;
+		this.progressbar = progressbar;
 		this.pagination_no = pagination_no;
 		this.search_keyword = search_keyword;
 		
@@ -49,6 +54,10 @@ public class GetCategorySimpleInfo extends AsyncTask<String, Integer, String>{
 	
 	protected void onPreExecute() {
 		super.onPreExecute();
+		//location = new LocationHelper(context);
+		//location.run();
+		
+		
 		if(selectedRegion == null) {
 			String[] region = location.getAddress();
 			selectedRegion = region[0];
@@ -59,11 +68,11 @@ public class GetCategorySimpleInfo extends AsyncTask<String, Integer, String>{
 			search_keyword = null;
 		}
 		
-		LocationHelper location = new LocationHelper(context);
-		location.run();
+		
 		latitude = String.valueOf(location.getLat());
 		longitude = String.valueOf(location.getLng());
-
+		
+		progressbar.setVisibility(View.VISIBLE);
 	}
 	
 	@Override
@@ -117,6 +126,9 @@ public class GetCategorySimpleInfo extends AsyncTask<String, Integer, String>{
 		}
 		
 		Log.e("simpleInfo.size", String.valueOf(simpleInfo.size()));
+		if(simpleInfo.size()==0) {
+			//Toast.makeText(context, "검색 결과가 없습니다~", Toast.LENGTH_SHORT).show();
+		}
 		
 		//CardAdapter searchListAdapter = new CardAdapter(context);
 		
@@ -128,6 +140,8 @@ public class GetCategorySimpleInfo extends AsyncTask<String, Integer, String>{
 		searchListAdapter.notifyDataSetChanged();
 		
 		search_listview.setAdapter(searchListAdapter);
+		
+		progressbar.setVisibility(View.GONE);
 		
 		
 		SharedPreferences pref = context.getSharedPreferences("page_no", 0);

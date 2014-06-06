@@ -49,9 +49,21 @@ public class OneStopActivity extends Fragment implements OnClickListener{
 		// TODO Auto-generated method stub
 		switch(v.getId()){
 		case R.id.onestop_ciss :
-			Intent intent = new Intent(getActivity().getBaseContext(), SendEmailActivity.class);
-			intent.putExtra("email_address", "aiaipming@gmail.com");
+			//Intent intent = new Intent(getActivity().getBaseContext(), SendEmailActivity.class);
+			//intent.putExtra("email_address", "aiaipming@gmail.com");
 			//한국 소비자원 : safe@kca.go.kr
+			//startActivity(intent);
+			
+			Intent intent = new Intent(Intent.ACTION_SEND);
+			intent.setType("plain/text");
+			
+			String[] tos = {"aiapming@gmail.com"};
+			intent.putExtra(Intent.EXTRA_EMAIL, tos);
+			
+			intent.putExtra(Intent.EXTRA_SUBJECT, "김규홍은 들어라");
+			intent.putExtra(Intent.EXTRA_TEXT, "김규홍은 듣고나서 밥먹으러 가자");
+			
+			//intent.putExtra(Intent.EXTRA_STREAM, value);
 			startActivity(intent);
 			break;
 		}

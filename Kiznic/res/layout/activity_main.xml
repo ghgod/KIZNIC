@@ -75,16 +75,30 @@
     
     <!-- 카드 리스트  -->
 
-    <ListView
-        android:id="@+id/main_list_view"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:cacheColorHint="@android:color/transparent"
-        android:divider="@null"
-        android:footerDividersEnabled="true"
-        android:headerDividersEnabled="true"
-        android:listSelector="@android:color/transparent"
-        android:scrollbars="none" >
-    </ListView>
+        android:layout_height="wrap_content" >
+
+        <ListView
+            android:id="@+id/main_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@null"
+            android:footerDividersEnabled="true"
+            android:headerDividersEnabled="true"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none" >
+        </ListView>
+
+        <ProgressBar
+            android:id="@+id/main_progressbar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_gravity="bottom" />
+
+    </FrameLayout>
 
 </LinearLayout>

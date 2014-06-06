@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +59,8 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 	private Context context;
 	
 	private static View view;
+	
+	private static ProgressBar progressbar;
 
 	
 	
@@ -122,7 +125,7 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 		date_condition = "1";
    	 	searchListAdapter = new CardAdapter(context);
 
-		new GetCategorySimpleInfo(context, searchListAdapter, location, play_address, Integer.parseInt(play_type), Integer.parseInt(date_condition), search_list_view, 0, search_keyword).execute();	
+		new GetCategorySimpleInfo(context, searchListAdapter, location, play_address, Integer.parseInt(play_type), Integer.parseInt(date_condition), search_list_view, progressbar, 0, search_keyword).execute();	
 		firstCalledSearch = true;
 	}
 	
@@ -142,6 +145,8 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 		
 		search_search_edittext = (EditText)view.findViewById(R.id.search_search_edittext);
 		search_searchbutton_image = (ImageView)view.findViewById(R.id.search_searchbutton_image);
+		
+		progressbar = (ProgressBar)view.findViewById(R.id.progressBar1);
 		
 		     //화면에 리스트의 마지막 아이템이 보여지는지 체크
 		
@@ -164,14 +169,15 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 		        	 search_keyword = pref.getString("search_keyword", "");
 		        	 
 		        	 
-		        	 LocationHelper location = new LocationHelper(getActivity().getApplicationContext());
-		        	 location.run();
+		        	LocationHelper location = new LocationHelper(getActivity().getApplicationContext());
+		        	location.run();
 		        	// Toast.makeText(getActivity().getApplicationContext(),"페이지 넘버 : " + pagination_no, Toast.LENGTH_SHORT).show();
 		        	// CardAdapter searchListAdapter = new CardAdapter(getActivity().getApplicationContext());
 		        	 if(!pref.getString("simpleInfo.size", "").equals("0")){
-			        	 new GetCategorySimpleInfo(context, searchListAdapter, location, play_address, Integer.parseInt(play_type), Integer.parseInt(date_condition), search_list_view, Integer.parseInt(pagination_no), search_keyword).execute();	
+		        		 //Toast.makeText(getActivity().getApplicationContext(), "새로운 컨텐츠를 불러옵니다~", Toast.LENGTH_LONG).show();
+		        		 new GetCategorySimpleInfo(getActivity().getApplicationContext(), searchListAdapter, location, play_address, Integer.parseInt(play_type), Integer.parseInt(date_condition), search_list_view, progressbar, Integer.parseInt(pagination_no), search_keyword).execute();	
 		        	 } else {
-		        		 Toast.makeText(context, "더 이상 컨텐츠가 없습니다~", Toast.LENGTH_SHORT).show();
+		        		 Toast.makeText(getActivity().getApplicationContext(), "더 이상 컨텐츠가 없습니다~", Toast.LENGTH_SHORT).show();
 		        	 }
 		         }
 		         
@@ -213,11 +219,11 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 			LocationHelper location = new LocationHelper(getActivity().getApplicationContext());
         	location.run();
        	 	CardAdapter searchListAdapter = new CardAdapter(getActivity().getApplicationContext());
-			
+			pagination_no = "0";
 			if(search_keyword.equals("")){
-				Toast.makeText(context,"검색어를 입력하세요~", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity().getApplicationContext(),"검색어를 입력하세요~", Toast.LENGTH_SHORT).show();
 			} else {
-				new GetCategorySimpleInfo(context, searchListAdapter, location, play_address, Integer.parseInt(play_type), Integer.parseInt(date_condition), search_list_view, Integer.parseInt(pagination_no), search_keyword).execute();	
+				new GetCategorySimpleInfo(getActivity().getApplicationContext(), searchListAdapter, location, play_address, Integer.parseInt(play_type), Integer.parseInt(date_condition), search_list_view, progressbar, Integer.parseInt(pagination_no), search_keyword).execute();	
 			}
 			      	
 
@@ -244,7 +250,7 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 		String search_keyword;
 		String pagination_no;
 		
-		LocationHelper location = new LocationHelper(context);
+		LocationHelper location = new LocationHelper(getActivity().getApplicationContext());
 		location.run();
 		switch(num){
 		case 0:
@@ -254,13 +260,13 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 			
 			if(firstCalledSearch) {
 				SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("page_no",  0);
-	        	 pagination_no = pref.getString("pagination_no", "");
+	        	 pagination_no ="0";
 	        	 play_type = pref.getString("play_type", "");
 	        	 date_condition = pref.getString("date_condition", "");
 	        	 search_keyword = pref.getString("search_keyword", "");
 			} else {
 				play_type = this.play_type;
-				pagination_no = this.pagination_no;
+				pagination_no = "0";
 				date_condition = this.date_condition;
 				search_keyword = search_search_edittext.getText().toString();
 			}
@@ -268,7 +274,7 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 			
 			play_address = arg;
 			
-       	 	new GetCategorySimpleInfo(context, searchListAdapter, location, play_address, Integer.parseInt(play_type), Integer.parseInt(date_condition), search_list_view, Integer.parseInt(pagination_no), search_keyword).execute();	
+       	 	new GetCategorySimpleInfo(getActivity().getApplicationContext(), searchListAdapter, location, play_address, Integer.parseInt(play_type), Integer.parseInt(date_condition), search_list_view, progressbar, Integer.parseInt(pagination_no), search_keyword).execute();	
 
 			break;
 		case 1:
@@ -296,17 +302,17 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 			
 			if(firstCalledSearch) {
 				SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("page_no",  0);
-	        	 pagination_no = pref.getString("pagination_no", "");
+	        	 pagination_no = "0";
 	        	 play_type = pref.getString("play_type", "");
 	        	 date_condition = pref.getString("date_condition", "");
 	        	 search_keyword = pref.getString("search_keyword", "");
 			} else {
 				play_type = this.play_type;
-				pagination_no = this.pagination_no;
+				pagination_no = "0";
 				search_keyword = search_search_edittext.getText().toString();
 			}
 
-			new GetCategorySimpleInfo(context, searchListAdapter, location, play_address, Integer.parseInt(play_type), Integer.parseInt(date_condition), search_list_view, Integer.parseInt(pagination_no), search_keyword).execute();	
+			new GetCategorySimpleInfo(getActivity().getApplicationContext(), searchListAdapter, location, play_address, Integer.parseInt(play_type), Integer.parseInt(date_condition), search_list_view, progressbar, Integer.parseInt(pagination_no), search_keyword).execute();	
 
 			break;
 		case 2:
@@ -331,17 +337,17 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 			
 			if(firstCalledSearch) {
 				SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("page_no",  0);
-	        	 pagination_no = pref.getString("pagination_no", "");
+	        	 pagination_no = "0";
 	        	 play_type = pref.getString("play_type", "");
 	        	 date_condition = pref.getString("date_condition", "");
 	        	 search_keyword = pref.getString("search_keyword", "");
 			} else {
-				pagination_no = this.pagination_no;
+				pagination_no = "0";
 				date_condition = this.date_condition;
 				search_keyword = search_search_edittext.getText().toString();
 			}
 			
-       	 	new GetCategorySimpleInfo(context, searchListAdapter, location, play_address, Integer.parseInt(play_type), Integer.parseInt(date_condition), search_list_view, Integer.parseInt(pagination_no), search_keyword).execute();	
+       	 	new GetCategorySimpleInfo(getActivity().getApplicationContext(), searchListAdapter, location, play_address, Integer.parseInt(play_type), Integer.parseInt(date_condition), search_list_view,progressbar, Integer.parseInt(pagination_no), search_keyword).execute();	
 
 			break;
 		//case 3:

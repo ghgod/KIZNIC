@@ -726,7 +726,7 @@
 				            android:layout_width="wrap_content"
 				            android:layout_height="wrap_content"
 							android:layout_marginLeft="10dip"
-				            android:text="Galaxy gear와 Kiznic의 연동이 끊어질 경우"
+				            android:text="스마트폰과 Kiznic의 연동이 끊어질 경우"
 				            android:textColor="#000000"
 				            android:textSize="14sp"/>
 			            
@@ -773,7 +773,7 @@
 				            android:layout_height="wrap_content"
 				            android:layout_alignParentRight="true"
 				            android:layout_centerVertical="true"
-				            android:text="*Galaxy gear 연동"
+				            android:text="*스마트폰 블루투스 연동"
 				            android:textColor="#000000"
 				            android:textSize="12sp"/>
 			        

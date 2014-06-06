@@ -25,14 +25,17 @@
         android:theme="@style/ThemeHoloWithActionBar">
         <activity
             android:name="com.hhh.kiznic.MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">>
+            
+        </activity>
         <activity android:name="MyPageActivity"
             android:screenOrientation="portrait"></activity>
         <activity android:name="SearchActivity"
             android:screenOrientation="portrait"></activity>
         <activity android:name="SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
              <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -28,6 +28,7 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 	TextView weather_mylocation;
 	TextView weather_today_timedesc;
 	TextView weather_today_temp;
+	TextView weather_today_feeltemp;
 	TextView weather_today_rainprob;
 	TextView weather_today_windspeed;
 	TextView weather_today_humidity;
@@ -54,7 +55,7 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 	int flag;
 	
 	public GetWeatherAsync(Context mContext, int flag, Databasehelper dbHelper, TextView weather_mylocation, TextView weather_today_timedesc,  
-			TextView weather_today_temp, TextView weather_today_rainprob, TextView weather_today_windspeed,
+			TextView weather_today_temp, TextView weather_today_feeltemp, TextView weather_today_rainprob, TextView weather_today_windspeed,
 			TextView weather_today_humidity, TextView weather_next_timedesc, TextView weather_next_temp,
 			ImageView weather_image,ImageView weather_next_image, ImageView weather_finedust, TextView weather_today_pm10value
 			) 
@@ -65,6 +66,7 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 		this.weather_mylocation = weather_mylocation;
 		this.weather_today_timedesc = weather_today_timedesc;
 		this.weather_today_temp = weather_today_temp;
+		this.weather_today_feeltemp = weather_today_feeltemp;
 		this.weather_today_rainprob = weather_today_rainprob;
 		this.weather_today_windspeed = weather_today_windspeed;
 		this.weather_today_humidity = weather_today_humidity;
@@ -144,7 +146,7 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 			pref.put("next_time", weatherInfo.get(1).getTime());
 			pref.put("next_temp", weatherInfo.get(1).getTemperature());
 			pref.put("next_weatherdesc", weatherInfo.get(1).getWeatherDesc());
-			pref.put("today_pm10value", pollutionInfo.get(0).getPM10Value());
+			//pref.put("today_pm10value", pollutionInfo.get(0).getPM10Value());
 					
 		} 
 		//if(flag == 1) {
@@ -160,6 +162,7 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 		weather_mylocation.setText(location.getMyLocation());
 		weather_today_timedesc.setText(pref.getValue("today_daystate") + " " + pref.getValue("today_time") + ", " + pref.getValue("today_weatherdesc"));
 		weather_today_temp.setText(pref.getValue("today_temp")+"℃");
+		weather_today_feeltemp.setText("체감온도 "+ pref.getValue("today_feeltemp")+"℃");
 		weather_today_rainprob.setText(" " + pref.getValue("today_rainprob")+ " %");
 		weather_today_windspeed.setText(" " + pref.getValue("today_windspeed") + " m/s");
 		weather_today_humidity.setText(pref.getValue("today_humidity")+"%");
@@ -169,7 +172,7 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 		weather_image.setImageBitmap(util.getWeatherImage(mContext, pref.getValue("today_weatherdesc")));
 		weather_next_image.setImageBitmap(util.getWeatherImage(mContext, pref.getValue("next_weatherdesc")));
 		//Log.d("pm10value 왜", pref.getValue("today_pm10value"));
-		weather_today_pm10value.setText("미세먼지 농도 " + pref.getValue("today_pm10value"));
+		//weather_today_pm10value.setText("미세먼지 농도 " + pref.getValue("today_pm10value"));
 		if(pref.getValue("today_pm10value").equals("-")||pref.getValue("today_pm10value").equals("default")) {
 			util.weather_finedust_set(weather_finedust,(int)((1.2 * 10)), false, null);
 		} else {

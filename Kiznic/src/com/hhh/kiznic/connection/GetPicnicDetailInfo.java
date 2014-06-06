@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.hhh.kiznic.DetailPageActivity;
+import com.hhh.kiznic.ImageDecoder;
 import com.hhh.kiznic.NMapPOIflagType;
 import com.hhh.kiznic.NMapViewerResourceProvider;
 import com.hhh.kiznic.R;
@@ -51,6 +52,19 @@ public class GetPicnicDetailInfo extends AsyncTask<String, Integer, String>{
 	ListView detail_list_view;
 	ListView detailNevigationInfoListView;
 	int play_no;
+	
+	String title;
+	String subtitle;
+	String description;
+	String startDate;
+	String endDate;
+	String place;
+	String price;
+	String ages;
+	String traffic;
+	String lat;
+	String lng;
+
 	
 
 	
@@ -105,11 +119,14 @@ public class GetPicnicDetailInfo extends AsyncTask<String, Integer, String>{
 		
 		Log.d("detail_result", result);
 		
+		boolean playThumbnail = false;
 		Util util = new Util();
 		PicnicDetailInfo detailInfo = null;
 		CardAdapter detail_info_adapter = new CardAdapter(context);
 		CardAdapter detailNevigationInfoAdapter = new CardAdapter(context);
 		
+		
+			
 		try {
 			detailInfo = util.parsePicnicDetailInfoJSON(result);
 		} catch (JSONException e) {
@@ -117,6 +134,84 @@ public class GetPicnicDetailInfo extends AsyncTask<String, Integer, String>{
 			e.printStackTrace();
 		}
 		
+		title = detailInfo.getPlay_title();
+		//subtitle = detailInfo.getPlay_subtitle();
+		description = detailInfo.getPlay_description();
+		startDate = detailInfo.getPlay_start_date();
+		endDate = detailInfo.getPlay_end_date();
+		place = detailInfo.getPlay_place();
+		price = detailInfo.getPlay_price();
+		ages = detailInfo.getPlay_ages();
+		traffic = detailInfo.getPlay_traffic();
+		
+		if(detailInfo.getPlay_photo().equals("kiznic")) {
+			playThumbnail = true;
+		}
+		
+		Log.e("title", title);
+		//Log.e("subtitle", subtitle);
+		Log.e("description", description);
+		Log.e("startDate", startDate);
+		Log.e("endDate", endDate);
+		Log.e("place", place);
+		Log.e("price", price);
+		Log.e("ages", ages);
+		Log.e("traffic", traffic);
+		/*
+		if(detailInfo.getPlay_title().equals("null")){
+			title = "kiznic";
+		} else {
+			title = detailInfo.getPlay_title();
+		}
+		
+		if(detailInfo.getPlay_subtitle().equals("null")){
+			subtitle = "kiznic";
+		} else {
+			subtitle = detailInfo.getPlay_subtitle();
+		}
+		
+		if(detailInfo.getPlay_description().equals("null")){
+			description = "kiznic";
+		} else {
+			description = detailInfo.getPlay_description();
+		}
+		
+		if(detailInfo.getPlay_start_date().equals("null")){
+			startDate = "kiznic";
+		} else {
+			startDate = detailInfo.getPlay_start_date();
+		}
+		
+		if(detailInfo.getPlay_end_date().equals("null")) {
+			endDate = "kiznic";
+		} else {
+			endDate = detailInfo.getPlay_end_date();
+		}
+		
+		if(detailInfo.getPlay_place().equals("null")) {
+			place = "kiznic";
+		} else {
+			place = detailInfo.getPlay_place();
+		}
+		
+		if(detailInfo.getPlay_price().equals("null")) {
+			price = "kiznic";
+		} else {
+			price = detailInfo.getPlay_price();
+		}
+		
+		if(detailInfo.getPlay_ages().equals("null")) {
+			ages = "kiznic";
+		} else {
+			ages = detailInfo.getPlay_ages();
+		}
+		
+		if(detailInfo.getPlay_traffic().equals("null")) {
+			traffic = "kiznic";
+		} else {
+			traffic = detailInfo.getPlay_traffic();
+		}
+		*/
 		
 		SharedPreferences pref = context.getSharedPreferences("place_geo", 0);
         Editor editor = pref.edit();
@@ -130,30 +225,35 @@ public class GetPicnicDetailInfo extends AsyncTask<String, Integer, String>{
 				
 	
         AQuery aq = new AQuery(detail_main_poster.getRootView());
-		detail_main_title.setText(detailInfo.getPlay_title() +":"+ detailInfo.getPlay_subtitle());
+		detail_main_title.setText(title);
 		
-
-		aq.id(R.id.detail_mainposter_image).image(detailInfo.getPlay_photo());
+		if(playThumbnail) {
+			detail_main_poster.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(context.getResources(), R.drawable.contents_null, 200, 200));
+		} else {
+			aq.id(R.id.detail_mainposter_image).image(detailInfo.getPlay_photo());
+		}
 		
-		detail_info_text.setText(detailInfo.getPlay_description());
+		
+		
+		detail_info_text.setText(description);
 		
 		int count = 0;
 		
 		// 일정
-		detail_info_adapter.addItem(new DetailListCard(R.layout.detailpage_info_list_card, "일정", context, count++, detailInfo.getPlay_start_date() + " ~ " + detailInfo.getPlay_end_date()));
+		detail_info_adapter.addItem(new DetailListCard(R.layout.detailpage_info_list_card, "일정", context, count++, startDate + " ~ " + endDate));
 		// 장소
-		detail_info_adapter.addItem(new DetailListCard(R.layout.detailpage_info_list_card, "장소", context, count++, detailInfo.getPlay_place()));
+		detail_info_adapter.addItem(new DetailListCard(R.layout.detailpage_info_list_card, "장소", context, count++, place));
 		// 가격
-		detail_info_adapter.addItem(new DetailListCard(R.layout.detailpage_info_list_card, "가격", context, count++, detailInfo.getPlay_price()));
+		detail_info_adapter.addItem(new DetailListCard(R.layout.detailpage_info_list_card, "가격", context, count++, price));
 		// 연령
-		detail_info_adapter.addItem(new DetailListCard(R.layout.detailpage_info_list_card, "연령", context, count++, detailInfo.getPlay_ages()));
+		detail_info_adapter.addItem(new DetailListCard(R.layout.detailpage_info_list_card, "연령", context, count++, ages));
 		//detail_info_adapter.addItem()
 		
 		detail_list_view.setAdapter(detail_info_adapter);
 		
 		int traffic_count = 0;
 		
-		detailNevigationInfoAdapter.addItem(new DetailnevigationlistCard(R.layout.detailpage_nevigation_list_card, "Detail Nevigation Info Card", context, traffic_count++, detailInfo.getPlay_traffic()));
+		detailNevigationInfoAdapter.addItem(new DetailnevigationlistCard(R.layout.detailpage_nevigation_list_card, "Detail Nevigation Info Card", context, traffic_count++, traffic));
 		
 		detailNevigationInfoListView.setAdapter(detailNevigationInfoAdapter);
 	}

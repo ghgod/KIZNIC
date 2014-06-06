@@ -38,7 +38,7 @@ public class MainWeatherCard extends Card implements View.OnClickListener{
 		
 		init();
 		
-		new GetWeatherAsync(context, 0, dbHelper,  weather_location_text, weather_simpleinfo_text, weather_temperature_text, weather_rainfallpercent_text, weather_windspeedpercent_text, weather_humidity_text, weather_nextdaysimpleinfo_text, weather_nexttemperature_text,  weather_weatherimage_image, weather_nextweatherimage_image, weather_finedustimage_image, weather_finedusttext_text ).execute("");
+		new GetWeatherAsync(context, 0, dbHelper,  weather_location_text, weather_simpleinfo_text, weather_temperature_text, weather_windcilltemperature_text,weather_rainfallpercent_text, weather_windspeedpercent_text, weather_humidity_text, weather_nextdaysimpleinfo_text, weather_nexttemperature_text,  weather_weatherimage_image, weather_nextweatherimage_image, weather_finedustimage_image, weather_finedusttext_text ).execute("");
 
 		
 		setListener();

@@ -842,6 +842,7 @@ public static String transformRegionName(String region1) {
 		DetailInfo.setPlay_type(util.checkNull(info.getString("play_type")));
 		DetailInfo.setPlay_description(util.checkNull(info.getString("play_description")));
 		DetailInfo.setPlay_price(util.checkNull(info.getString("play_price")));
+		DetailInfo.setPlay_place(util.checkNull(info.getString("play_place")));
 		DetailInfo.setPlay_photo(util.checkNull(info.getString("play_photo")));
 		DetailInfo.setPlay_contact(util.checkNull(info.getString("play_contact")));
 		DetailInfo.setPlay_link(util.checkNull(info.getString("play_link")));
@@ -863,36 +864,36 @@ public static String transformRegionName(String region1) {
 	
 	public Bitmap getWeatherImage(Context context, String weatherDesc) {
 		
-Bitmap image = null;
+		Bitmap image = null;
 		
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inSampleSize = 4;
 				
 		if(weatherDesc.equals("맑음")) {
-			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_sunny_image_sky, options);
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.main_weather_sunny_image_sky, options);
 			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true ); 		}
 		else if(weatherDesc.equals("흐림")) {
-			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_cloudy_image_sky, options);
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.main_weather_cloudy_image_sky, options);
 			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true ); 
 		}
 		else if(weatherDesc.equals("구름 많음")) {
-			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_verycloudy_image_sky, options);
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.main_weather_verycloudy_image_sky, options);
 			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true ); 
 		}
 		else if(weatherDesc.equals("구름 조금")) {
-			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_slightlycover_image_sky, options);
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.main_weather_slightlycover_image_sky, options);
 			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true ); 
 		}
 		else if(weatherDesc.equals("비")) {
-			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_rain_image_sky, options);
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.main_weather_rain_image_sky, options);
 			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true ); 
 		}
 		else if(weatherDesc.equals("눈/비")) {
-			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_snowrain_image_sky, options);
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.main_weather_snowrain_image_sky, options);
 			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true ); 
 		}
 		else if(weatherDesc.equals("눈")) {
-			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.weather_snow_image_sky, options);
+			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.main_weather_snow_image_sky, options);
 			image = Bitmap.createScaledBitmap( src, src.getWidth(), src.getHeight(), true );
 		}
 		

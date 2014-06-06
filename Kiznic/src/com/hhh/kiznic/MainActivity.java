@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,7 +65,7 @@ public class MainActivity extends Fragment {
 	private static ImageView weather_image;
 	private static ImageView weather_next_image;
 	private static ImageView profile_kidimage_image;
-	
+	private static ProgressBar main_progressbar;
 	private static ImageView main_seekbar_background;
 	
 	private static SeekBar condition_range_seekbar; 
@@ -112,7 +113,7 @@ public class MainActivity extends Fragment {
 		return view;
 	}
 	private void set_data() {
-		if(localdata.getprofile(localdata.getprofileflag()).getname().length() <= 5 && localdata.getprofile(localdata.getprofileflag()).getname().equals(""))
+		if(localdata.getprofile(localdata.getprofileflag()).getname().length() > 5 || localdata.getprofile(localdata.getprofileflag()).getname().equals(""))
 			profile_kidname_text.setText("오늘은 어디까지 갈까요?");
 		else
 			profile_kidname_text.setText(localdata.getprofile(localdata.getprofileflag()).getname() + "님 오늘은 어디까지 갈까요?");
@@ -158,6 +159,7 @@ public class MainActivity extends Fragment {
 		main_seekbar_background = (ImageView)view.findViewById(R.id.main_seekbar_background);
 		
 		condition_range_seekbar = (SeekBar)view.findViewById(R.id.condition_range_seekbar);
+		main_progressbar = (ProgressBar)view.findViewById(R.id.main_progressbar);
 		
 		listsetting();
 		
@@ -194,7 +196,7 @@ public class MainActivity extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				new GetWeatherAsync(getActivity().getBaseContext(),0, dbHelper, weather_mylocation, weather_today_timedesc, weather_today_humidity, weather_today_rainprob, weather_today_windspeed, weather_today_feeltemp, weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image, weather_finedust, weather_today_pm10value).execute("");				
+				new GetWeatherAsync(getActivity().getBaseContext(),0, dbHelper, weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_feeltemp, weather_today_rainprob, weather_today_windspeed, weather_today_humidity,  weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image, weather_finedust, weather_today_pm10value).execute("");				
 			}
 		});
 
@@ -203,33 +205,33 @@ public class MainActivity extends Fragment {
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				// TODO Auto-generated method stub
-				Toast.makeText(getActivity(), range_progress + "값 넘김", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getActivity(), range_progress + "값 넘김", Toast.LENGTH_SHORT).show();
 				CardAdapter cardAdapter = new CardAdapter(context);
 				switch(range_progress) {
 				case 0 :
 					cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
-					new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "1", cardAdapter, mainListView ).execute("");
+					new GetRecommendPicnicSimpleInfo(getActivity().getApplicationContext(), "11", "1", "1", cardAdapter, mainListView, main_progressbar ).execute("");
 					mainListView.setAdapter(cardAdapter);
 					break;
 				case 1 :
 					cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
-					new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "5", cardAdapter, mainListView ).execute("");
+					new GetRecommendPicnicSimpleInfo(getActivity().getApplicationContext(), "11", "1", "5", cardAdapter, mainListView, main_progressbar ).execute("");
 					mainListView.setAdapter(cardAdapter);
 					break;
 				case 2 :
 					cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
-					new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "10", cardAdapter, mainListView ).execute("");
+					new GetRecommendPicnicSimpleInfo(getActivity().getApplicationContext(), "11", "1", "10", cardAdapter, mainListView, main_progressbar ).execute("");
 					mainListView.setAdapter(cardAdapter);
 					break;
 				case 3 :
 					
 					cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
-					new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "15", cardAdapter, mainListView ).execute("");
+					new GetRecommendPicnicSimpleInfo(getActivity().getApplicationContext(), "11", "1", "15", cardAdapter, mainListView , main_progressbar).execute("");
 					mainListView.setAdapter(cardAdapter);
 					break;
 				case 4 :
 					cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
-					new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "0", cardAdapter, mainListView ).execute("");
+					new GetRecommendPicnicSimpleInfo(getActivity().getApplicationContext(), "11", "1", "0", cardAdapter, mainListView , main_progressbar).execute("");
 					mainListView.setAdapter(cardAdapter);
 					break;
 				}
@@ -281,7 +283,7 @@ public class MainActivity extends Fragment {
 		// weather
 		cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
 		// recommend
-		new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "15", cardAdapter, mainListView ).execute("");
+		new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "15", cardAdapter, mainListView, main_progressbar).execute("");
 
 		mainListView.setAdapter(cardAdapter);
 	}
