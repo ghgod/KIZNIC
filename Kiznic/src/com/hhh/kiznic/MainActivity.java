@@ -79,6 +79,8 @@ public class MainActivity extends Fragment {
 	private int distance;
 	private int range_progress;
 	
+	private int progress_i = 0;
+	
 	//////////////////////////////////////////////
 
 	public static localDataAdmin localdata;
@@ -240,7 +242,8 @@ public class MainActivity extends Fragment {
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
 				// TODO Auto-generated method stub
-				
+				progress_i++;
+				condition_range_seekbar.setProgress(progress_i%5);
 			}
 			
 			@Override

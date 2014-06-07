@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <clip xmlns:android="http://schemas.android.com/apk/res/android" >
-        <nine-patch
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:src="@drawable/whitepatch">
-          </nine-patch>
+
+			<nine-patch
+            	xmlns:android="http://schemas.android.com/apk/res/android"
+            	android:src="@drawable/a">
+          	</nine-patch>
 </clip>

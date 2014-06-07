@@ -9,7 +9,9 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="89dip"
 	        android:orientation="horizontal"
-	        android:background="#FFFFFF">
+	        android:clickable="true"
+	        android:focusable="true"
+	        android:background="@drawable/carditem_background">
 	        
 	        <!-- recommend item poster -->
 	        

@@ -43,7 +43,8 @@
         </activity>
         <activity android:name="DetailPageActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"></activity>
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:launchMode="singleTask"></activity>
         <activity android:name="SearchcategoryDialog"
             android:screenOrientation="portrait"></activity>
          <activity android:name="SendEmailActivity"

@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.hhh.kiznic.card.CardAdapter;
+import com.hhh.kiznic.card.CategoryListCard;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -24,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,8 +45,10 @@ public class SearchcategoryDialog extends DialogFragment {
 	int dialog_num;
 	int firstlist_position = 0;
 	
-	ArrayAdapter<String> first_arrayAdapter = null;
-	ArrayAdapter<String> second_arrayAdapter = null;
+	//
+	
+	CardAdapter first_arrayAdapter = null;
+	CardAdapter second_arrayAdapter = null;
 	
 	ArrayList<String> location_list = new ArrayList<String>();
 	
@@ -57,6 +63,10 @@ public class SearchcategoryDialog extends DialogFragment {
 	
 	public interface onSearchFlagListener{
 		void setSearchFlagListener(String arg, int num);
+	}
+	
+	public SearchcategoryDialog(Context context){
+		this.context = context;
 	}
 	
 	@Override
@@ -94,6 +104,9 @@ public class SearchcategoryDialog extends DialogFragment {
 	public void init(){
 		dialog_title_textview = (TextView)dialog.findViewById(R.id.search_dailog_title_text);
 		
+		first_arrayAdapter = new CardAdapter(getActivity());
+		second_arrayAdapter = new CardAdapter(getActivity());
+		
 		 activity = (onSearchFlagListener)getParentFragment();
 			
 		
@@ -112,7 +125,9 @@ public class SearchcategoryDialog extends DialogFragment {
 				@Override
 		        public void onItemClick(AdapterView<?> parent, View view, int position, long l_position) {
 		           
-					String tv = (String)parent.getAdapter().getItem(position);
+					TextView t = (TextView) dialog_firstlist_listview.getAdapter().getView(position, null, dialog_firstlist_listview).findViewById(R.id.category_item_text);
+					
+					String tv = t.getText().toString();
 					
 					activity.setSearchFlagListener(tv, dialog_num);
 					
@@ -186,8 +201,18 @@ public class SearchcategoryDialog extends DialogFragment {
 					for(int i=0;i<location_list.size();i++)
 						list_item2[i] = location_list.get(i);
 					
-					second_arrayAdapter = new ArrayAdapter<String>(dialog.getContext(), android.R.layout.simple_list_item_1, list_item2);
+					second_arrayAdapter = new CardAdapter(getActivity());
+					
+					for(int i=0;i<location_list.size();i++)
+						second_arrayAdapter.addItem(new CategoryListCard(R.layout.search_categorylist_card, "category Card", getActivity().getApplicationContext(), i));
+					
 					dialog_secondlist_listview.setAdapter(second_arrayAdapter);
+					
+					TextView a;
+					for(int i=0;i<location_list.size();i++){
+						a = (TextView)dialog_secondlist_listview.getAdapter().getView(i, null, dialog_firstlist_listview).findViewById(R.id.category_item_text);
+						a.setText(list_item2[i]);
+					}
 					
 				}
 			});
@@ -196,7 +221,11 @@ public class SearchcategoryDialog extends DialogFragment {
 				@Override
 		        public void onItemClick(AdapterView<?> parent, View view, int position, long l_position) {
 		           
-					String tv = (String)dialog_firstlist_listview.getAdapter().getItem(firstlist_position) + " " + (String)parent.getAdapter().getItem(position);
+					TextView t = (TextView) dialog_firstlist_listview.getAdapter().getView(firstlist_position, null, dialog_firstlist_listview).findViewById(R.id.category_item_text);
+					TextView t2 = (TextView) dialog_secondlist_listview.getAdapter().getView(position, null, dialog_secondlist_listview).findViewById(R.id.category_item_text);
+					
+					
+					String tv = t.getText().toString() + " " + t2.getText().toString();
 					
 					activity.setSearchFlagListener(tv, dialog_num);
 					
@@ -229,18 +258,57 @@ public class SearchcategoryDialog extends DialogFragment {
 			break;
 		}
 		
-		//if(dialog_title.equals("장르"))
-		
 		if(dialog_num != 0){
-			first_arrayAdapter = new ArrayAdapter<String>(dialog.getContext(), android.R.layout.simple_list_item_1, list_item);
+			
+			if(dialog_num == 1){
+				for(int i=0;i<6;i++)
+					first_arrayAdapter.addItem(new CategoryListCard(R.layout.search_categorylist_card, "category Card", getActivity().getApplicationContext(), i));
+			}
+			else if(dialog_num == 2){
+				for(int i=0;i<5;i++)
+					first_arrayAdapter.addItem(new CategoryListCard(R.layout.search_categorylist_card, "category Card", getActivity().getApplicationContext(), i));
+			}
+			
 			dialog_firstlist_listview.setAdapter(first_arrayAdapter);
+
+			TextView a;
+			LinearLayout b;
+			
+			if(dialog_num == 1){
+				for(int i=0;i<6;i++){
+					a = (TextView)dialog_firstlist_listview.getAdapter().getView(i, null, dialog_firstlist_listview).findViewById(R.id.category_item_text);
+					a.setText(list_item[i]);
+				}
+			}
+			else if(dialog_num == 2){
+				for(int i=0;i<5;i++){
+					a = (TextView)dialog_firstlist_listview.getAdapter().getView(i, null, dialog_firstlist_listview).findViewById(R.id.category_item_text);
+					a.setText(list_item[i]);
+				}
+			}
 		}
 		else{
-			first_arrayAdapter = new ArrayAdapter<String>(dialog.getContext(), android.R.layout.simple_list_item_1, list_item);
-			second_arrayAdapter = new ArrayAdapter<String>(dialog.getContext(), android.R.layout.simple_list_item_1, list_item2);
+			for(int i=0;i<16;i++)
+				first_arrayAdapter.addItem(new CategoryListCard(R.layout.search_categorylist_card, "category Card", getActivity().getApplicationContext(), i));
+			
+			for(int i=0;i<location_list.size();i++)
+				second_arrayAdapter.addItem(new CategoryListCard(R.layout.search_categorylist_card, "category Card", getActivity().getApplicationContext(), i));
+			
 			
 			dialog_firstlist_listview.setAdapter(first_arrayAdapter);
 			dialog_secondlist_listview.setAdapter(second_arrayAdapter);
+			
+			TextView a;
+			for(int i=0;i<16;i++){
+				a = (TextView)dialog_firstlist_listview.getAdapter().getView(i, null, dialog_firstlist_listview).findViewById(R.id.category_item_text);
+				a.setText(list_item[i]);
+			}
+			
+			for(int i=0;i<location_list.size();i++){
+				a = (TextView)dialog_secondlist_listview.getAdapter().getView(i, null, dialog_firstlist_listview).findViewById(R.id.category_item_text);
+				a.setText(list_item2[i]);
+			}
+			
 		}
 			
 	}

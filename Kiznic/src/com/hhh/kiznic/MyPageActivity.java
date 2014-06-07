@@ -251,9 +251,15 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 				mypage_profile_layout.setVisibility(LinearLayout.INVISIBLE);
 				
 				mypage_kidimageset_view.setVisibility(LinearLayout.VISIBLE);
+				if(profile_name.getText().length() > 5)
+					mypage_profilename_edittext.setText(null);
+				else
+					mypage_profilename_edittext.setText(profile_name.getText());
 				
-				mypage_profilename_edittext.setText(profile_name.getText());
-				mypage_profilebirth_edittext.setText(profile_birth.getText());
+				if(profile_birth.getText().length() > 5)
+					mypage_profilebirth_edittext.setText(null);
+				else
+					mypage_profilebirth_edittext.setText(profile_birth.getText());
 				
 				profile_amend_flag = true;
 			}
@@ -265,14 +271,21 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 				mypage_profilesetting_layout.setVisibility(LinearLayout.INVISIBLE);
 				mypage_profile_layout.setVisibility(LinearLayout.VISIBLE);
 
-				localdata.getprofile(localdata.getprofileflag()).setname(mypage_profilename_edittext.getText().toString());
-				localdata.getprofile(localdata.getprofileflag()).setbirth(mypage_profilebirth_edittext.getText().toString());
+				if(mypage_profilename_edittext.getText().length() == 0)
+					localdata.getprofile(localdata.getprofileflag()).setname("이름을 입력하세요");
+				else
+					localdata.getprofile(localdata.getprofileflag()).setname(mypage_profilename_edittext.getText().toString());
+				
+				if(mypage_profilebirth_edittext.getText().length() == 0)
+					localdata.getprofile(localdata.getprofileflag()).setbirth("생일을 입력하세요");
+				else
+					localdata.getprofile(localdata.getprofileflag()).setbirth(mypage_profilebirth_edittext.getText().toString());
 				
 				mypage_kidimageset_view.setVisibility(LinearLayout.INVISIBLE);
 				
 				mypage_profilename_edittext.setText("");
 				mypage_profilebirth_edittext.setText("");
-				
+					
 				profile_amend_flag = false;
 
 				profile_input();

@@ -233,7 +233,7 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 	
 	private void showListDialog(int dialog_num, String dialog_title){
 		
-		listdialog = new SearchcategoryDialog();
+		listdialog = new SearchcategoryDialog(context);
 		
 	    listdialog.dialog_title = dialog_title;
 	    listdialog.dialog_num = dialog_num;
