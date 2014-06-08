@@ -15,6 +15,7 @@
 	    <item name="android:paddingRight">0dp</item>
 	    <item name="android:actionBarSize">50dp</item>
 	    <item name="android:divider">#24B0CD</item>
+	    <item name="android:windowDisablePreview">true</item>
 	     <item name="android:actionBarDivider">@null</item>
 	    
 	</style>

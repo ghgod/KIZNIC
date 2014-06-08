@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#24B0CD"
                 android:textSize="25sp"
-                android:text="안전 자동 신고" />
+                android:text="안전 신속 신고" />
 
         </LinearLayout>
 
@@ -48,7 +48,7 @@
                 android:background="#ffffff"
                 android:textColor="#000000"
                 android:textSize="15sp"
-                android:text="나들이의 안전 문제나 불편한 점을 간편히 이메일로 보낼 수 있습니다. 키즈닉 계정(kiznic.onestop)으로 빠르고 쉽게 접수하세요!" />
+                android:text="나들이의 안전 문제나 불편한 점을 간편히 이메일로 보낼 수 있습니다.아래의 기관으로 빠르고 쉽게 접수하세요!" />
     
     
     <Button
@@ -64,7 +64,7 @@
         android:text="어린이 안전넷" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/onestop_sobijawon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"

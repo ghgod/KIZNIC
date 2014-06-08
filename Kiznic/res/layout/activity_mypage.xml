@@ -739,7 +739,7 @@
 					            android:layout_width="wrap_content"
 					            android:layout_height="wrap_content"
 								android:layout_marginLeft="10dip"
-					            android:text="아이 프로필에 '"
+					            android:text="진동이 "
 					            android:textColor="#000000"
 					            android:textSize="14sp"/>
 			                
@@ -748,6 +748,7 @@
 					            android:layout_width="15dip"
 			                    android:layout_height="15dip"
 			                    android:layout_marginLeft="5dip"
+			                    android:visibility="gone"
 			                    android:layout_toRightOf="@id/smartwatch_text1"/>
 			                
 			                <TextView
@@ -755,7 +756,7 @@
 					            android:layout_height="wrap_content"
 								android:layout_marginLeft="5dip"
 								android:layout_toRightOf="@id/smartwatch_wearning_image"
-					            android:text="'가 생성됩니다."
+					            android:text="강력하게 울립니다!"
 					            android:textColor="#000000"
 					            android:textSize="14sp"/>
 			                

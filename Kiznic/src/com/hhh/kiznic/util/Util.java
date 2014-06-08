@@ -867,7 +867,7 @@ public static String transformRegionName(String region1) {
 		Bitmap image = null;
 		
 		BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inSampleSize = 4;
+		options.inSampleSize = 2;
 				
 		if(weatherDesc.equals("맑음")) {
 			Bitmap src = BitmapFactory.decodeResource(context.getResources(), R.drawable.main_weather_sunny_image_sky, options);
@@ -950,13 +950,13 @@ public static String transformRegionName(String region1) {
 		
 		Paint circlepnt = new Paint();
 		if(gage <= 30){
-			circlepnt.setColor(Color.parseColor("#66CC00"));
+			circlepnt.setColor(Color.parseColor("#26DB48"));
 		}
 		else if(gage <= 80){
-			circlepnt.setColor(Color.parseColor("#CC6600"));
+			circlepnt.setColor(Color.parseColor("#FFC239"));
 		}
 		else{
-			circlepnt.setColor(Color.parseColor("#CC0000"));
+			circlepnt.setColor(Color.parseColor("#FC534F"));
 		}
 		// Circle
 		circlepnt.setAntiAlias(true);

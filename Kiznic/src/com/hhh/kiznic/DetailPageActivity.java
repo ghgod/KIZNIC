@@ -86,9 +86,11 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 	private static double latitude;
 	private static double longitude;
 	
+	private GetPicnicDetailInfo info;
 	
 	static Toast t;
 	private String play_no;
+	
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -97,20 +99,25 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 		setContentView(R.layout.activity_detailpage);
 	
 	   init();
-	   new GetPicnicDetailInfo(getBaseContext(), Integer.parseInt(play_no), 
-	    		detail_main_title, detail_main_poster, detail_infotext_text, detailInfoListView,detailNevigationInfoListView, detail_mainposter_layout).execute();
-	  
 	   
-	   pref = getSharedPreferences("place_geo",  0);
-       String dftValue = "1";
-              
-	   	   	   
-	   	   
-	  setNMap(Double.parseDouble(pref.getString("latitude",  dftValue)), Double.parseDouble(pref.getString("longitude",  dftValue)), pref.getString("placeName", dftValue));
-	    
+	  info =  new GetPicnicDetailInfo(getApplicationContext(), Integer.parseInt(play_no), 
+	    		detail_main_title, detail_main_poster, detail_infotext_text, detailInfoListView,detailNevigationInfoListView, detail_mainposter_layout, nmapView, nmapViewerResourceProvider, nmapOverlayManager, mapViewContainer);
+	  
+	   info.execute();
+	   
+	  // pref = getSharedPreferences("place_geo",  0);
+       //String dftValue = "1";
+       
+      // Log.e("latitude_보여주기", pref.getString("latitude", ""));
+       //Log.e("longitude_보여주기", pref.getString("latitude", ""));
+	  // setNMap(Double.parseDouble(pref.getString("latitude",  dftValue)), Double.parseDouble(pref.getString("longitude",  dftValue)), pref.getString("placeName", dftValue));
+       
+       
 	   clicklistener();
 	   
 	   set_image();
+	   
+	   
 	}
 
 	
@@ -149,11 +156,6 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 		
 		detail_infotext_text = (TextView)findViewById(R.id.detail_infotext_text);
 		
-
-		
-		mapViewContainer = (LinearLayout)findViewById(R.id.mapViewContainer);
-
-		
 		infotextview_flag = false;
 		
 		detail_scrollview = (ScrollView)findViewById(R.id.detail_scrollview);
@@ -161,8 +163,12 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 		play_no = intent.getExtras().getString("play_no");
 		
 		nmapView = new NMapView(this);
+		nmapViewerResourceProvider = new NMapViewerResourceProvider(this);
+		nmapOverlayManager = new NMapOverlayManager(this, nmapView, nmapViewerResourceProvider);
+		mapViewContainer = (LinearLayout)findViewById(R.id.mapViewContainer);
+
 		
-				
+		
 		listsetting();
 	}
 	
@@ -170,10 +176,10 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 
 	
 	
-	public void setNMap(double latitude, double longitude, String placeName) {
-		nmapView = new NMapView(this);
-		nmapViewerResourceProvider = new NMapViewerResourceProvider(this);
-		nmapOverlayManager = new NMapOverlayManager(this, nmapView, nmapViewerResourceProvider);
+	public void setNMap( double latitude, double longitude, String placeName) {
+		//nmapView = new NMapView(this);
+		//nmapViewerResourceProvider = new NMapViewerResourceProvider(this);
+		//nmapOverlayManager = new NMapOverlayManager(this, nmapView, nmapViewerResourceProvider);
 		
 		int markerID = NMapPOIflagType.PIN;
 		

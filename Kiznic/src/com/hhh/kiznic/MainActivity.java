@@ -119,6 +119,8 @@ public class MainActivity extends Fragment {
 			profile_kidname_text.setText("오늘은 어디까지 갈까요?");
 		else
 			profile_kidname_text.setText(localdata.getprofile(localdata.getprofileflag()).getname() + "님 오늘은 어디까지 갈까요?");
+	
+		condition_range_seekbar.setProgress(3);
 	}
 
 	@Override
@@ -191,7 +193,7 @@ public class MainActivity extends Fragment {
 			@Override
 			public void onClick(View v) {
 				MainFragmentActivity mf = new MainFragmentActivity();
-				mf.mViewPager.setCurrentItem(3);
+				mf.mViewPager.setCurrentItem(4);
 			}
 		});
 		weather_refresh_button.setOnClickListener(new ImageView.OnClickListener(){

@@ -38,6 +38,7 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 	private static SearchActivity search;
 	private static OneStopActivity onestop;
 	private static MyPageActivity mypage;
+	private static EventActivity event;
 	
 	Context mContext;
 	
@@ -51,13 +52,13 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 		
 		setContentView(R.layout.activity_fragment);
 		//getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.kiznic_title_bar);
-		
 		//startActivity(new Intent(this, SplashActivity.class));
 		
 		main = new MainActivity(mContext);
 		search = new SearchActivity(mContext);
 		onestop = new OneStopActivity(mContext);
 		mypage = new MyPageActivity(mContext);
+		event = new EventActivity(mContext);
 		
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -93,7 +94,7 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 			actionBar.addTab(actionBar.newTab().setTabListener(this));
 			
 		}
-		for(int i=0;i<4;i++){
+		for(int i=0;i<5;i++){
 			actionBar.addTab(actionBar.newTab().setTabListener(this));
 		}
 		
@@ -102,7 +103,9 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 		
 		actionBar.getTabAt(1).setCustomView(R.layout.kiznic_title_search_tab);
 		actionBar.getTabAt(2).setCustomView(R.layout.kiznic_title_safe_tab);
-		actionBar.getTabAt(3).setCustomView(R.layout.kiznic_title_mypage_tab);
+		actionBar.getTabAt(3).setCustomView(R.layout.kiznic_title_event_tab);
+		actionBar.getTabAt(4).setCustomView(R.layout.kiznic_title_mypage_tab);
+		
 	}
 	
 	@Override
@@ -161,8 +164,9 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 			case 2:
 				return onestop;
 			case 3:
+				return event;
+			case 4:
 				return mypage;
-				
 			}
 			return null;
 		}
@@ -170,7 +174,7 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
-			return 4;
+			return 5;
 		}
 		
 		@SuppressLint("DefaultLocale")
@@ -186,6 +190,8 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 				return "c";
 			case 3:
 				return "d";
+			case 4:
+				return "e";
 			}
 			
 			return null;

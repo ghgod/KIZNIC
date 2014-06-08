@@ -54,7 +54,7 @@ public class MainRecommendCard extends Card implements View.OnClickListener{
 			//mf.start
 			
 			Bundle bundle = new Bundle();
-			bundle.putString("play_type", String.valueOf(cardId));
+			bundle.putString("play_type", String.valueOf(cardName));
 			SearchActivity frag = new SearchActivity(getCardView().getContext());
 			frag.setArguments(bundle);
 			frag.getS();

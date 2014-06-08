@@ -18,6 +18,7 @@ public class OneStopActivity extends Fragment implements OnClickListener{
 	
 	private static View view;
 	private Button onestop_ciss;
+	private Button onestop_sobijawon;
 	private Context context;
 	
 	public OneStopActivity(Context context){
@@ -37,35 +38,47 @@ public class OneStopActivity extends Fragment implements OnClickListener{
 	
 	public void init() {
 		onestop_ciss = (Button)view.findViewById(R.id.onestop_ciss);
+		onestop_sobijawon = (Button)view.findViewById(R.id.onestop_sobijawon);
 	}
 	
 	public void clicklistener() {
 		onestop_ciss.setOnClickListener(this);
-		
+		onestop_sobijawon.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
+		Intent intent = new Intent(Intent.ACTION_SEND);
 		switch(v.getId()){
 		case R.id.onestop_ciss :
-			//Intent intent = new Intent(getActivity().getBaseContext(), SendEmailActivity.class);
-			//intent.putExtra("email_address", "aiaipming@gmail.com");
+		//	Intent intent = new Intent(getActivity().getBaseContext(), SendEmailActivity.class);
+		//	intent.putExtra("email_address", "aiaipming@gmail.com");
 			//한국 소비자원 : safe@kca.go.kr
-			//startActivity(intent);
+		//	startActivity(intent);
 			
-			Intent intent = new Intent(Intent.ACTION_SEND);
+			
 			intent.setType("plain/text");
 			
 			String[] tos = {"aiapming@gmail.com"};
 			intent.putExtra(Intent.EXTRA_EMAIL, tos);
 			
-			intent.putExtra(Intent.EXTRA_SUBJECT, "김규홍은 들어라");
-			intent.putExtra(Intent.EXTRA_TEXT, "김규홍은 듣고나서 밥먹으러 가자");
+			intent.putExtra(Intent.EXTRA_SUBJECT, "[Kiznic] 불편사항 접수 : ");
+			//intent.putExtra(Intent.EXTRA_TEXT, "김규홍은 듣고나서 밥먹으러 가자");
 			
 			//intent.putExtra(Intent.EXTRA_STREAM, value);
 			startActivity(intent);
 			break;
+		case R.id.onestop_sobijawon :
+			intent.setType("plain/text");
+			
+			String[] tos2 = {"aiapming@gmail.com"};
+			intent.putExtra(Intent.EXTRA_EMAIL, tos2);
+			
+			intent.putExtra(Intent.EXTRA_SUBJECT, "[Kiznic] 불편사항 접수 : ");
+			startActivity(intent);
+			break;
+			
 		}
 	}
 	

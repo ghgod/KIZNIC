@@ -29,6 +29,11 @@
             android:theme="@android:style/Theme.NoTitleBar">>
             
         </activity>
+        
+         <activity android:name="EventActivity"
+            android:screenOrientation="portrait"></activity>
+        
+        
         <activity android:name="MyPageActivity"
             android:screenOrientation="portrait"></activity>
         <activity android:name="SearchActivity"
@@ -58,7 +63,8 @@
             	android:name="android.support.PARENT_ACTIVITY"
             	android:value="com.hhh.kiznic.MyPageActivity" /></activity>
         <activity android:name="MainFragmentActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+             >
            
         </activity>
         <activity android:name="MyPageNicknameDialog"></activity>

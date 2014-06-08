@@ -116,7 +116,21 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 	
 	
 	public void getS(){
-		play_type = getArguments().getString("play_type");
+		String play_type_string = getArguments().getString("play_type");
+		search_category3_text.setText(play_type_string);
+		if(play_type_string.equals("공연")) {
+			play_type = "1";
+		}
+		if(play_type_string.equals("전시/체험")) {
+			play_type = "2";
+		}
+		if(play_type_string.equals("놀이")) {
+			play_type = "3";
+		}
+		if(play_type_string.equals("축제")) {
+			play_type = "4";
+		}
+		
 		location = new LocationHelper(context);
 		location.run();
 		
