@@ -32,7 +32,7 @@
 	            android:layout_gravity="center"
 	            android:gravity="center_vertical"
 	            android:paddingLeft="5dp"
-	            android:text="공연 / 전시"
+	            android:text="공연 /전시"
 	            android:textColor="#000000"
 	            android:background="#6076C4C1"
 	            android:textSize="16sp"/>
@@ -43,7 +43,7 @@
 		android:id="@+id/main_recommend_card_item_list"
 		android:layout_width="match_parent"
 		android:layout_height="0dip"
-		android:layout_weight="5"
+		android:layout_weight="8"
 		android:headerDividersEnabled="true"
 		android:footerDividersEnabled="true"
 		android:listSelector="@android:color/transparent"

@@ -105,8 +105,8 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 	  
 	   info.execute();
 	   
-	  // pref = getSharedPreferences("place_geo",  0);
-       //String dftValue = "1";
+	  pref = getSharedPreferences("place_geo",  0);
+      //String dftValue = "1";
        
       // Log.e("latitude_보여주기", pref.getString("latitude", ""));
        //Log.e("longitude_보여주기", pref.getString("latitude", ""));
@@ -234,13 +234,16 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 			break;
 		case R.id.detail_link_image:
 			Intent intent = new Intent(Intent.ACTION_VIEW);
+			Log.e("title", pref.getString("title", ""));
 			Uri u = Uri.parse("http://search.naver.com/search.naver?where=nexearch&query="+pref.getString("title", "")+ "&sm=top_hty");
 			intent.setData(u);
 			startActivity(intent);
 			break;
 		case R.id.detail_bookmark_image:
-			t = Toast.makeText(getBaseContext(), "북마크 등록", Toast.LENGTH_LONG);
-			t.show();
+			Intent intent2 = new Intent(Intent.ACTION_VIEW);
+			Uri u2 = Uri.parse("http://search.naver.com/search.naver?where=nexearch&query="+pref.getString("placeName", "")+" 안전사고"+ "&sm=top_hty");
+			intent2.setData(u2);
+			startActivity(intent2);
 			break;
 		case R.id.detail_sharing_image:
 		
