@@ -94,7 +94,7 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 			actionBar.addTab(actionBar.newTab().setTabListener(this));
 			
 		}
-		for(int i=0;i<5;i++){
+		for(int i=0;i<2;i++){
 			actionBar.addTab(actionBar.newTab().setTabListener(this));
 		}
 		
@@ -106,6 +106,8 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 		actionBar.getTabAt(3).setCustomView(R.layout.kiznic_title_event_tab);
 		actionBar.getTabAt(4).setCustomView(R.layout.kiznic_title_mypage_tab);
 		
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 	}
 	
 	@Override

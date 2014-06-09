@@ -431,9 +431,7 @@ android:scrollbars="none"/>
 
             android:layout_width="match_parent"
 
-            android:layout_height="0dip"
-
-            android:layout_weight="2"
+            android:layout_height="30dip"
 
             android:background="@drawable/detail_underline_background">
 

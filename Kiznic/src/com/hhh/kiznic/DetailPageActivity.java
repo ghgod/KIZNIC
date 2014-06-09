@@ -4,41 +4,27 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-import com.hhh.kiznic.card.CardAdapter;
-import com.hhh.kiznic.card.DetailListCard;
-import com.hhh.kiznic.card.DetailnevigationlistCard;
 import com.hhh.kiznic.connection.GetPicnicDetailInfo;
-import com.hhh.kiznic.databasemanager.KiznicSharedPreferences;
 import com.nhn.android.maps.NMapActivity;
 import com.nhn.android.maps.NMapController;
-import com.nhn.android.maps.NMapOverlayItem;
 import com.nhn.android.maps.NMapView;
 import com.nhn.android.maps.NMapView.OnMapStateChangeListener;
 import com.nhn.android.maps.maplib.NGeoPoint;
 import com.nhn.android.maps.nmapmodel.NMapError;
 import com.nhn.android.maps.overlay.NMapPOIdata;
-import com.nhn.android.maps.overlay.NMapPOIitem;
 import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
 import com.nhn.android.mapviewer.overlay.NMapPOIdataOverlay;
-import com.nhn.android.mapviewer.overlay.NMapResourceProvider;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.util.MonthDisplayHelper;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
@@ -50,7 +36,7 @@ import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 
-public class DetailPageActivity extends NMapActivity implements OnClickListener, OnTouchListener, OnMapStateChangeListener{
+public class DetailPageActivity extends NMapActivity implements OnClickListener, OnMapStateChangeListener{
 
 	private static ListView detailInfoListView, detailNevigationInfoListView;
 	
@@ -202,10 +188,116 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 	}
 
 	private void clicklistener() {
-		detail_phone_image.setOnClickListener(this);
-		detail_link_image.setOnClickListener(this);
-		detail_bookmark_image.setOnClickListener(this);
-		detail_sharing_image.setOnClickListener(this);
+		//detail_phone_image.setOnClickListener(this);
+		detail_phone_image.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if(event.getAction() == MotionEvent.ACTION_DOWN){
+					detail_phone_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getResources(), R.drawable.detail_phone_down, 200, 200));
+				}
+				
+				if(event.getAction() == MotionEvent.ACTION_UP){
+					detail_phone_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getResources(), R.drawable.detail_phone_up, 200, 200));
+					
+					Uri number = Uri.parse("tel:" + pref.getString("contact", "tel:0000000"));
+					Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
+					startActivity(callIntent);
+				}
+				
+				return true;
+			}
+		});
+		
+		detail_link_image.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if(event.getAction() == MotionEvent.ACTION_DOWN){
+					detail_link_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getResources(), R.drawable.detail_link_down, 200, 200));
+				}
+				
+				if(event.getAction() == MotionEvent.ACTION_UP){
+					detail_link_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getResources(), R.drawable.detail_link_up, 200, 200));
+					
+					Intent intent = new Intent(Intent.ACTION_VIEW);
+					Log.e("title", pref.getString("title", ""));
+					Uri u = Uri.parse("http://search.naver.com/search.naver?where=nexearch&query="+pref.getString("title", "")+ "&sm=top_hty");
+					intent.setData(u);
+					startActivity(intent);
+				}
+				
+				return true;
+			}
+		});
+		
+		detail_bookmark_image.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if(event.getAction() == MotionEvent.ACTION_DOWN){
+					detail_bookmark_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getResources(), R.drawable.detail_bookmark_down, 200, 200));
+				}
+				
+				if(event.getAction() == MotionEvent.ACTION_UP){
+					detail_bookmark_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getResources(), R.drawable.detail_bookmark_up, 200, 200));
+					/*
+					Intent intent2 = new Intent(Intent.ACTION_VIEW);
+					Uri u2 = Uri.parse("http://search.naver.com/search.naver?where=nexearch&query="+pref.getString("placeName", "")+" 안전사고"+ "&sm=top_hty");
+					intent2.setData(u2);
+					startActivity(intent2);
+					*/
+					
+					Toast.makeText(getApplicationContext(), "준비중 입니다!", Toast.LENGTH_LONG).show();
+				}
+				
+				return true;
+			}
+		});
+		
+		detail_sharing_image.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if(event.getAction() == MotionEvent.ACTION_DOWN){
+					detail_sharing_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getResources(), R.drawable.detail_share_down, 200, 200));
+				}
+				
+				if(event.getAction() == MotionEvent.ACTION_UP){
+					detail_sharing_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getResources(), R.drawable.detail_share_up, 200, 200));
+					
+					LinearLayout capture = (LinearLayout)findViewById(R.id.detailpage_captureLayout);
+					capture.buildDrawingCache();
+					
+					Bitmap captureView = capture.getDrawingCache();
+					
+					FileOutputStream fos;
+					try {
+					
+						fos = new FileOutputStream(Environment.getExternalStorageDirectory().toString()+"/capture.jpeg");
+						captureView.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+						
+						Uri mSaveImageUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory().toString()+"/capture.jpeg")); //file의 경로를 uri로 변경합니다.
+						
+						Intent shareintent = new Intent(Intent.ACTION_SEND); //전송 메소드를 호출합니다. Intent.ACTION_SEND
+						shareintent.setType("image/jpg"); //jpg 이미지를 공유 하기 위해 Type을 정의합니다.
+						shareintent.putExtra(Intent.EXTRA_STREAM, mSaveImageUri); //사진의 Uri를 가지고 옵니다.
+						startActivity(Intent.createChooser(shareintent, "공유")); //Activity를 이용하여 호출 합니다.
+								
+					
+					} catch (FileNotFoundException e) {
+					
+						e.printStackTrace();
+					
+					}
+				
+					Toast.makeText(getApplicationContext(), "공유 성공", Toast.LENGTH_LONG).show();
+				}
+				
+				return true;
+			}
+		});
+		
 		detail_moreinfo_button.setOnClickListener(this);
 		
 		nmapView.setOnTouchListener(new OnTouchListener() {
@@ -226,7 +318,7 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 	public void onClick(View v){
 
 		switch(v.getId()){
-		
+		/*
 		case R.id.detail_phone_image:
 			Uri number = Uri.parse("tel:" + pref.getString("contact", "tel:0000000"));
 			Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
@@ -277,6 +369,7 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 					
 			
 			break;
+			*/
 		case R.id.detail_moreinfo_button:
 			if(infotextview_flag){
 				infotextview_flag = false;
@@ -346,12 +439,5 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public boolean onTouch(View v, MotionEvent event) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	
 }
