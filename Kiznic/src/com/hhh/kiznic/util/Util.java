@@ -53,6 +53,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo.State;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
@@ -974,6 +976,28 @@ public static String transformRegionName(String region1) {
 		else {
 			return str;
 		}
+	}
+	
+	public static boolean isOnline(Context context) { // network 연결 상태 확인
+		try {
+		
+			ConnectivityManager conMan = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+			State wifi = conMan.getNetworkInfo(1).getState(); // wifi
+				if (wifi == android.net.NetworkInfo.State.CONNECTED || wifi == android.net.NetworkInfo.State.CONNECTING) {
+					return true;
+				}
+
+			State mobile = conMan.getNetworkInfo(0).getState(); // mobile ConnectivityManager.TYPE_MOBILE
+				if (mobile == android.net.NetworkInfo.State.CONNECTED || mobile ==android.net.NetworkInfo.State.CONNECTING) {
+					return true;
+				}
+
+		} catch (NullPointerException e) {
+			return false;
+		}
+
+		return false;
 	}
 	
 	

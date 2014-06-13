@@ -100,7 +100,7 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 	
 	   init();
 	   
-	  info =  new GetPicnicDetailInfo(getApplicationContext(), Integer.parseInt(play_no), 
+	  info =  new GetPicnicDetailInfo(this, getApplicationContext(), Integer.parseInt(play_no), 
 	    		detail_main_title, detail_main_poster, detail_infotext_text, detailInfoListView,detailNevigationInfoListView, detail_mainposter_layout, nmapView, nmapViewerResourceProvider, nmapOverlayManager, mapViewContainer);
 	  
 	   info.execute();

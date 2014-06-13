@@ -22,6 +22,10 @@ public class CardAdapter extends BaseAdapter{
 		cardList.add(inputCard);
 	}
 	
+	public void removeAll(){
+		cardList.removeAll(cardList);
+	}
+	
 	@Override
 	public int getCount(){
 		return cardList.size();

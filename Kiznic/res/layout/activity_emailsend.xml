@@ -28,7 +28,7 @@
     </FrameLayout>
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/weather_null"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="5dp"
@@ -147,7 +147,7 @@
 
             </LinearLayout>
             <ImageView
-		        android:id="@+id/imageView1"
+		        android:id="@+id/weather_null"
 		        android:layout_width="match_parent"
 		        android:layout_height="1dp"
 		        android:layout_marginLeft="5dp"

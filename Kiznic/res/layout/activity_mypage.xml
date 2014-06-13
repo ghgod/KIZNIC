@@ -786,12 +786,13 @@
 	                android:layout_width="0dip"
 	                android:layout_height="match_parent"
 	                android:layout_weight="1"
+	                android:gravity="center"
 	                android:orientation="vertical">
 	            
 	                <Button 
 	                    android:id="@+id/mypage_smartwatch_onoff_button"
 	                    android:layout_width="match_parent"
-	                    android:layout_height="match_parent"/>
+	                    android:layout_height="wrap_content"/>
 	                
 	            </LinearLayout>
 	            

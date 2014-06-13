@@ -1,8 +1,13 @@
 package com.hhh.kiznic;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,9 +16,12 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,6 +45,7 @@ import com.hhh.kiznic.databasemanager.Databasehelper;
 import com.hhh.kiznic.databasemanager.KiznicSharedPreferences;
 import com.hhh.kiznic.util.LocationHelper;
 import com.hhh.kiznic.util.Util;
+import com.nhn.android.maps.NMapView.LayoutParams;
 
 @SuppressLint({ "ValidFragment", "NewApi" })
 public class MainActivity extends Fragment {
@@ -46,24 +55,10 @@ public class MainActivity extends Fragment {
 	//private static CardAdapter[] recommendCardAdapter = new CardAdapter[4];
 	//private static int cardCount = -1, recommendcardCount = -1;
 	
-	private static ImageView weather_finedust;
 	
 	private static TextView profile_kidname_text;
 	
-	private static TextView weather_mylocation;
-	private static TextView weather_today_timedesc;
-	private static TextView weather_today_temp;
-	private static TextView weather_today_rainprob;
-	private static TextView weather_today_windspeed;
-	private static TextView weather_next_timedesc;
-	private static TextView weather_next_temp;
-	private static TextView weather_today_pm10value;
-	private static TextView weather_today_feeltemp;
-	private TextView weather_today_humidity;
 	
-	private static ImageView weather_refresh_button;
-	private static ImageView weather_image;
-	private static ImageView weather_next_image;
 	private static ImageView profile_kidimage_image;
 	private static ProgressBar main_progressbar;
 	private static ImageView main_seekbar_background;
@@ -76,7 +71,6 @@ public class MainActivity extends Fragment {
 	
 	private static View view;
 	
-	private int distance;
 	private int range_progress;
 	
 	private int progress_i = 0;
@@ -98,19 +92,73 @@ public class MainActivity extends Fragment {
 		dbHelper = new Databasehelper(getActivity().getBaseContext());
 		
 		init();
-		
 		clicklistener();
-		
 		set_image();
-		
 		set_data();
+
 		
-		if(localdata.getprofile(localdata.getprofileflag()).getimageurl() != null){
-			Bitmap selectedImage = BitmapFactory.decodeFile(localdata.getprofile(localdata.getprofileflag()).getimageurl());
-			if(selectedImage != null)
-				profile_circleimage(selectedImage);
-		}
+		if(checkNetwokState()){
+			listsetting();
+			if(localdata.getprofile(localdata.getprofileflag()).getimageurl() != null){
+				Bitmap selectedImage = BitmapFactory.decodeFile(localdata.getprofile(localdata.getprofileflag()).getimageurl());
+				if(selectedImage != null)
+					profile_circleimage(selectedImage);
+			}
 			
+		} else {
+			AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+			 
+			   dlg.setTitle("네트워크 오류");
+			   
+			   TextView myMsg = new TextView(getActivity().getApplicationContext());
+			   myMsg.setText("네트워크 상태를 확인해 주세요");
+			   myMsg.setTextSize(20);
+			   LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, LayoutParams.CENTER);
+			   myMsg.setLayoutParams(lp);
+			   myMsg.setGravity(Gravity.CENTER);
+			   myMsg.setHeight(120);
+			   dlg.setView(myMsg);		   
+			   dlg.setPositiveButton("연결", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					ConnectivityManager dataManager;
+					dataManager  = (ConnectivityManager)getActivity().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+					Method dataMtd = null;
+					try {
+						dataMtd = ConnectivityManager.class.getDeclaredMethod("setMobileDataEnabled", boolean.class);
+						dataMtd.setAccessible(true);
+						dataMtd.invoke(dataManager, true); 
+					} catch (NoSuchMethodException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InvocationTargetException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				   
+			   });
+			   
+			   dlg.setNegativeButton("종료", new DialogInterface.OnClickListener() {
+			    
+				   public void onClick(DialogInterface dialog, int whichButton) {      
+					  getActivity().finish();
+				   } 
+				   
+			   });
+			   dlg.setCancelable(false);
+			   dlg.show();
+			
+			//getActivity().finish();
+		}
 		
 		return view;
 	}
@@ -120,21 +168,21 @@ public class MainActivity extends Fragment {
 		else
 			profile_kidname_text.setText(localdata.getprofile(localdata.getprofileflag()).getname() + "님 오늘은 어디까지 갈까요?");
 	
-		condition_range_seekbar.setProgress(3);
+		condition_range_seekbar.setProgress(4);
 	}
 
 	@Override
 	public void onDestroy(){
 		RecycleUtils.recursiveRecycle(getActivity().getWindow().getDecorView());
 		System.gc();
-		
 		super.onDestroy();
 	}
 	
 	@Override
 	public void onResume(){
 		super.onResume();
-		getWeatherFast();
+		
+		
 	}
 
 	
@@ -152,7 +200,6 @@ public class MainActivity extends Fragment {
 		localdata = new localDataAdmin(getActivity().getBaseContext());
 		
 		//
-		
 		profile_kidimage_image = (ImageView)view.findViewById(R.id.profile_kidimage_image);
 		
 		profile_kidname_text = (TextView)view.findViewById(R.id.profile_kidname_text);
@@ -164,9 +211,9 @@ public class MainActivity extends Fragment {
 		
 		condition_range_seekbar = (SeekBar)view.findViewById(R.id.condition_range_seekbar);
 		main_progressbar = (ProgressBar)view.findViewById(R.id.main_progressbar);
+
 		
-		listsetting();
-		
+/*
 		weather_mylocation = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_location_text);
 		weather_today_timedesc = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_simpleinfo_text);
 		weather_today_temp= (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_temperature_text);
@@ -182,9 +229,11 @@ public class MainActivity extends Fragment {
 	
 		weather_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_weatherimage_image);
 		weather_next_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextweatherimage_image);
+		*/
 		
-		//aq = new AQuery(mainListView.getAdapter().getView(0, null, mainListView));
-		//aq.id(R.id.weather_weatherimage_image).image("http://bufferblog.wpengine.netdna-cdn.com/wp-content/uploads/2014/05/145.jpg");
+		
+		
+		
 	}
 	
 	private void clicklistener(){
@@ -196,14 +245,18 @@ public class MainActivity extends Fragment {
 				mf.mViewPager.setCurrentItem(4);
 			}
 		});
-		weather_refresh_button.setOnClickListener(new ImageView.OnClickListener(){
+		/*weather_refresh_button.setOnClickListener(new ImageView.OnClickListener(){
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				new GetWeatherAsync(getActivity().getBaseContext(),0, dbHelper, weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_feeltemp, weather_today_rainprob, weather_today_windspeed, weather_today_humidity,  weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image, weather_finedust, weather_today_pm10value).execute("");				
+				if(Util.isOnline(getActivity().getApplicationContext())) {
+					new GetWeatherAsync(getActivity().getApplicationContext(),0, dbHelper, weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_feeltemp, weather_today_rainprob, weather_today_windspeed, weather_today_humidity,  weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image, weather_finedust, weather_today_pm10value).execute("");				
+				} else {
+					Toast.makeText(getActivity().getApplicationContext(), "네트워크를 연결하세요~", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
-
+*/
 		condition_range_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			
 			@Override
@@ -228,7 +281,6 @@ public class MainActivity extends Fragment {
 					mainListView.setAdapter(cardAdapter);
 					break;
 				case 3 :
-					
 					cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
 					new GetRecommendPicnicSimpleInfo(getActivity().getApplicationContext(), "11", "1", "15", cardAdapter, mainListView , main_progressbar).execute("");
 					mainListView.setAdapter(cardAdapter);
@@ -286,22 +338,34 @@ public class MainActivity extends Fragment {
 	
 	private void listsetting(){
 		// weather
-		cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
-		// recommend
-		new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "15", cardAdapter, mainListView, main_progressbar).execute("");
-
-		mainListView.setAdapter(cardAdapter);
+				
+		
+		if(Util.isOnline(getActivity().getApplicationContext())) {
+			
+			cardAdapter.removeAll();
+			cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
+			
+			// recommend
+			new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "0", cardAdapter, mainListView, main_progressbar).execute("");
+			mainListView.setAdapter(cardAdapter);
+		}
+		 else {
+			 cardAdapter.removeAll();
+			 cardAdapter.addItem(new MainWeatherCard(R.layout.list_item_weather_card, "Weather Card", getActivity().getApplicationContext(), 0));
+			//getWeatherFast();
+			mainListView.setAdapter(cardAdapter);
+		}
 	}
-	
+	/*
 	public void getWeatherFast() {
 		
 		KiznicSharedPreferences pref = new KiznicSharedPreferences(getActivity().getApplicationContext());
-		LocationHelper location = new LocationHelper(getActivity().getApplicationContext());
-		location.run();
 		Util util = new Util();
-		weather_mylocation.setText(location.getMyLocation());
+		
+		weather_mylocation.setText(pref.getValue("mylocation"));
 		weather_today_timedesc.setText(pref.getValue("today_daystate") + " " + pref.getValue("today_time") + ", " + pref.getValue("today_weatherdesc"));
 		weather_today_temp.setText(pref.getValue("today_temp")+"℃");
+		weather_today_feeltemp.setText("체감 온도 " + pref.getValue("today_feeltemp"+"℃"));
 		weather_today_rainprob.setText(" " + pref.getValue("today_rainprob")+ " %");
 		weather_today_windspeed.setText(" " + pref.getValue("today_windspeed") + " m/s");
 		weather_today_humidity.setText(pref.getValue("today_humidity")+"%");
@@ -321,6 +385,29 @@ public class MainActivity extends Fragment {
 			util.weather_finedust_set(weather_finedust,(int)((1.2 * Integer.parseInt(pref.getValue("today_pm10value")))), false, null);
 
 		}		
+	}*/
+	
+	public boolean checkNetwokState() {
+		  ConnectivityManager manager = (ConnectivityManager)getActivity().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+		  NetworkInfo mobile = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+		  NetworkInfo wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+		  NetworkInfo lte_4g = manager.getNetworkInfo(ConnectivityManager.TYPE_WIMAX);
+		  
+		  boolean blte_4g = false;
+		  
+		  if(lte_4g != null)                             
+			   blte_4g = lte_4g.isConnected();
+		  if (mobile.isConnected() || wifi.isConnected() || blte_4g)
+		       return true;
+		  else {
+		 // 여기는 걍 네트워크 상태 체크와 상관없는 연결이 잘 안될때 경고문 띄움 ㅋㅋ
+		   
+		   return false;
+		  }
 	}
+	
+	
+	
+	
 	
 }

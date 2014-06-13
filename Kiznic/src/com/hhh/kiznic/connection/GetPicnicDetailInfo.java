@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -49,7 +50,7 @@ public class GetPicnicDetailInfo extends AsyncTask<String, Integer, String> impl
 	LinearLayout mapViewContainer;
 	
 	
-	
+	Activity activity;
 	ListView detail_list_view;
 	ListView detailNevigationInfoListView;
 	int play_no;
@@ -69,11 +70,11 @@ public class GetPicnicDetailInfo extends AsyncTask<String, Integer, String> impl
 	
 
 	
-	public GetPicnicDetailInfo(Context context, int play_no, TextView detail_main_title, 
+	public GetPicnicDetailInfo(Activity activity, Context context, int play_no, TextView detail_main_title, 
 			ImageView detail_main_poster, TextView detail_info_text, ListView detail_list_view
 			, ListView detailNevigationInfoListView, LinearLayout detail_mainposter_layout,
 			NMapView nmapView, NMapViewerResourceProvider nmapViewerResourceProvider, NMapOverlayManager nmapOverlayManager, LinearLayout mapViewContainer) {
-		
+		this.activity = activity;
 		this.context = context;
 		this.play_no = play_no;
 		this.detail_main_title = detail_main_title;

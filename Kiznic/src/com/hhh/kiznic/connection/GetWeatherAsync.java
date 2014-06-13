@@ -90,7 +90,7 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 		addressArray = location.getAddress();
 		mySiDo = location.getMySiDo();
 		
-		pref = new KiznicSharedPreferences(mContext);
+		
 	}
 		
 	@Override
@@ -117,11 +117,10 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 	}
 	
 	protected void onPostExecute(String[] result) {
-        //tv4.setText(result);
 		ArrayList<WeatherInfo> weatherInfo = null;
 		ArrayList<PollutionInfo> pollutionInfo = null;
-		
 		Util util = new Util();
+		pref = new KiznicSharedPreferences(mContext);
 		
 		try {
 			weatherInfo = util.parseWeatherXML(result[0]);
@@ -136,6 +135,7 @@ public class GetWeatherAsync extends AsyncTask<String, Integer, String[]> {
 			//Log.d("createWeather", "Table 생성");
 			//dbHelper.createWeather(weatherInfo.get(0), weatherInfo.get(1), pollutionInfo.get(0));
 			//Log.d("booleanCreateWeather", booleanCreateWeather);
+			pref.put("mylocation", location.getMyLocation());
 			pref.put("today_daystate", weatherInfo.get(0).getDayState());
 			pref.put("today_time", weatherInfo.get(0).getTime());
 			pref.put("today_weatherdesc", weatherInfo.get(0).getWeatherDesc());

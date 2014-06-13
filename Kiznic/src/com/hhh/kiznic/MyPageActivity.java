@@ -434,10 +434,12 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 					if(adapter.getState() == BluetoothAdapter.STATE_TURNING_ON || adapter.getState() == BluetoothAdapter.STATE_ON)     
 						{
 						Toast.makeText(getActivity().getApplicationContext(), "블루투스를 Off니다", Toast.LENGTH_LONG).show();
+						mypage_smartwatch_onoff_button.setBackgroundResource(R.drawable.ic_bt_off);
 						adapter.disable();
 						}
 					else
 						{
+						mypage_smartwatch_onoff_button.setBackgroundResource(R.drawable.ic_bt_on);
 						Toast.makeText(getActivity().getApplicationContext(), "블루투스를 On합니다", Toast.LENGTH_LONG).show();	
 							if(btService.getDeviceState()) {
 								// ��������� ���� ������ ����� ��
@@ -866,6 +868,7 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 		
 		mypage_smartpush_button = (ImageView)view.findViewById(R.id.mypage_smartpush_button);
 		mypage_smartwatch_button = (ImageView)view.findViewById(R.id.mypage_smartwatch_button);
+		mypage_smartwatch_onoff_button.setBackgroundResource(R.drawable.ic_bt_off);
 		
 		mypage_smartpush_button.setImageResource(R.drawable.mypage_push_image_focus);
 		
@@ -942,7 +945,7 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
             	// Next Step
             	btService.scanDevice();
             } else {
-
+            	mypage_smartwatch_onoff_button.setBackgroundResource(R.drawable.ic_bt_off);
                 Log.d(TAG, "Bluetooth is not enabled");
             }
             break;
