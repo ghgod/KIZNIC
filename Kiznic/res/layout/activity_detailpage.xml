@@ -61,7 +61,7 @@
 
             android:layout_width="match_parent"
 
-            android:layout_height="50dip"
+            android:layout_height="wrap_content"
 
             android:gravity="center">
 
@@ -70,14 +70,10 @@
             <TextView
 				android:id="@+id/detail_main_title"
                 android:layout_width="wrap_content"
-
                 android:layout_height="wrap_content"
-
                 android:layout_gravity="center"
-
-                android:text="[성남 아트센터] 배고픈 애벌레"
-                android:singleLine="true"
-                android:ellipsize="middle"
+                android:layout_marginLeft="10dip"
+                android:ellipsize="end"
 
                 android:textColor="#000000"
 

@@ -218,9 +218,8 @@
 					 
 					        <RadioButton
 					            android:id="@+id/profile_male_radiobutton"
-					            android:layout_width="match_parent"
-					            android:layout_height="match_parent"
-					            android:checked="true"
+					            android:layout_width="wrap_content"
+					            android:layout_height="wrap_content"
 					            android:button="@android:drawable/btn_radio"/>
 					            
 					        <TextView
@@ -233,8 +232,8 @@
 					        
 					        <RadioButton
 					            android:id="@+id/profile_female_radiobutton"
-					            android:layout_width="match_parent"
-					            android:layout_height="match_parent"
+					            android:layout_width="wrap_content"
+					            android:layout_height="wrap_content"
 					            android:layout_marginLeft="3dip"
 					            android:button="@android:drawable/btn_radio" />
 					 

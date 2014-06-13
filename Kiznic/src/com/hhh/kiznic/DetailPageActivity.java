@@ -103,6 +103,7 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 	   
 	   set_image();
 	   
+	   detail_scrollview.pageScroll(View.FOCUS_UP);
 	}
 
 	
