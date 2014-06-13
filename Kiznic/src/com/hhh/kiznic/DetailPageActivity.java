@@ -47,7 +47,7 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 	private static ImageView detail_bookmark_image;
 	private static ImageView detail_sharing_image;
 	
-	private static Button detail_moreinfo_button;
+	//private static Button detail_moreinfo_button;
 	
 	private static TextView detail_infotext_text;
 	
@@ -103,7 +103,6 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 	   
 	   set_image();
 	   
-	   
 	}
 
 	
@@ -111,7 +110,7 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 	private void set_image() {
 		detail_phone_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getResources(), R.drawable.detail_phone_up, 200, 200));
 		detail_link_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getResources(), R.drawable.detail_link_up, 200, 200));
-		detail_bookmark_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getResources(), R.drawable.detail_bookmark_up, 200, 200));
+		//detail_bookmark_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getResources(), R.drawable.detail_bookmark_up, 200, 200));
 		detail_sharing_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getResources(), R.drawable.detail_share_up, 200, 200));
 	}
 
@@ -135,10 +134,10 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 		detailNevigationInfoListView = (ListView)findViewById(R.id.detail_list2_view);
 		detail_phone_image = (ImageView)findViewById(R.id.detail_phone_image);
 		detail_link_image = (ImageView)findViewById(R.id.detail_link_image);
-		detail_bookmark_image = (ImageView)findViewById(R.id.detail_bookmark_image);
+		//detail_bookmark_image = (ImageView)findViewById(R.id.detail_bookmark_image);
 		detail_sharing_image = (ImageView)findViewById(R.id.detail_sharing_image);
 		
-		detail_moreinfo_button = (Button)findViewById(R.id.detail_moreinfo_button);
+		//detail_moreinfo_button = (Button)findViewById(R.id.detail_moreinfo_button);
 		
 		detail_infotext_text = (TextView)findViewById(R.id.detail_infotext_text);
 		
@@ -230,7 +229,7 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 				return true;
 			}
 		});
-		
+		/*
 		detail_bookmark_image.setOnTouchListener(new OnTouchListener() {
 			
 			@Override
@@ -241,12 +240,6 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 				
 				if(event.getAction() == MotionEvent.ACTION_UP){
 					detail_bookmark_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getResources(), R.drawable.detail_bookmark_up, 200, 200));
-					/*
-					Intent intent2 = new Intent(Intent.ACTION_VIEW);
-					Uri u2 = Uri.parse("http://search.naver.com/search.naver?where=nexearch&query="+pref.getString("placeName", "")+" 안전사고"+ "&sm=top_hty");
-					intent2.setData(u2);
-					startActivity(intent2);
-					*/
 					
 					Toast.makeText(getApplicationContext(), "준비중 입니다!", Toast.LENGTH_LONG).show();
 				}
@@ -254,7 +247,7 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 				return true;
 			}
 		});
-		
+		*/
 		detail_sharing_image.setOnTouchListener(new OnTouchListener() {
 			
 			@Override
@@ -298,7 +291,7 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 			}
 		});
 		
-		detail_moreinfo_button.setOnClickListener(this);
+		//detail_moreinfo_button.setOnClickListener(this);
 		
 		nmapView.setOnTouchListener(new OnTouchListener() {
 			
@@ -318,58 +311,8 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 	public void onClick(View v){
 
 		switch(v.getId()){
+		
 		/*
-		case R.id.detail_phone_image:
-			Uri number = Uri.parse("tel:" + pref.getString("contact", "tel:0000000"));
-			Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
-			startActivity(callIntent);
-			break;
-		case R.id.detail_link_image:
-			Intent intent = new Intent(Intent.ACTION_VIEW);
-			Log.e("title", pref.getString("title", ""));
-			Uri u = Uri.parse("http://search.naver.com/search.naver?where=nexearch&query="+pref.getString("title", "")+ "&sm=top_hty");
-			intent.setData(u);
-			startActivity(intent);
-			break;
-		case R.id.detail_bookmark_image:
-			Intent intent2 = new Intent(Intent.ACTION_VIEW);
-			Uri u2 = Uri.parse("http://search.naver.com/search.naver?where=nexearch&query="+pref.getString("placeName", "")+" 안전사고"+ "&sm=top_hty");
-			intent2.setData(u2);
-			startActivity(intent2);
-			break;
-		case R.id.detail_sharing_image:
-		
-			LinearLayout capture = (LinearLayout)findViewById(R.id.detailpage_captureLayout);
-			capture.buildDrawingCache();
-			
-			Bitmap captureView = capture.getDrawingCache();
-			
-			FileOutputStream fos;
-			try {
-			
-				fos = new FileOutputStream(Environment.getExternalStorageDirectory().toString()+"/capture.jpeg");
-				captureView.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-				
-				Uri mSaveImageUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory().toString()+"/capture.jpeg")); //file의 경로를 uri로 변경합니다.
-				
-				Intent shareintent = new Intent(Intent.ACTION_SEND); //전송 메소드를 호출합니다. Intent.ACTION_SEND
-				shareintent.setType("image/jpg"); //jpg 이미지를 공유 하기 위해 Type을 정의합니다.
-				shareintent.putExtra(Intent.EXTRA_STREAM, mSaveImageUri); //사진의 Uri를 가지고 옵니다.
-				startActivity(Intent.createChooser(shareintent, "공유")); //Activity를 이용하여 호출 합니다.
-						
-			
-			} catch (FileNotFoundException e) {
-			
-				e.printStackTrace();
-			
-			}
-		
-			Toast.makeText(getApplicationContext(), "공유 성공", Toast.LENGTH_LONG).show();
-		
-					
-			
-			break;
-			*/
 		case R.id.detail_moreinfo_button:
 			if(infotextview_flag){
 				infotextview_flag = false;
@@ -380,6 +323,7 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 				detail_moreinfo_button.setText("줄이기");
 			}
 			break;
+			*/
 		}
 	}
 	

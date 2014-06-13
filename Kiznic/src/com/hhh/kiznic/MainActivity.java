@@ -11,6 +11,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -60,8 +61,9 @@ public class MainActivity extends Fragment {
 	private static TextView weather_today_pm10value;
 	private static TextView weather_today_feeltemp;
 	private TextView weather_today_humidity;
+	private static TextView profile_kidsetplz_text;
 	
-	private static ImageView weather_refresh_button;
+	//private static ImageView weather_refresh_button;
 	private static ImageView weather_image;
 	private static ImageView weather_next_image;
 	private static ImageView profile_kidimage_image;
@@ -110,17 +112,21 @@ public class MainActivity extends Fragment {
 			if(selectedImage != null)
 				profile_circleimage(selectedImage);
 		}
-			
 		
 		return view;
 	}
 	private void set_data() {
 		if(localdata.getprofile(localdata.getprofileflag()).getname().length() > 5 || localdata.getprofile(localdata.getprofileflag()).getname().equals(""))
-			profile_kidname_text.setText("오늘은 어디까지 갈까요?");
+			profile_kidname_text.setText("오늘 나들이는 어디까지 갈까요?");
 		else
-			profile_kidname_text.setText(localdata.getprofile(localdata.getprofileflag()).getname() + "님 오늘은 어디까지 갈까요?");
+			profile_kidname_text.setText(localdata.getprofile(localdata.getprofileflag()).getname() + "님 오늘 나들이는 어디까지 갈까요?");
 	
 		condition_range_seekbar.setProgress(3);
+		
+		if(localdata.getprofile(localdata.getprofileflag()).getimageurl() == null)
+			profile_kidsetplz_text.setText("프로필을 등록해주세요");
+		else
+			profile_kidsetplz_text.setText(null);
 	}
 
 	@Override
@@ -157,6 +163,8 @@ public class MainActivity extends Fragment {
 		
 		profile_kidname_text = (TextView)view.findViewById(R.id.profile_kidname_text);
 		
+		profile_kidsetplz_text = (TextView)view.findViewById(R.id.profile_kidsetplz_text);
+		
 		mainListView = (ListView)view.findViewById(R.id.main_list_view);
 		cardAdapter = new CardAdapter(getActivity().getApplicationContext());
 	
@@ -177,12 +185,26 @@ public class MainActivity extends Fragment {
 		weather_next_timedesc = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextdaysimpleinfo_text);
 		weather_next_temp = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nexttemperature_text);
 		weather_today_pm10value = (TextView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_finedusttext_text);
-		weather_refresh_button = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_getlocation_imagebutton);
+		//weather_refresh_button = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_getlocation_imagebutton);
 		weather_finedust = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_finedustimage_image);
 	
 		weather_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_weatherimage_image);
 		weather_next_image = (ImageView)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_nextweatherimage_image);
 		
+		
+		LinearLayout a = (LinearLayout)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_weather_layout);
+		
+		a.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(Intent.ACTION_VIEW);
+				Uri u = Uri.parse("http://m.kma.go.kr/m/observation/observation_01.jsp");
+				intent.setData(u);
+				startActivity(intent);
+			}
+		});
 		//aq = new AQuery(mainListView.getAdapter().getView(0, null, mainListView));
 		//aq.id(R.id.weather_weatherimage_image).image("http://bufferblog.wpengine.netdna-cdn.com/wp-content/uploads/2014/05/145.jpg");
 	}
@@ -196,6 +218,7 @@ public class MainActivity extends Fragment {
 				mf.mViewPager.setCurrentItem(4);
 			}
 		});
+		/*
 		weather_refresh_button.setOnClickListener(new ImageView.OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -203,7 +226,7 @@ public class MainActivity extends Fragment {
 				new GetWeatherAsync(getActivity().getBaseContext(),0, dbHelper, weather_mylocation, weather_today_timedesc, weather_today_temp, weather_today_feeltemp, weather_today_rainprob, weather_today_windspeed, weather_today_humidity,  weather_next_timedesc, weather_next_temp,  weather_image, weather_next_image, weather_finedust, weather_today_pm10value).execute("");				
 			}
 		});
-
+		 */
 		condition_range_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			
 			@Override

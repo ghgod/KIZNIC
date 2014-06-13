@@ -27,7 +27,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dip"
-                    android:text="Profile"
+                    android:text="프로필"
                     android:textSize="17sp"/>
                 
 	            <!-- 

@@ -155,7 +155,7 @@ public class SearchActivity extends Fragment implements OnClickListener, onSearc
 		search_category1_text = (TextView)view.findViewById(R.id.search_category1_text);
 		search_category2_text = (TextView)view.findViewById(R.id.search_category2_text);
 		search_category3_text = (TextView)view.findViewById(R.id.search_category3_text);
-		search_category4_text = (TextView)view.findViewById(R.id.search_category4_text);
+		//search_category4_text = (TextView)view.findViewById(R.id.search_category4_text);
 		
 		search_search_edittext = (EditText)view.findViewById(R.id.search_search_edittext);
 		search_searchbutton_image = (ImageView)view.findViewById(R.id.search_searchbutton_image);
