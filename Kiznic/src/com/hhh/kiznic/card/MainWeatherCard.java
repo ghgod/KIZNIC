@@ -9,13 +9,14 @@ import com.hhh.kiznic.util.Util;
 
 import android.content.Context;
 import android.util.Log;
+
+import android.content.Context;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class MainWeatherCard extends Card implements View.OnClickListener{
+public class MainWeatherCard extends Card {
 
 	TextView weather_location_text;
 	TextView weather_simpleinfo_text;
@@ -34,6 +35,7 @@ public class MainWeatherCard extends Card implements View.OnClickListener{
 	ImageView weather_windspeed_image;
 	ImageView weather_nextweatherimage_image;
 	public LinearLayout weather_circlemeter_layout;
+	LinearLayout weather_weather_layout;
 	private Databasehelper dbHelper;
 	
 	public MainWeatherCard(int layout, String cardName, Context context, int cardId){
@@ -61,12 +63,14 @@ public class MainWeatherCard extends Card implements View.OnClickListener{
 		weather_humidity_text = (TextView)cardView.findViewById(R.id.weather_humidity_text);
 		weather_nextdaysimpleinfo_text = (TextView)cardView.findViewById(R.id.weather_nextdaysimpleinfo_text);
 		weather_nexttemperature_text = (TextView)cardView.findViewById(R.id.weather_nexttemperature_text);
-		weather_getlocation_imagebutton = (ImageView)cardView.findViewById(R.id.weather_getlocation_imagebutton);
+		//weather_getlocation_imagebutton = (ImageView)cardView.findViewById(R.id.weather_getlocation_imagebutton);
 		weather_weatherimage_image = (ImageView)cardView.findViewById(R.id.weather_weatherimage_image);
 		weather_finedustimage_image = (ImageView)cardView.findViewById(R.id.weather_finedustimage_image);
 		weather_rainfall_image = (ImageView)cardView.findViewById(R.id.weather_rainfall_image);
 		weather_windspeed_image = (ImageView)cardView.findViewById(R.id.weather_windspeed_image);
 		weather_nextweatherimage_image = (ImageView)cardView.findViewById(R.id.weather_nextweatherimage_image);
+		
+		weather_weather_layout = (LinearLayout)cardView.findViewById(R.id.weather_weather_layout);
 		
 		Databasehelper dbHelper = new Databasehelper(context);
 		this.dbHelper = dbHelper;
@@ -75,9 +79,11 @@ public class MainWeatherCard extends Card implements View.OnClickListener{
 	
 	@Override
 	public void setListener(){
-		weather_getlocation_imagebutton.setOnClickListener(this);
+		
+		//weather_getlocation_imagebutton.setOnClickListener(this);
 	}
 	
+/*
 	@Override
 	public void onClick(View v){
 		switch(v.getId()){
@@ -91,7 +97,7 @@ public class MainWeatherCard extends Card implements View.OnClickListener{
 			break;
 		}
 	}
-	
+	*/
 	public void getWeatherFast() {
 		
 		KiznicSharedPreferences pref = new KiznicSharedPreferences(context);
@@ -117,4 +123,5 @@ public class MainWeatherCard extends Card implements View.OnClickListener{
 			util.weather_finedust_set(weather_finedustimage_image,(int)((1.2 * Integer.parseInt(pref.getValue("today_pm10value")))), false, null);
 		}		
 	}
+
 }

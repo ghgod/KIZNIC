@@ -61,7 +61,7 @@
 
             android:layout_width="match_parent"
 
-            android:layout_height="50dip"
+            android:layout_height="wrap_content"
 
             android:gravity="center">
 
@@ -70,14 +70,12 @@
             <TextView
 				android:id="@+id/detail_main_title"
                 android:layout_width="wrap_content"
-
                 android:layout_height="wrap_content"
-
                 android:layout_gravity="center"
-
-                android:text="[성남 아트센터] 배고픈 애벌레"
-                android:singleLine="true"
-                android:ellipsize="middle"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="5dip"
+                android:layout_marginBottom="5dip"
+                android:ellipsize="end"
 
                 android:textColor="#000000"
 
@@ -155,7 +153,13 @@
 
             android:layout_height="match_parent"
 
-            android:layout_weight="1">
+            android:layout_weight="1"
+            
+            android:layout_marginTop="3dip"
+            
+            android:layout_marginBottom="3dip"
+            
+           	android:background="@drawable/gray_sideline_background">
 
              
 
@@ -174,7 +178,7 @@
         </LinearLayout>
 
        
-
+<!-- 
         <LinearLayout
 
             android:layout_width="0dip"
@@ -199,7 +203,7 @@
 
         </LinearLayout>
 
-       
+       --> 
 
         <LinearLayout
 
@@ -207,7 +211,13 @@
 
             android:layout_height="match_parent"
 
-            android:layout_weight="1">
+            android:layout_weight="1"
+            
+            android:layout_marginTop="3dip"
+            
+            android:layout_marginBottom="3dip"
+            
+            android:background="@drawable/gray_sideline_background">
 
              
 
@@ -303,44 +313,11 @@
 
                 android:layout_marginRight="10dip"
 
-                android:layout_marginBottom="10dip"
-
-                android:text="배고픈 애벌레는 먹이를 찾으러 이곳 저곳을 돌아다니기 시작한다. 이러쿵 저러쿵 왔다가갔다 으흐흐흐 모라고 써야할까 배고픈 애벌레는 이곳저곳 돌아다니다 새밥이된다.동심파괴 젠장.. 몇자까지가 적당할까, 난 여기에 조금 더 써볼까해, 음... 아무래도 5줄 정도면..."/>
+                android:layout_marginBottom="10dip"/>
 
            
 
         </LinearLayout>
-
-       
-
-        <LinearLayout
-
-            android:layout_width="match_parent"
-
-            android:layout_height="30dip">
-
-           
-
-            <Button
-
-                android:id="@+id/detail_moreinfo_button"
-
-                android:layout_width="match_parent"
-
-                android:layout_height="match_parent"
-
-                android:text="더보기"
-
-                android:textColor="#000000"
-
-                android:textSize="12sp"
-
-                android:background="#5076C4C1"/>
-
-           
-
-        </LinearLayout>
-
        
 
     </LinearLayout>
@@ -431,9 +408,7 @@ android:scrollbars="none"/>
 
             android:layout_width="match_parent"
 
-            android:layout_height="0dip"
-
-            android:layout_weight="2"
+            android:layout_height="30dip"
 
             android:background="@drawable/detail_underline_background">
 
