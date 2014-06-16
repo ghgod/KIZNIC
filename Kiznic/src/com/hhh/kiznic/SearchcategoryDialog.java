@@ -20,11 +20,14 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.View.MeasureSpec;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -100,7 +103,7 @@ public class SearchcategoryDialog extends DialogFragment {
 		
 		return dialog;
 	}
-
+	
 	public void init(){
 		dialog_title_textview = (TextView)dialog.findViewById(R.id.search_dailog_title_text);
 		
@@ -209,9 +212,16 @@ public class SearchcategoryDialog extends DialogFragment {
 					dialog_secondlist_listview.setAdapter(second_arrayAdapter);
 					
 					TextView a;
+					LinearLayout b;
+					
 					for(int i=0;i<location_list.size();i++){
-						a = (TextView)dialog_secondlist_listview.getAdapter().getView(i, null, dialog_firstlist_listview).findViewById(R.id.category_item_text);
+						a = (TextView)dialog_secondlist_listview.getAdapter().getView(i, null, dialog_secondlist_listview).findViewById(R.id.category_item_text);
 						a.setText(list_item2[i]);
+						
+						b = (LinearLayout)dialog_secondlist_listview.getAdapter().getView(i, null, dialog_secondlist_listview).findViewById(R.id.category_item_layout);
+						LayoutParams bParams = (LayoutParams) b.getLayoutParams();
+
+						bParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 43, getResources().getDisplayMetrics());
 					}
 					
 				}
@@ -278,12 +288,23 @@ public class SearchcategoryDialog extends DialogFragment {
 				for(int i=0;i<6;i++){
 					a = (TextView)dialog_firstlist_listview.getAdapter().getView(i, null, dialog_firstlist_listview).findViewById(R.id.category_item_text);
 					a.setText(list_item[i]);
+					
+					b = (LinearLayout)dialog_firstlist_listview.getAdapter().getView(i, null, dialog_firstlist_listview).findViewById(R.id.category_item_layout);
+					LayoutParams bParams = (LayoutParams) b.getLayoutParams();
+					
+					bParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 43, getResources().getDisplayMetrics());
+					
 				}
 			}
 			else if(dialog_num == 2){
 				for(int i=0;i<5;i++){
 					a = (TextView)dialog_firstlist_listview.getAdapter().getView(i, null, dialog_firstlist_listview).findViewById(R.id.category_item_text);
 					a.setText(list_item[i]);
+					
+					b = (LinearLayout)dialog_firstlist_listview.getAdapter().getView(i, null, dialog_firstlist_listview).findViewById(R.id.category_item_layout);
+					LayoutParams bParams = (LayoutParams) b.getLayoutParams();
+
+					bParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 43, getResources().getDisplayMetrics());
 				}
 			}
 		}
@@ -299,14 +320,26 @@ public class SearchcategoryDialog extends DialogFragment {
 			dialog_secondlist_listview.setAdapter(second_arrayAdapter);
 			
 			TextView a;
+			LinearLayout b;
+			
 			for(int i=0;i<16;i++){
 				a = (TextView)dialog_firstlist_listview.getAdapter().getView(i, null, dialog_firstlist_listview).findViewById(R.id.category_item_text);
 				a.setText(list_item[i]);
+				
+				b = (LinearLayout)dialog_firstlist_listview.getAdapter().getView(i, null, dialog_firstlist_listview).findViewById(R.id.category_item_layout);
+				LayoutParams bParams = (LayoutParams) b.getLayoutParams();
+
+				bParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 43, getResources().getDisplayMetrics());
 			}
 			
 			for(int i=0;i<location_list.size();i++){
-				a = (TextView)dialog_secondlist_listview.getAdapter().getView(i, null, dialog_firstlist_listview).findViewById(R.id.category_item_text);
+				a = (TextView)dialog_secondlist_listview.getAdapter().getView(i, null, dialog_secondlist_listview).findViewById(R.id.category_item_text);
 				a.setText(list_item2[i]);
+				
+				b = (LinearLayout)dialog_secondlist_listview.getAdapter().getView(i, null, dialog_secondlist_listview).findViewById(R.id.category_item_layout);
+				LayoutParams bParams = (LayoutParams) b.getLayoutParams();
+
+				bParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 43, getResources().getDisplayMetrics());
 			}
 			
 		}

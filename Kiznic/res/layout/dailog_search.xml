@@ -43,7 +43,7 @@
 				android:focusable="true"
 				android:headerDividersEnabled="true"
 				android:footerDividersEnabled="true"
-				android:divider="#ACACAC"
+				android:divider="@color/kiznic1"
 				android:dividerHeight="1dip"
 				android:scrollbars="none" />
 	        

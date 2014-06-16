@@ -29,8 +29,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -101,7 +103,10 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 	private static ImageView mypage_smartpush_button;
 	private static ImageView mypage_smartwatch_button;
 	
+	private static boolean smartalarm_flag, smartwatch_flag; 
+	
 	// smartalarm
+	private static FrameLayout mypage_smart_framelayout;
 	
 	private static LinearLayout mypage_smartalarm_layout;
 	private static LinearLayout mypage_amalarm_layout;
@@ -137,6 +142,13 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 	private static TextView pm_alarm_hour_text;
 	private static TextView pm_alarm_minute_text;
 	
+	// tutorial
+	
+	private static LinearLayout mypage_tutorial_layout;
+	private static ImageView mypage_tutorial_image;
+	private static boolean tutorial_flag = false;
+	private static Bitmap tutorial_bitmap;
+	
 	// Image set
 	
 	private static Uri imageCaptureUri;
@@ -165,7 +177,34 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 		
 		set_data();
 		
+		tutorial_layout();
+		
     	return view;
+	}
+
+	private void tutorial_layout() {
+		if(!localdata.gettutorialmypage()){
+			
+			mypage_tutorial_image.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					
+					if(!tutorial_flag){
+						mypage_tutorial_image.setImageBitmap(tutorial_bitmap);
+						tutorial_flag = true;
+					}
+					else{
+						mypage_tutorial_layout.setVisibility(LinearLayout.INVISIBLE);
+						localdata.settutorialmypage(true);
+						localdata.setLocalData();	
+					}
+				}
+			});
+		}
+		else{
+			mypage_tutorial_layout.setVisibility(LinearLayout.INVISIBLE);
+		}
 	}
 
 	private void set_data() {
@@ -209,7 +248,7 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 		//mypage_idinput_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_login, 200, 200));
 		mypage_profileamend_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profileamend_image, 200, 200));
 		mypage_profileset_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profileset_image, 200, 200));
-		mypage_smartpush_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_push_image_focus, 200, 200));
+		mypage_smartpush_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_push_image_up, 200, 200));
 		mypage_smartwatch_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smartwatch_image_up, 200, 200));
 		mypage_am_alarm_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_pushalarm_image_up, 200, 200));
 		mypage_pm_alarm_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_pushalarm_image_up, 200, 200));
@@ -217,11 +256,26 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 		mypage_smallkidimage1_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
 		mypage_smallkidimage2_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
 		mypage_smallkidimage3_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
-	
+		
+		switch(localdata.getprofileflag()){
+		case 0:
+			mypage_smallkidimage1_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_focus_image, 200, 200));
+			break;
+		case 1:
+			mypage_smallkidimage2_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_focus_image, 200, 200));
+			break;
+		case 2:
+			mypage_smallkidimage3_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_focus_image, 200, 200));
+			break;
+		}
+		
 		smartwatch_wearning_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_waerning_image, 200, 200));
 	
 		mypage_kidimage_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profile, 200, 200));
 		mypage_kidimageset_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profileimage_set_image, 200, 200));
+		
+		mypage_tutorial_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_tutorial_image1, 600, 600));
+		tutorial_bitmap = ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_tutorial_image2, 600, 600);
 	}
 
 	@Override
@@ -256,7 +310,7 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 				else
 					mypage_profilename_edittext.setText(profile_name.getText());
 				
-				if(profile_birth.getText().length() > 5)
+				if(profile_birth.getText().length() > 8)
 					mypage_profilebirth_edittext.setText(null);
 				else
 					mypage_profilebirth_edittext.setText(profile_birth.getText());
@@ -280,6 +334,9 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 					localdata.getprofile(localdata.getprofileflag()).setbirth("생일을 입력하세요");
 				else
 					localdata.getprofile(localdata.getprofileflag()).setbirth(mypage_profilebirth_edittext.getText().toString());
+				
+				if(localdata.getprofile(localdata.getprofileflag()).getsex().length() >= 3)
+					localdata.getprofile(localdata.getprofileflag()).setsex("성별을 입력하세요");
 				
 				mypage_kidimageset_view.setVisibility(LinearLayout.INVISIBLE);
 				
@@ -340,23 +397,55 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 		mypage_smartpush_button.setOnClickListener(new ImageView.OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				mypage_smartalarm_layout.setVisibility(LinearLayout.VISIBLE);
-				mypage_smartwatch_layout.setVisibility(LinearLayout.INVISIBLE);
 				
-				mypage_smartpush_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_push_image_focus, 200, 200));
-				mypage_smartwatch_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smartwatch_image_up, 200, 200));
+				if(!smartalarm_flag){
+					mypage_smart_framelayout.setVisibility(FrameLayout.VISIBLE);
+					
+					mypage_smartalarm_layout.setVisibility(LinearLayout.VISIBLE);
+					mypage_smartwatch_layout.setVisibility(LinearLayout.INVISIBLE);
+					
+					mypage_smartpush_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_push_image_focus, 200, 200));
+					mypage_smartwatch_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smartwatch_image_up, 200, 200));
+				
+					smartalarm_flag = true;
+					smartwatch_flag = false;
+				}
+				else{
+					mypage_smart_framelayout.setVisibility(FrameLayout.INVISIBLE);
+					
+					smartalarm_flag = false;
+					smartwatch_flag = false;
+					
+					mypage_smartpush_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_push_image_up, 200, 200));
+				}
 			}
 		});
 		
 		mypage_smartwatch_button.setOnClickListener(new ImageView.OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				mypage_smartalarm_layout.setVisibility(LinearLayout.INVISIBLE);
-				mypage_smartwatch_layout.setVisibility(LinearLayout.VISIBLE);
+				if(!smartwatch_flag){
+					mypage_smart_framelayout.setVisibility(FrameLayout.VISIBLE);
+					
+					mypage_smartalarm_layout.setVisibility(LinearLayout.INVISIBLE);
+					mypage_smartwatch_layout.setVisibility(LinearLayout.VISIBLE);
+					
+					mypage_smartpush_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_push_image_up, 200, 200));
+					mypage_smartwatch_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smartwatch_image_focus, 200, 200));
+					
+					smartalarm_flag = false;
+					smartwatch_flag = true;
+				}
+				else{
+					mypage_smart_framelayout.setVisibility(FrameLayout.INVISIBLE);
+					
+					smartalarm_flag = false;
+					smartwatch_flag = false;
+					
+					mypage_smartwatch_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smartwatch_image_up, 200, 200));
+				}
 				
-
-				mypage_smartpush_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_push_image_up, 200, 200));
-				mypage_smartwatch_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smartwatch_image_focus, 200, 200));
+				
 			}
 		});
 		
@@ -457,6 +546,10 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 			public void onClick(View v) {
 				if(!profile_amend_flag){
 					localdata.setprofileflag(0);
+					mypage_smallkidimage1_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+					mypage_smallkidimage2_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+					mypage_smallkidimage3_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+					
 					profile_input();
 				}
 			}
@@ -467,6 +560,10 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 			public void onClick(View v) {
 				if(!profile_amend_flag){
 					localdata.setprofileflag(1);
+					mypage_smallkidimage1_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+					mypage_smallkidimage2_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+					mypage_smallkidimage3_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+					
 					profile_input();
 				}
 			}
@@ -477,6 +574,10 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 			public void onClick(View v) {
 				if(!profile_amend_flag){
 					localdata.setprofileflag(2);
+					mypage_smallkidimage1_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+					mypage_smallkidimage2_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+					mypage_smallkidimage3_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+					
 					profile_input();
 				}
 			}
@@ -735,7 +836,7 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 		
 			switch(localdata.getprofileflag()){
 			case 0:
-				mypage_smallkidimage1_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+				mypage_smallkidimage1_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_focus_image, 200, 200));
 				
 				if(localdata.getprofile(1).getimageurl() != null){
 					Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(1).getimageurl());
@@ -759,7 +860,7 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 				
 				break;
 			case 1:
-				mypage_smallkidimage2_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+				mypage_smallkidimage2_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_focus_image, 200, 200));
 				
 				if(localdata.getprofile(0).getimageurl() != null){
 					Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(0).getimageurl());
@@ -783,7 +884,7 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 				
 				break;
 			case 2:
-				mypage_smallkidimage3_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_image, 200, 200));
+				mypage_smallkidimage3_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_smallprofile_focus_image, 200, 200));
 				
 				if(localdata.getprofile(0).getimageurl() != null){
 					Bitmap b_t = BitmapFactory.decodeFile(localdata.getprofile(0).getimageurl());
@@ -877,6 +978,7 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 		}
 		
 		// alarm set
+		mypage_smart_framelayout = (FrameLayout)view.findViewById(R.id.mypage_smart_framelayout);
 		
 		mypage_alarmset_layout = (LinearLayout)view.findViewById(R.id.mypage_alarmset_layout);
 		
@@ -897,6 +999,16 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 		
 		smartwatch_wearning_image = (ImageView)view.findViewById(R.id.smartwatch_wearning_image);
 		
+		
+		mypage_smart_framelayout.setVisibility(FrameLayout.INVISIBLE);
+		
+		smartalarm_flag = false;
+		smartwatch_flag = false;
+		
+		// tutorial
+
+		mypage_tutorial_layout = (LinearLayout)view.findViewById(R.id.mypage_tutorial_layout);
+		mypage_tutorial_image = (ImageView)view.findViewById(R.id.mypage_tutorial_image);
 	}
 	
 	@Override

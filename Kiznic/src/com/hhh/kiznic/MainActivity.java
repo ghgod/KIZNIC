@@ -58,13 +58,17 @@ public class MainActivity extends Fragment {
 	
 	
 	private static TextView profile_kidname_text;
-	private static TextView profile_kidsetplz_text;
 	
 	private static ImageView profile_kidimage_image;
 	private static ProgressBar main_progressbar;
 	private static ImageView main_seekbar_background;
 	
 	private static SeekBar condition_range_seekbar; 
+	
+	private static LinearLayout weather_weather_layout;
+	
+	private static LinearLayout tutorial_main_layout;
+	private static ImageView tutorial_main_image;
 	
 	static Databasehelper dbHelper;
 	
@@ -166,25 +170,29 @@ public class MainActivity extends Fragment {
 				profile_circleimage(selectedImage);
 		}
 		
-		//
-		
-		LinearLayout a = (LinearLayout)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_weather_layout);
-		
-		a.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(Intent.ACTION_VIEW);
-				Uri u = Uri.parse("http://m.kma.go.kr/m/observation/observation_01.jsp");
-				intent.setData(u);
-				startActivity(intent);
-			}
-		});
+		tutorial_layout();
 		
 		return view;
 	}
 		
+	private void tutorial_layout() {
+		if(!localdata.gettutorialmain()){
+			
+			tutorial_main_image.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					tutorial_main_layout.setVisibility(LinearLayout.INVISIBLE);
+					localdata.settutorialmain(true);
+					localdata.setLocalData();
+				}
+			});
+		}
+		else{
+			tutorial_main_layout.setVisibility(LinearLayout.INVISIBLE);
+		}
+	}
+
 	private void set_data() {
 		if(localdata.getprofile(localdata.getprofileflag()).getname().length() > 5 || localdata.getprofile(localdata.getprofileflag()).getname().equals(""))
 			profile_kidname_text.setText("오늘 나들이는 어디까지 갈까요?");
@@ -193,10 +201,6 @@ public class MainActivity extends Fragment {
 	
 		condition_range_seekbar.setProgress(4);
 
-		if(localdata.getprofile(localdata.getprofileflag()).getimageurl() == null)
-			profile_kidsetplz_text.setText("프로필을 등록해주세요");
-		else
-			profile_kidsetplz_text.setText(null);
 	}
 
 	@Override
@@ -221,6 +225,8 @@ public class MainActivity extends Fragment {
 		main_seekbar_background.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.condition_seekbar_background_image, 200, 200));
 	
 		profile_kidimage_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_profile, 200, 200));
+		
+		tutorial_main_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.main_tutorial_image, 600, 600));
 	}
 	
 	private void init() {
@@ -232,8 +238,6 @@ public class MainActivity extends Fragment {
 		
 		profile_kidname_text = (TextView)view.findViewById(R.id.profile_kidname_text);
 		
-		profile_kidsetplz_text = (TextView)view.findViewById(R.id.profile_kidsetplz_text);
-		
 		mainListView = (ListView)view.findViewById(R.id.main_list_view);
 		cardAdapter = new CardAdapter(getActivity().getApplicationContext());
 	
@@ -242,6 +246,8 @@ public class MainActivity extends Fragment {
 		condition_range_seekbar = (SeekBar)view.findViewById(R.id.condition_range_seekbar);
 		main_progressbar = (ProgressBar)view.findViewById(R.id.main_progressbar);
 
+		tutorial_main_layout = (LinearLayout)view.findViewById(R.id.tutorial_main_layout);
+		tutorial_main_image = (ImageView)view.findViewById(R.id.tutorial_main_image);
 		
 		//aq = new AQuery(mainListView.getAdapter().getView(0, null, mainListView));
 		//aq.id(R.id.weather_weatherimage_image).image("http://bufferblog.wpengine.netdna-cdn.com/wp-content/uploads/2014/05/145.jpg");
@@ -362,6 +368,20 @@ public class MainActivity extends Fragment {
 			// recommend
 			new GetRecommendPicnicSimpleInfo(getActivity().getBaseContext(), "11", "1", "0", cardAdapter, mainListView, main_progressbar).execute("");
 			mainListView.setAdapter(cardAdapter);
+			
+			weather_weather_layout = (LinearLayout)mainListView.getAdapter().getView(0, null, mainListView).findViewById(R.id.weather_weather_layout);
+			
+			weather_weather_layout.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent intent = new Intent(Intent.ACTION_VIEW);
+					Uri u = Uri.parse("http://m.kma.go.kr/m/observation/observation_01.jsp");
+					intent.setData(u);
+					startActivity(intent);
+				}
+			});
 		}
 		 else {
 			 cardAdapter.removeAll();

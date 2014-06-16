@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.hhh.kiznic.databasemanager.Databasehelper;
 
@@ -20,6 +22,11 @@ public class OneStopActivity extends Fragment implements OnClickListener{
 	private Button onestop_ciss;
 	private Button onestop_sobijawon;
 	private Context context;
+	
+	private static LinearLayout onestop_tutorial_layout;
+	private static ImageView onestop_tutorial_image;
+	
+	public static localDataAdmin localdata;
 	
 	public OneStopActivity(Context context){
 		this.context = context;
@@ -33,12 +40,43 @@ public class OneStopActivity extends Fragment implements OnClickListener{
 		init();
 		clicklistener();
 		
+		set_image();
+		tutorial_layout();
+		
 		return view;
 	}
 	
+	private void set_image() {
+		// TODO Auto-generated method stub
+		onestop_tutorial_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.safe_tutorial_image, 600, 600));
+	}
+
+	private void tutorial_layout() {
+		if(!localdata.gettutorialsafe()){
+			
+			onestop_tutorial_image.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					onestop_tutorial_layout.setVisibility(LinearLayout.INVISIBLE);
+					localdata.settutorialsafe(true);
+					localdata.setLocalData();
+				}
+			});
+		}
+		else{
+			onestop_tutorial_layout.setVisibility(LinearLayout.INVISIBLE);
+		}
+	}
+
 	public void init() {
 		onestop_ciss = (Button)view.findViewById(R.id.onestop_ciss);
 		onestop_sobijawon = (Button)view.findViewById(R.id.onestop_sobijawon);
+		
+		localdata = new localDataAdmin(getActivity().getBaseContext());
+
+		onestop_tutorial_layout = (LinearLayout)view.findViewById(R.id.onestop_tutorial_layout);
+		onestop_tutorial_image = (ImageView)view.findViewById(R.id.onestop_tutorial_image);
 	}
 	
 	public void clicklistener() {

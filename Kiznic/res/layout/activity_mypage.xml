@@ -5,58 +5,22 @@
     android:background="#F1F2F2"
     android:orientation="vertical" >
     
-    <LinearLayout
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            
+            <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dip"
         android:orientation="vertical"
         android:background="#FFFFFF">
         
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight="3"
-            android:orientation="horizontal">
-            
-            <RelativeLayout
-	            android:layout_width="0dip"
-	            android:layout_height="match_parent"
-	            android:layout_weight="51">
-	            
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dip"
-                    android:text="프로필"
-                    android:textSize="17sp"/>
-                
-	            <!-- 
-	            <TextView
-	                android:id="@+id/mypage_id_text"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_centerVertical="true"
-	                android:layout_marginLeft="10dip"
-	                android:text="cmin890@gmail.com"
-	                android:textSize="17sp"/>
-            	-->
-        	</RelativeLayout>
         
-       		<RelativeLayout
-	            android:layout_width="0dip"
-	            android:layout_height="match_parent"
-	            android:layout_weight="7">
-	            <!-- 
-	            <ImageView
-	                android:id="@+id/mypage_idinput_image"
-	                android:layout_width="match_parent"
-	                android:layout_height="match_parent"
-	                android:layout_centerInParent="true"/>
-            	 -->
-        	</RelativeLayout>
-            
-
-        	</LinearLayout>
         
         	<LinearLayout
 	            android:layout_width="match_parent"
@@ -79,7 +43,10 @@
 			                android:layout_width="match_parent"
 			                android:layout_height="match_parent"
 			                android:layout_gravity="center"
-			                android:padding="5dip"/>
+			                android:paddingLeft="18dip"
+			                android:paddingRight="20dip"
+			                android:paddingTop="20dip"
+			                android:paddingBottom="20dip"/>
 	                
 	            	</LinearLayout>
 	            
@@ -93,7 +60,10 @@
 			                android:layout_width="match_parent"
 			                android:layout_height="match_parent"
 			                android:layout_gravity="center"
-			                android:padding="5dip"/>
+			                android:paddingLeft="18dip"
+			                android:paddingRight="20dip"
+			                android:paddingTop="20dip"
+			                android:paddingBottom="20dip"/>
 	                
 	            	</LinearLayout>
         	        
@@ -111,30 +81,43 @@
 					    android:orientation="vertical"
 					    android:background="#FFFFFF" >
 					                
-		                <RelativeLayout
+		                <LinearLayout
 			                android:layout_width="match_parent"
-			                android:layout_height="70dip"
+			                android:layout_height="60dip"
 			                android:orientation="horizontal">
 			                
-		                    <TextView
+		                    <LinearLayout
+		                        android:layout_width="0dip"
+		                        android:layout_height="match_parent"
+		                        android:layout_weight="5"
+		                        android:background="@drawable/detail_underline_background">
+		                    	
+		                        <TextView
 		                        android:id="@+id/profile_name"
 		                        android:layout_width="wrap_content"
 		                        android:layout_height="wrap_content"
 		                        android:layout_gravity="bottom"
-		                        android:layout_alignParentBottom="true"
 		                        android:layout_marginBottom="2dip"
 		                        android:textColor="#ACACAC"
 		                        android:textSize="18sp"/>
 		                    
-		                    <ImageView 
-		                        android:id="@+id/mypage_profileamend_button"
-		                        android:layout_width="30dip"
-		                        android:layout_height="30dip"
-		                        android:layout_alignParentBottom="true"
-		                        android:layout_alignParentRight="true"
-		                        android:layout_marginBottom="2dip"/>
+		                    </LinearLayout>
 		                    
-		                </RelativeLayout>
+		                    <LinearLayout
+		                        android:layout_width="0dip"
+		                        android:layout_height="match_parent"
+		                        android:layout_weight="1">
+		                        
+			                    <ImageView 
+			                        android:id="@+id/mypage_profileamend_button"
+			                        android:layout_width="30dip"
+			                        android:layout_height="30dip"
+			                        android:layout_gravity="bottom"
+			                        android:layout_marginBottom="2dip"/>
+			                    
+		                    </LinearLayout>
+		                    
+		                </LinearLayout>
 	                
 		                <LinearLayout
 			                android:layout_width="match_parent"
@@ -146,7 +129,6 @@
 		                        android:layout_width="wrap_content"
 		                        android:layout_height="wrap_content"
 		                        android:layout_gravity="center_vertical"
-		                        android:text="남아"
 		                        android:textSize="12sp"/>
 		                    
 		                </LinearLayout>
@@ -159,7 +141,6 @@
 		                        android:id="@+id/profile_birth"
 		                        android:layout_width="wrap_content"
 		                        android:layout_height="wrap_content"
-		                        android:text="11.09.21(만 36개월)"
 		                        android:textSize="12sp"/>
 		                    
 		                </LinearLayout>
@@ -173,36 +154,50 @@
 					    android:layout_height="match_parent"
 					    android:orientation="vertical"
 					    android:background="#FFFFFF" >
-	    			<RelativeLayout
-	    			    android:layout_width="match_parent"
-		                android:layout_height="70dip"
-		                android:orientation="horizontal">
-		                
-	                    <EditText
-	                        android:id="@+id/mypage_profilename_edittext"
-	                        android:layout_width="120dip"
-	                        android:layout_height="30dip"
-	                        android:layout_gravity="bottom"
-	                        android:layout_alignParentBottom="true"
-	                        android:layout_marginBottom="2dip"
-	                        android:singleLine="true"
-	                        android:paddingLeft="5dip"
-	                        android:hint="아이 이름"
-	                        android:textColor="#000000"
-	                        android:textSize="18sp"
-	                        android:maxLength="5"
-	                        android:background="@drawable/search_edittext_background"/>
-	                    
-	                    <ImageView 
-	                        android:id="@+id/mypage_profileset_button"
-	                        android:layout_width="30dip"
-	                        android:layout_height="30dip"
-	                        android:layout_alignParentBottom="true"
-	                        android:layout_alignParentRight="true"
-	                        android:layout_marginBottom="2dip"/>
-	                    
-	                </RelativeLayout>
-	                
+	    			
+	                    <LinearLayout
+			                android:layout_width="match_parent"
+			                android:layout_height="60dip"
+			                android:orientation="horizontal">
+			                
+		                    <LinearLayout
+		                        android:layout_width="0dip"
+		                        android:layout_height="match_parent"
+		                        android:layout_weight="5"
+		                        android:background="@drawable/detail_underline_background">
+		                    	
+		                        <EditText
+			                        android:id="@+id/mypage_profilename_edittext"
+			                        android:layout_width="120dip"
+			                        android:layout_height="30dip"
+			                        android:layout_gravity="bottom"
+			                        android:layout_marginBottom="2dip"
+			                        android:singleLine="true"
+			                        android:paddingLeft="5dip"
+			                        android:hint="아이 이름"
+			                        android:textColor="#000000"
+			                        android:textSize="18sp"
+			                        android:maxLength="5"
+			                        android:background="@drawable/search_edittext_background"/>
+		                    
+		                    </LinearLayout>
+		                    
+		                    <LinearLayout
+		                        android:layout_width="0dip"
+		                        android:layout_height="match_parent"
+		                        android:layout_weight="1">
+		                        
+			                    <ImageView 
+			                        android:id="@+id/mypage_profileset_button"
+			                        android:layout_width="30dip"
+			                        android:layout_height="30dip"
+			                        android:layout_gravity="bottom"
+			                        android:layout_marginBottom="2dip"/>
+			                    
+		                    </LinearLayout>
+		                    
+		                </LinearLayout>
+	    			
 	                <LinearLayout
 		                android:layout_width="match_parent"
 		                android:layout_height="20dip"
@@ -259,9 +254,9 @@
 	                        android:layout_height="20dip"
 	                        android:paddingLeft="5dip"
 	                        android:singleLine="true"
-	                        android:maxLength="6"
+	                        android:maxLength="8"
 	                        android:inputType="number"
-	                        android:hint="00.00.00"
+	                        android:hint="YYYY.MM.DD"
 	                        android:textColor="#000000"
 	                        android:textSize="12sp"
 	                        android:background="@drawable/search_edittext_background"/>
@@ -342,13 +337,13 @@
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
         android:orientation="vertical"
-        android:background="#FDFDFD">
+        android:background="#F1F2F3">
         
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_weight="1"
-            android:background="#F9F9F9"
+            android:background="#FFFFFF"
             android:orientation="horizontal">
             
             <LinearLayout
@@ -392,13 +387,13 @@
 		
         </LinearLayout>
         
-	    <FrameLayout
+	    <FrameLayout 
+	        android:id="@+id/mypage_smart_framelayout"
 	        android:layout_width="match_parent"
 	        android:layout_height="0dip"
 	        android:layout_weight="2">
 		
-	            
-	            <FrameLayout 
+	            <FrameLayout
 	                android:layout_width="match_parent"
 				    android:layout_height="match_parent">
 	                <!-- smartalarm -->
@@ -814,53 +809,21 @@
         </FrameLayout>
         
     </LinearLayout>
-
-    
-    <!-- 
-    <LinearLayout
-        android:id="@+id/mypage_nickname_view"
-        android:layout_width="match_parent"
-        android:layout_height="60dip"
-        android:layout_marginTop="5dip"
-        android:layout_marginLeft="5dip"
-        android:layout_marginRight="5dip"
-        android:orientation="horizontal"
-        android:background="@drawable/mypage_card_background">
-        
-        <RelativeLayout
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="51">
             
-            <TextView
-                android:id="@+id/mypage_nickname_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dip"
-                android:text="닉네이이임"
-                android:textColor="#000000"
-                android:textSize="20sp"/>
-            
-        </RelativeLayout>
+        </LinearLayout>
         
-        <RelativeLayout
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="7">
+        <LinearLayout
+            android:id="@+id/mypage_tutorial_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
             
             <ImageView
-                android:id="@+id/mypage_nicknameinput_image"
+                android:id="@+id/mypage_tutorial_image"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-     		    android:padding="10dip"
-                android:layout_centerInParent="true"
-                android:src="@drawable/mypage_next"/>
+                android:layout_height="match_parent"/>
             
-        </RelativeLayout>
+        </LinearLayout>
         
-    </LinearLayout>
-    
-     -->
+    </FrameLayout>
     
 </LinearLayout>

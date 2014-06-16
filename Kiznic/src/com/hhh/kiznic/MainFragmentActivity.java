@@ -89,7 +89,6 @@ public class MainFragmentActivity extends FragmentActivity implements ActionBar.
 			// the adapter. Also specify this Activity object, which implements
 			// the TabListener interface, as the callback (listener) for when
 			// this tab is selected.
-			
 		
 			actionBar.addTab(actionBar.newTab().setTabListener(this));
 			

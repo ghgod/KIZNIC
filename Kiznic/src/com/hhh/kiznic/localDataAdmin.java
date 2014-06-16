@@ -100,7 +100,7 @@ public class localDataAdmin {
 	
 	private static profileInfo profile_info[];
 	private static int profile_flag;
-	
+	private static boolean tutorial_main, tutorial_safe, tutorial_mypage;
 	// alarm
 	
 	private static alarmInfo alarm_info;
@@ -111,11 +111,16 @@ public class localDataAdmin {
 		
 		profile_info = new profileInfo[3];
 		for(int i=0;i<3;i++)
-			profile_info[i] = new profileInfo("이름을 입력하세요", " - ", "생일을 입력하세요");
+			profile_info[i] = new profileInfo("이름을 입력하세요", "성별을 입력하세요", "생일을 입력하세요");
 		
 		profile_flag = 0;
 		
 		alarm_info = new alarmInfo(false, 10, 00, false, 10, 00);
+		
+		tutorial_main = false;
+		tutorial_safe = false;
+		tutorial_mypage = false;
+		
 		try{
 			getLocalData();
 		}catch(Exception e){
@@ -128,6 +133,12 @@ public class localDataAdmin {
 	public int getprofileflag(){return profile_flag;}
 	public void setprofileflag(int flag){profile_flag = flag;}
 	public alarmInfo getalarm(){return alarm_info;}
+	public boolean gettutorialmain(){return tutorial_main;}
+	public boolean gettutorialsafe(){return tutorial_safe;}
+	public boolean gettutorialmypage(){return tutorial_mypage;}
+	public void settutorialmain(boolean flag){tutorial_main = flag;}
+	public void settutorialsafe(boolean flag){tutorial_safe = flag;}
+	public void settutorialmypage(boolean flag){tutorial_mypage = flag;}
 	
 	public void setLocalData(){
 		SharedPreferences pref = context.getSharedPreferences("kiznic", 0);
@@ -153,6 +164,12 @@ public class localDataAdmin {
 		editor.putInt("pm_hour_value", alarm_info.getpm_hour_value());
 		editor.putInt("pm_minute_value", alarm_info.getpm_minute_value());
 		
+		// tutorial
+		
+		editor.putBoolean("tutorial_main", tutorial_main);
+		editor.putBoolean("tutorial_safe", tutorial_safe);
+		editor.putBoolean("tutorial_mypage", tutorial_mypage);
+		
 		editor.commit();
 	}
 	
@@ -163,7 +180,7 @@ public class localDataAdmin {
 		
 		for(int i=0;i<3;i++){
 			profile_info[i].setname(pref.getString("profile"+i+"_name", "이름을 입력하세요"));
-			profile_info[i].setsex(pref.getString("profile"+i+"_sex", " - "));
+			profile_info[i].setsex(pref.getString("profile"+i+"_sex", "성별을 입력하세요"));
 			profile_info[i].setbirth(pref.getString("profile"+i+"_birth", "생일을 입력하세요"));
 			profile_info[i].setiamge_url(pref.getString("profile"+i+"_url", null));
 		}
@@ -178,6 +195,12 @@ public class localDataAdmin {
 		alarm_info.setpm_alarm_onoff(pref.getBoolean("pm_alarm_onoff", false));
 		alarm_info.setpm_hour_value(pref.getInt("pm_hour_value", 10));
 		alarm_info.setpm_minute_value(pref.getInt("pm_minute_value", 0));
+		
+		//tutorial
+
+		tutorial_main = pref.getBoolean("tutorial_main", false);
+		tutorial_safe = pref.getBoolean("tutorial_safe", false);
+		tutorial_mypage = pref.getBoolean("tutorial_mypage", false);
 	}
 
 }

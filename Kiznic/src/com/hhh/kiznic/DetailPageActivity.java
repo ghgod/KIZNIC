@@ -21,6 +21,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -47,7 +48,7 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 	private static ImageView detail_bookmark_image;
 	private static ImageView detail_sharing_image;
 	
-	//private static Button detail_moreinfo_button;
+	private static Button detail_moreinfo_button;
 	
 	private static TextView detail_infotext_text;
 	
@@ -102,8 +103,8 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 	   clicklistener();
 	   
 	   set_image();
-	   
-	   detail_scrollview.pageScroll(View.FOCUS_UP);
+	   LinearLayout capture = (LinearLayout)findViewById(R.id.detailpage_captureLayout);
+	   detail_scrollview.requestChildFocus(null, capture);
 	}
 
 	
@@ -138,9 +139,12 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 		//detail_bookmark_image = (ImageView)findViewById(R.id.detail_bookmark_image);
 		detail_sharing_image = (ImageView)findViewById(R.id.detail_sharing_image);
 		
-		//detail_moreinfo_button = (Button)findViewById(R.id.detail_moreinfo_button);
+		detail_moreinfo_button = (Button)findViewById(R.id.detail_moreinfo_button);
 		
 		detail_infotext_text = (TextView)findViewById(R.id.detail_infotext_text);
+		
+		detail_infotext_text.setMaxLines(5);
+		detail_infotext_text.setEllipsize(TextUtils.TruncateAt.END);
 		
 		infotextview_flag = false;
 		
@@ -153,14 +157,8 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 		nmapOverlayManager = new NMapOverlayManager(this, nmapView, nmapViewerResourceProvider);
 		mapViewContainer = (LinearLayout)findViewById(R.id.mapViewContainer);
 
-		
-		
 		listsetting();
 	}
-	
-	
-
-	
 	
 	public void setNMap( double latitude, double longitude, String placeName) {
 		//nmapView = new NMapView(this);
@@ -285,14 +283,14 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 					
 					}
 				
-					Toast.makeText(getApplicationContext(), "공유 성공", Toast.LENGTH_LONG).show();
+					//Toast.makeText(getApplicationContext(), "공유 성공", Toast.LENGTH_LONG).show();
 				}
 				
 				return true;
 			}
 		});
 		
-		//detail_moreinfo_button.setOnClickListener(this);
+		detail_moreinfo_button.setOnClickListener(this);
 		
 		nmapView.setOnTouchListener(new OnTouchListener() {
 			
@@ -313,18 +311,18 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 
 		switch(v.getId()){
 		
-		/*
 		case R.id.detail_moreinfo_button:
 			if(infotextview_flag){
 				infotextview_flag = false;
+				detail_infotext_text.setMaxLines(5);
 				detail_moreinfo_button.setText("더보기");
 			}
 			else{
 				infotextview_flag = true;
+				detail_infotext_text.setMaxLines(299);
 				detail_moreinfo_button.setText("줄이기");
 			}
 			break;
-			*/
 		}
 	}
 	
@@ -346,7 +344,6 @@ public class DetailPageActivity extends NMapActivity implements OnClickListener,
 		
 		detailNevigationParams.height = deatilNevigationCardheight;
 		
-
 	}
 
 	
