@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#EEEEEF" >
-    
+    android:background="#EEEEEF"
+    android:orientation="vertical" >
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,14 +18,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="이벤트"
                 android:textColor="#24B0CD"
-                android:textSize="25sp"
-                android:text="이벤트" />
-
+                android:textSize="25sp" />
         </LinearLayout>
-
     </FrameLayout>
-    
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -35,148 +33,196 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="225dip"
-        android:layout_marginTop="10dip"
+        android:layout_height="245dip"
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
+        android:layout_marginTop="10dip"
         android:background="#FFFFFF"
-        android:orientation="vertical">
-        
+        android:orientation="vertical" >
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_weight="5">
+            android:layout_weight="4" >
 
             <ImageView
                 android:id="@+id/event_event1_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-				android:scaleType="fitXY"/>
-            
+                android:scaleType="fitXY" />
         </LinearLayout>
-        
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:background="#FFFFFF">
-            
-            <RelativeLayout
-                android:layout_width="0dip"
+            android:layout_weight="1.5"
+            android:background="#FFFFFF"
+            android:orientation="vertical" >
+
+            <FrameLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginLeft="5dip"
-                android:layout_marginTop="5dip"
                 android:layout_marginBottom="5dip"
-                android:layout_marginRight="2dip"
-                android:background="@color/kiznic1">
-                
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:layout_weight="1"
+                android:background="@color/kiznic1" >
+
+                <Button
+                    android:id="@+id/event1_detailview_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
                     android:text="공연정보"
                     android:textColor="#000000"
-                    android:textSize="20sp"/>
-                
-            </RelativeLayout>
-            
-            <RelativeLayout
-                android:layout_width="0dip"
+                    android:textSize="15sp" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginLeft="2dip"
-                android:layout_marginTop="5dip"
-                android:layout_marginBottom="5dip"
+                android:layout_marginLeft="5dip"
                 android:layout_marginRight="5dip"
-                android:background="@color/kiznic1">
-                
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="응모하기"
-                    android:textColor="#000000"
-                    android:textSize="20sp"/>
-                
-            </RelativeLayout>
-            
+  				android:layout_marginBottom="5dp"
+                android:layout_weight="1" >
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="2.5dp"
+                    android:layout_weight="1"
+                    android:background="@color/kiznic1" >
+
+                    <Button
+                        android:id="@+id/event1_share_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:text="공유하기"
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2.5dp"
+                    android:layout_weight="1"
+                    android:background="@color/kiznic1"  >
+                    
+                    <Button
+                        android:id="@+id/event1_enter_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:text="응모하기"
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+                    
+                    
+                </FrameLayout>
+
+            </LinearLayout>
         </LinearLayout>
-        
     </LinearLayout>
-    
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="225dip"
-        android:layout_marginTop="10dip"
+        android:layout_height="245dip"
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
+        android:layout_marginTop="10dip"
         android:background="#FFFFFF"
-        android:orientation="vertical">
-        
+        android:orientation="vertical" >
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_weight="5">
+            android:layout_weight="4" >
 
             <ImageView
                 android:id="@+id/event_event2_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-				android:scaleType="fitXY"/>
-            
+                android:scaleType="fitXY" />
         </LinearLayout>
-        
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:background="#FFFFFF">
-            
-            <RelativeLayout
-                android:layout_width="0dip"
+            android:layout_weight="1.5"
+            android:background="#FFFFFF"
+            android:orientation="vertical" >
+
+            <FrameLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginLeft="5dip"
-                android:layout_marginTop="5dip"
                 android:layout_marginBottom="5dip"
-                android:layout_marginRight="2dip"
-                android:background="@color/kiznic1">
-                
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:layout_weight="1"
+                android:background="@color/kiznic1" >
+
+                <Button
+                    android:id="@+id/event2_detailview_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
                     android:text="공연정보"
                     android:textColor="#000000"
-                    android:textSize="20sp"/>
-                
-            </RelativeLayout>
-            
-            <RelativeLayout
-                android:layout_width="0dip"
+                    android:textSize="15sp" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginLeft="2dip"
-                android:layout_marginTop="5dip"
-                android:layout_marginBottom="5dip"
+       			android:layout_marginLeft="5dip"
                 android:layout_marginRight="5dip"
-                android:background="@color/kiznic1">
-                
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="응모하기"
-                    android:textColor="#000000"
-                    android:textSize="20sp"/>
-                
-            </RelativeLayout>
-            
+  				android:layout_marginBottom="5dp"
+                android:layout_weight="1" >
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="2.5dp"
+
+                    android:layout_weight="1"
+                    android:background="@color/kiznic1" >
+
+                    <Button
+                        android:id="@+id/event2_share_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:text="공유하기"
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2.5dp"
+                    android:layout_weight="1"
+                    android:background="@color/kiznic1"  >
+                    
+                    <Button
+                        android:id="@+id/event2_enter_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:text="응모하기"
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+                    
+                    
+                </FrameLayout>
+
+            </LinearLayout>
         </LinearLayout>
         
+        
+        
     </LinearLayout>
-    
+
 </LinearLayout>

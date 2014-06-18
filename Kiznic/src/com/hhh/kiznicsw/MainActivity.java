@@ -85,6 +85,10 @@ public class MainActivity extends Fragment {
 
 	public static localDataAdmin localdata;
 	
+	public MainActivity() {
+		
+	}
+	
 	public MainActivity(Context context){
 		this.context = context;
 	}
