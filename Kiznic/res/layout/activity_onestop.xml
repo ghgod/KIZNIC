@@ -94,7 +94,8 @@
             <ImageView
                 android:id="@+id/onestop_tutorial_image"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"/>
             
         </LinearLayout>
         

@@ -201,47 +201,37 @@
 	                <LinearLayout
 		                android:layout_width="match_parent"
 		                android:layout_height="20dip"
-		                android:background="@drawable/carditem_background">
+		                android:background="@drawable/carditem_background"
+		                android:orientation="horizontal">
 	                    
-	                    <RadioGroup
-					        android:id="@+id/profile_kidsex_radiogroup"
-					        android:layout_width="wrap_content"
+					    <ImageView
+					        android:id="@+id/profile_male_button"
+					        android:layout_width="20dip"
 					        android:layout_height="20dip"
-					        android:layout_gravity="center_vertical"
-					        android:inputType="text"
-					        android:orientation="horizontal" >
-					 
-					        <RadioButton
-					            android:id="@+id/profile_male_radiobutton"
-					            android:layout_width="wrap_content"
-					            android:layout_height="wrap_content"
-					            android:button="@android:drawable/btn_radio"/>
+					        android:button="@android:drawable/btn_radio"/>
 					            
-					        <TextView
-		                        android:layout_width="wrap_content"
-		                        android:layout_height="wrap_content"
-		                        android:layout_gravity="center_vertical"
-		                        android:layout_marginLeft="3dip"
-		                        android:text="남아"
-		                        android:textSize="15sp"/>
+					    <TextView
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:layout_gravity="center_vertical"
+		                    android:layout_marginLeft="3dip"
+		                    android:text="남아"
+		                    android:textSize="15sp"/>
 					        
-					        <RadioButton
-					            android:id="@+id/profile_female_radiobutton"
-					            android:layout_width="wrap_content"
-					            android:layout_height="wrap_content"
-					            android:layout_marginLeft="3dip"
-					            android:button="@android:drawable/btn_radio" />
-					 
-					        <TextView
-		                        android:layout_width="wrap_content"
-		                        android:layout_height="wrap_content"
-		                        android:layout_gravity="center_vertical"
-		                        android:layout_marginLeft="3dip"
-		                        android:text="여아"
-		                        android:textSize="15sp"/>
+					    <ImageView
+					        android:id="@+id/profile_female_button"
+					        android:layout_width="20dip"
+					        android:layout_height="20dip"
+					        android:button="@android:drawable/btn_radio"/>
+					            
+					    <TextView
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:layout_gravity="center_vertical"
+		                    android:layout_marginLeft="3dip"
+		                    android:text="여아"
+		                    android:textSize="15sp"/>
 					        
-					    </RadioGroup>
-	                    
 	                </LinearLayout>
 	                
 	                <LinearLayout
@@ -820,7 +810,8 @@
             <ImageView
                 android:id="@+id/mypage_tutorial_image"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"/>
             
         </LinearLayout>
         
