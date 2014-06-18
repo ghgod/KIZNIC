@@ -27,7 +27,9 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -97,7 +99,9 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 	private static EditText mypage_profilename_edittext;
 	private static EditText mypage_profilebirth_edittext;
 	
-	private static RadioGroup profile_kidsex_radiogroup;
+	private static ImageView profile_male_button;
+	private static ImageView profile_female_button;
+    
 	
 	// setting 
 	
@@ -277,6 +281,9 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 		
 		mypage_tutorial_image.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_tutorial_image1, 600, 600));
 		tutorial_bitmap = ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.mypage_tutorial_image2, 600, 600);
+		
+		profile_male_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.profile_radiobutton_up, 200, 200));
+		profile_female_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.profile_radiobutton_up, 200, 200));
 	}
 
 	@Override
@@ -299,6 +306,45 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 			}
 		});
 		*/
+		
+		profile_male_button.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				
+				if(event.getAction() == MotionEvent.ACTION_DOWN){
+					profile_male_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.profile_radiobutton_down, 200, 200));
+				}
+				else if(event.getAction() == MotionEvent.ACTION_UP){
+					profile_male_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.profile_radiobutton_focus, 200, 200));
+					profile_female_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.profile_radiobutton_up, 200, 200));
+					
+					localdata.getprofile(localdata.getprofileflag()).setsex("남아");
+				}
+				
+				return true;
+			}
+		});
+		
+		profile_female_button.setOnTouchListener(new OnTouchListener() {
+		
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if(event.getAction() == MotionEvent.ACTION_DOWN){
+					profile_female_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.profile_radiobutton_down, 200, 200));
+				}
+				else if(event.getAction() == MotionEvent.ACTION_UP){
+					profile_female_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.profile_radiobutton_focus, 200, 200));
+					profile_male_button.setImageBitmap(ImageDecoder.decodeSampledBitmapFromResource(getActivity().getResources(), R.drawable.profile_radiobutton_up, 200, 200));
+					
+					localdata.getprofile(localdata.getprofileflag()).setsex("여아");
+				}
+				
+				return true;
+
+			}
+		});
+		
 		mypage_profileamend_button.setOnClickListener(new ImageView.OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -347,17 +393,6 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 				profile_amend_flag = false;
 
 				profile_input();
-			}
-		});
-		
-		profile_kidsex_radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-			
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				if(checkedId == R.id.profile_male_radiobutton)
-					localdata.getprofile(localdata.getprofileflag()).setsex("남아");
-				else
-					localdata.getprofile(localdata.getprofileflag()).setsex("여아");
 			}
 		});
 		
@@ -941,8 +976,6 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 		mypage_profilename_edittext = (EditText)view.findViewById(R.id.mypage_profilename_edittext);
 		mypage_profilebirth_edittext = (EditText)view.findViewById(R.id.mypage_profilebirth_edittext);
 		
-		profile_kidsex_radiogroup = (RadioGroup)view.findViewById(R.id.profile_kidsex_radiogroup);
-
 		mypage_kidimage_view = (LinearLayout)view.findViewById(R.id.mypage_kidimage_view);
 		mypage_kidimageset_view = (LinearLayout)view.findViewById(R.id.mypage_kidimageset_view);
 		
@@ -950,6 +983,9 @@ public class MyPageActivity extends Fragment implements NumberPicker.OnValueChan
 
 		mypage_kidimage_image = (ImageView)view.findViewById(R.id.mypage_kidimage_image);
 		mypage_kidimageset_image = (ImageView)view.findViewById(R.id.mypage_kidimageset_image);
+
+		profile_male_button = (ImageView)view.findViewById(R.id.profile_male_button);
+		profile_female_button = (ImageView)view.findViewById(R.id.profile_female_button);
 		
 		// mypage smartpush, mypage smartwatch
 		
