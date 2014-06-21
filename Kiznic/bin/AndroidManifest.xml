@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hhh.kiznicsw"
-    android:versionCode="2"
-    android:versionName="1.1" >
+    android:versionCode="3"
+    android:versionName="1.2" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -55,9 +55,6 @@
              <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-               	            <data android:scheme="@string/kakao_scheme" android:host="@string/kakaolink_host" /> 
-                
-                
             </intent-filter>
         </activity>
         <activity android:name="DetailPageActivity"
